@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # database connection credential
+    url: jdbc:mysql://3x90r222i992.us-east-3.psdb.cloud/web?sslMode=VERIFY_IDENTITY
+    username: zw2fgqvxpb0f
+    password: pscale_pw_7xoe_T3nSWKr8fXt5nwyduxIMHMf9IK9xhlQAbU-CdE
+
+    # config jpa
+    jpa:
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQLDialect
+          ddl-auto: create-drop
