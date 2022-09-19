@@ -15,8 +15,9 @@ import java.util.Set;
  public class User {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO,generator = "native")
-//    @GenericGenerator(name = "native",strategy = "native")
+    @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
+    @GenericGenerator(name = "native",strategy = "native")
+    @Column(name = "user_id")
     private int userId;
 
     private String nickname;
@@ -32,11 +33,11 @@ import java.util.Set;
     private Date dob;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-                joinColumns = {@JoinColumn(name = "user_id")},
-                inverseJoinColumns = {@JoinColumn(name = "role_id")}
-    )
-    private Set<Role> roles = new HashSet<>();
+//    @JoinTable(name = "user_role",
+//                joinColumns = {@JoinColumn(name = "user_id")},
+//                inverseJoinColumns = {@JoinColumn(name = "role_id")}
+//    )
+    private List<Role> roles = new ArrayList<>();
 
     public User() {
     }
@@ -48,6 +49,13 @@ import java.util.Set;
         this.gender = gender;
         this.phone = phone;
         this.dob = dob;
+    }
+
+    public User(String nickname,String email,String password, int phone){
+        this.nickname = nickname;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
     }
 
     public int getUserId() {
@@ -106,11 +114,11 @@ import java.util.Set;
         this.dob = dob;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 

@@ -14,16 +14,10 @@ public class TestController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/register")
-    public String register(){
-        userService.register(new User());
-        return "Register successfully";
-    }
-
 
     @GetMapping("/info")
     public User getUserInfo(String email){
-       return  userService.getUserInfo(email);
+       return  userService.getUserInfo("13@qq.com");
     }
 
 }

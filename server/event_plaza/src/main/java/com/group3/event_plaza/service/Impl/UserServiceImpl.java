@@ -36,21 +36,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         @Override
         public void register(User user) {
-                System.out.println(UserRole.ROLE_USER.getId());
-
                 Role role = roleRepository.findByRoleId(1);
-                user.setEmail("test@1.com");
-                user.setPassword(passwordEncoder.encode("123456"));
-                user.setPhone(1332323);
+                Role role2 = roleRepository.findByRoleId(2);
                 user.getRoles().add(role);
-                user.setUserId(1);
+                user.getRoles().add(role2);
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
                 userRepository.save(user);
 
         }
 
         @Override
         public User getUserInfo(String email) {
-            return null;
+            return userRepository.findUserByEmail(email);
         }
 
         @Override

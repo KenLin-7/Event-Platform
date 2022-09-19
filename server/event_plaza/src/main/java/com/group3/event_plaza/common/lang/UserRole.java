@@ -4,8 +4,8 @@ public enum UserRole {
     ROLE_USER("ROLE_USER",1)
     ,ROLE_ORGANIZER("ROLE_ORGANIZER",2);
 
-    private int id;
-    private String value;
+    private final int id;
+    private final String value;
 
     UserRole(String value,int id) {
         this.id = id;

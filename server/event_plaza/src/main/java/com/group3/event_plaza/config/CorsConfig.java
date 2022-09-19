@@ -14,7 +14,7 @@ import java.util.Arrays;
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
-    private static final String ORIGIN_URL = "http://localhost:3000";
+    private static final String ORIGIN_URL = "*";
     private static final String EXPOSED_HEADER = "access_token";
     private static final String[] ALLOW_METHODS ={"POST", "GET", "PUT", "DELETE"} ;
 

@@ -1,6 +1,9 @@
 package com.group3.event_plaza.config;
 
 import com.group3.event_plaza.security.filter.CustomAuthenticationFilter;
+import com.group3.event_plaza.security.filter.JwtTokenFilter;
+import com.group3.event_plaza.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @EnableWebSecurity
@@ -19,12 +23,23 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
+
+
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private JwtTokenFilter jwtTokenFilter;
+
     private static final String[] URL_WHITELISTS ={
         "/",
-        "/test/*"
+
+        "/api/user/register"
     };
 
     private static final String[] ORGANIZER_URLS = {
+            "/test/*",
     };
     @Bean
     public AuthenticationManager authenticationManager(
@@ -45,12 +60,13 @@ public class SecurityConfig {
         http.csrf().disable().cors();
         http.authorizeHttpRequests()
                 .antMatchers(URL_WHITELISTS).permitAll()
-                .antMatchers(ORGANIZER_URLS).hasRole("ROLE_ORGANIZER")
+                .antMatchers(ORGANIZER_URLS).hasAnyAuthority("ROLE_ORGANIZER")
                 .anyRequest().authenticated();
         http.formLogin();
-        http.addFilter(new CustomAuthenticationFilter(authenticationManager));
+        http.addFilter(new CustomAuthenticationFilter(authenticationManager,jwtUtil));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.headers().xssProtection().and().contentSecurityPolicy("'script-src','self'");
+        http.addFilterAfter(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

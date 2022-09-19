@@ -1,26 +1,44 @@
 package com.group3.event_plaza.util;
 
-import io.jsonwebtoken.Jwts;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
+@Component
 public class JwtUtil {
 
-    private String secret;
+    private static final long EXPIRE_DURATION = 24*60*60*1000; // 24h
 
-    private long expire;
+    @Value("${app.jwt.secret}")
+    private String secretKey;
 
-    private String header;
 
-    public String createToken(String email){
-        Date createDate = new Date();
-        Date expireDate = new Date(createDate.getTime()+1000*expire);
 
-        return Jwts.builder().
-                setHeaderParam("typ","JWT")
-                .setSubject(email)
-                .setIssuedAt(createDate)
-                .setExpiration(expireDate)
-                .compact();
+
+    public String createJwt(String name, String url, Object[] role){
+
+        Algorithm algorithm = Algorithm.HMAC256(secretKey.getBytes());
+
+        return "Bearer  "+ JWT.create()
+                .withSubject(name)
+                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
+                .withIssuer(url)
+//                .withClaim("roles", Arrays.asList(role))
+                .withIssuedAt(new Date())
+                .sign(algorithm);
     }
+
+    public DecodedJWT isVerified (String token) throws Exception {
+        Algorithm algorithm = Algorithm.HMAC256(secretKey.getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        return verifier.verify(token);
+    }
+
 }
