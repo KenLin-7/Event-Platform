@@ -1,5 +1,7 @@
 package com.group3.event_plaza.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.group3.event_plaza.common.lang.UserRole;
 
 import javax.persistence.*;
@@ -15,6 +17,7 @@ public class Role {
     private String roleName;
 
     @ManyToMany(cascade = CascadeType.ALL,mappedBy = "roles")
+    @JsonIgnoreProperties(value = "roles")
     private Set<User> user = new HashSet<>();
 
 

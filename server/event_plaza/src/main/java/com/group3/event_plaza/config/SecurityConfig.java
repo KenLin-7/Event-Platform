@@ -1,7 +1,10 @@
 package com.group3.event_plaza.config;
 
+import com.group3.event_plaza.common.lang.UserRole;
+import com.group3.event_plaza.security.TokenAuthenticationEntryPoint;
 import com.group3.event_plaza.security.filter.CustomAuthenticationFilter;
 import com.group3.event_plaza.security.filter.JwtTokenFilter;
+import com.group3.event_plaza.security.handler.LogoutSuccessfulHandler;
 import com.group3.event_plaza.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +26,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
+    private static final String[] URL_WHITELISTS ={
+            "/",
+            "/api/user/register",
+            "/api/user/logout",
+    };
 
+    private static final String[] ORGANIZER_URLS = {
+            "/test/*",
+    };
+
+    private static final String[] USER_URLS = {
+            "/api/user/current",
+    };
 
 
     @Autowired
@@ -32,15 +47,13 @@ public class SecurityConfig {
     @Autowired
     private JwtTokenFilter jwtTokenFilter;
 
-    private static final String[] URL_WHITELISTS ={
-        "/",
+    @Autowired
+    private LogoutSuccessfulHandler logoutSuccessfulHandler;
 
-        "/api/user/register"
-    };
 
-    private static final String[] ORGANIZER_URLS = {
-            "/test/*",
-    };
+    @Autowired
+    private TokenAuthenticationEntryPoint tokenAuthenticationEntryPoint;
+
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -57,16 +70,26 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         AuthenticationManager authenticationManager =authenticationManager(http.getSharedObject(AuthenticationConfiguration.class));
+
+        // security config
         http.csrf().disable().cors();
-        http.authorizeHttpRequests()
-                .antMatchers(URL_WHITELISTS).permitAll()
-                .antMatchers(ORGANIZER_URLS).hasAnyAuthority("ROLE_ORGANIZER")
-                .anyRequest().authenticated();
-        http.formLogin();
-        http.addFilter(new CustomAuthenticationFilter(authenticationManager,jwtUtil));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.headers().xssProtection().and().contentSecurityPolicy("'script-src','self'");
-        http.addFilterAfter(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
+        // authorize api url
+        http.authorizeHttpRequests()
+                .antMatchers(URL_WHITELISTS).permitAll()
+                .antMatchers(ORGANIZER_URLS).hasAnyAuthority(UserRole.ROLE_ORGANIZER.getValue())
+                .antMatchers().hasAnyAuthority(UserRole.ROLE_ORGANIZER.getValue())
+                .anyRequest().authenticated();
+        http.httpBasic().authenticationEntryPoint(tokenAuthenticationEntryPoint);
+
+        http.logout().logoutUrl("/api/user/logout").logoutSuccessHandler(logoutSuccessfulHandler);
+
+        // validate login status
+        http.addFilter(new CustomAuthenticationFilter(authenticationManager,jwtUtil));
+        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 }

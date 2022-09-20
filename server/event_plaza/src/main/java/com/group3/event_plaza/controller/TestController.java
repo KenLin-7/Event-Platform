@@ -17,7 +17,7 @@ public class TestController {
 
     @GetMapping("/info")
     public User getUserInfo(String email){
-       return  userService.getUserInfo("13@qq.com");
+        return  userService.getUserInfo(email);
     }
 
 }

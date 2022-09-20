@@ -1,6 +1,7 @@
 package com.group3.event_plaza.security.filter;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.group3.event_plaza.common.exception.TokenAuthenticationFailException;
 import com.group3.event_plaza.model.Role;
 import com.group3.event_plaza.model.User;
 import com.group3.event_plaza.security.TokenAuthenticationEntryPoint;
@@ -34,7 +35,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().equals("/login") || request.getServletPath().equals("/api/account/register")){
+        if(request.getServletPath().equals("/login") ){
             filterChain.doFilter(request,response);
         }else{
 
@@ -45,14 +46,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     // verify token, throw exception if invalidated
                     DecodedJWT decodedJWT = jwtUtil.isVerified(token);
                     String username = decodedJWT.getSubject();
-                    System.out.println(decodedJWT.getClaim("role").toString());
+                    // get user role
+                    String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username,null,
-                            Collections.singleton(new SimpleGrantedAuthority("ROLE_ORGANIZER")));
+                            getAuthorities(roles));
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                     filterChain.doFilter(request,response);
                 } catch (Exception e) {
                     logger.error(e.getMessage());
-                    e.printStackTrace();
+                    authenticationEntryPoint.commence(request,response,new TokenAuthenticationFailException("Incorrect login status"));
                 }
 
             }else{
@@ -63,12 +65,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
     }
 
-//    private Collection<? extends GrantedAuthority> getAuthorities(String roles){
-//
-//        List<GrantedAuthority> authorities = new ArrayList<>();
-//        for(Role role: roles){
-//            authorities.add(new SimpleGrantedAuthority(role.getRoleName().toString()));
-//        }
-//        return  authorities;
-//    }
+    private Collection<? extends GrantedAuthority> getAuthorities(String[] roles){
+
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for(int i = 0; i < roles.length; i++){
+            authorities.add(new SimpleGrantedAuthority(roles[i]));
+        }
+        return  authorities;
+    }
 }

@@ -14,7 +14,7 @@ import java.util.Arrays;
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
-    private static final String ORIGIN_URL = "*";
+    private static final String ALLOW_ORIGIN_URL = "http://localhost:3000";
     private static final String EXPOSED_HEADER = "access_token";
     private static final String[] ALLOW_METHODS ={"POST", "GET", "PUT", "DELETE"} ;
 
@@ -22,7 +22,7 @@ public class CorsConfig implements WebMvcConfigurer {
 
     private CorsConfiguration buildConfig(){
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin(ORIGIN_URL);
+        corsConfiguration.addAllowedOrigin(ALLOW_ORIGIN_URL);
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.setAllowedMethods(Arrays.asList(ALLOW_METHODS));
         corsConfiguration.addExposedHeader(EXPOSED_HEADER);
@@ -40,7 +40,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(ORIGIN_URL)
+                .allowedOrigins(ALLOW_ORIGIN_URL)
                 .allowedMethods(ALLOW_METHODS)
                 .maxAge(3600);
     }
