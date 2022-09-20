@@ -19,10 +19,10 @@ public class JwtUtil {
     @Value("${app.jwt.secret}")
     private String secretKey;
 
+    @Value("${app.jwt.header")
+    private String header;
 
-
-
-    public String createJwt(String name, String url, Object[] role){
+    public String createJwt(String name, String url, String[] role){
 
         Algorithm algorithm = Algorithm.HMAC256(secretKey.getBytes());
 
@@ -30,7 +30,7 @@ public class JwtUtil {
                 .withSubject(name)
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
                 .withIssuer(url)
-//                .withClaim("roles", Arrays.asList(role))
+                .withArrayClaim("roles", role)
                 .withIssuedAt(new Date())
                 .sign(algorithm);
     }
@@ -41,4 +41,7 @@ public class JwtUtil {
         return verifier.verify(token);
     }
 
+    public String getHeader() {
+        return header;
+    }
 }

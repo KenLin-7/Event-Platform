@@ -1,5 +1,8 @@
 package com.group3.event_plaza.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -33,10 +36,11 @@ import java.util.Set;
     private Date dob;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-//    @JoinTable(name = "user_role",
-//                joinColumns = {@JoinColumn(name = "user_id")},
-//                inverseJoinColumns = {@JoinColumn(name = "role_id")}
-//    )
+    @JoinTable(name = "user_role",
+                joinColumns = {@JoinColumn(name = "user_id")},
+                inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    )
+    @JsonIgnoreProperties(value = "user")
     private List<Role> roles = new ArrayList<>();
 
     public User() {
