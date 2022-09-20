@@ -18,8 +18,7 @@ import java.util.Set;
  public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
-    @GenericGenerator(name = "native",strategy = "native")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int userId;
 
@@ -34,6 +33,8 @@ import java.util.Set;
     private int phone;
 
     private Date dob;
+
+    private String avatar;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
@@ -126,6 +127,14 @@ import java.util.Set;
         this.roles = roles;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -136,6 +145,8 @@ import java.util.Set;
                 ", gender='" + gender + '\'' +
                 ", phone=" + phone +
                 ", dob=" + dob +
+                ", avatar='" + avatar + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 }
