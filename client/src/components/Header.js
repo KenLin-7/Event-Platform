@@ -44,8 +44,8 @@ const Header = () => {
 
         <div className="right">
           <Stack className="right-stack" direction="row" spacing={2}>
-            <Button variant="outlined" sx={{ borderRadius: 8 }}>Sign in</Button>
-            <Button variant="contained" sx={{ borderRadius: 8 }}>Register</Button>
+            <Button variant="outlined" sx={{ borderRadius: 8 }} className="header-btn">Sign in</Button>
+            <Button variant="contained" sx={{ borderRadius: 8 }} className="header-btn">Register</Button>
           </Stack>
         </div>
 

@@ -33,3 +33,13 @@
 .header-logo-font {
   font-family: 'Raleway', sans-serif !important;
 }
+
+.header-btn{
+  font-family: 'Raleway', sans-serif !important;
+}
+
+@media screen and (max-width: 1000px) {
+  .mid{
+    display: none;
+  }
+}
