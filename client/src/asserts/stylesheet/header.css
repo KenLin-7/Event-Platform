@@ -1,0 +1,35 @@
+.header-container{
+  max-height: 50px;
+  box-shadow: 1px 2px #d4d4d4;
+}
+
+.left {
+  flex: 1;
+  width: 100px;
+  height: 100px;
+}
+
+.mid {
+  flex: 2;
+  width: auto;
+
+  text-align: center;
+}
+
+.right {
+  flex: 1;
+  width: auto;
+}
+
+.right-stack {
+  float: right;
+}
+
+.header-font {
+  font-family: 'Raleway', sans-serif !important;
+  color: #7780A1 !important;
+}
+
+.header-logo-font {
+  font-family: 'Raleway', sans-serif !important;
+}
