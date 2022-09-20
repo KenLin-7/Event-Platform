@@ -3,9 +3,9 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
     # database connection credential
-    url: jdbc:mysql://3x90r222i992.us-east-3.psdb.cloud/web?sslMode=VERIFY_IDENTITY
-    username: zw2fgqvxpb0f
-    password: pscale_pw_7xoe_T3nSWKr8fXt5nwyduxIMHMf9IK9xhlQAbU-CdE
+    url:  jdbc:mysql://sql3.freesqldatabase.com:3306/sql3521049
+    username: sql3521049
+    password: yig48bFyWG
 
     # config jpa
     jpa:
