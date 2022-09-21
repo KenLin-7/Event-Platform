@@ -1,16 +1,17 @@
 import React from 'react';
 import './App.css';
 import Header from './components/Header';
-import { CssBaseline } from '@mui/material';
 import Home from './components/HomePage/Home'
+import Footer from './components/Footer'
 
 function App() {
   return (
-    <React.Fragment>
-      <CssBaseline />
-          <Header />
-          <Home />
-    </React.Fragment>
+    <>
+      <Header />
+      <Home />
+      <Footer />
+    </>
+
   );
 }
 

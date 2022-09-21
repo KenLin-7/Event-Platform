@@ -5,7 +5,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Stack } from '@mui/system';
 import { Button, Typography } from '@mui/material';
 
-import '../asserts/stylesheet/header.css'
+import styles from '../asserts/stylesheet/Header.module.css'
 
 const items = [
   { id: 1, text: 'Latest event' },
@@ -16,23 +16,23 @@ const items = [
 
 const Header = () => {
   return (
-    <div className="header-container">
-      <Container maxWidth="xl" sx={{ display: "flex", marginTop: 3 }}>
+    <div className={styles["header-container"]}>
+      <Container maxWidth="xl" sx={{ display: "flex", padding: 3 }}>
 
-        <Box className="left">
+        <Box className={styles["left"]}>
           <Stack direction="row" spacing={2}>
             <AdbIcon />
-            <Typography className="header-logo-font">
+            <Typography className={styles["header-logo-font"]}>
               Event Plaza
             </Typography>
           </Stack>
         </Box>
 
-        <div className='mid'>
+        <div className={styles["mid"]}>
           {
             items.map(item => {
               return (
-                <Button key={item.id} className="header-mid-btn">
+                <Button key={item.id} className={styles["header-mid-btn"]}>
                   <Typography className="header-font" sx={{ color: 'black', fontSize: 'small' }}>
                     {item.text}
                   </Typography>
@@ -42,8 +42,8 @@ const Header = () => {
           }
         </div>
 
-        <div className="right">
-          <Stack className="right-stack" direction="row" spacing={2}>
+        <div className={styles["right"]}>
+          <Stack className={styles["right-stack"]} direction="row" spacing={2}>
             <Button variant="outlined" sx={{ borderRadius: 8 }} className="header-btn">Sign in</Button>
             <Button variant="contained" sx={{ borderRadius: 8 }} className="header-btn">Register</Button>
           </Stack>

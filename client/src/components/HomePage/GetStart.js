@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../../asserts/stylesheet/GetStart.module.css'
+import styles from '../../asserts/stylesheet/Home/GetStart.module.css'
 import Box from '@mui/material/Box';
 
 

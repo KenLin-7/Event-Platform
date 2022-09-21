@@ -1,11 +1,9 @@
 import React from 'react';
-import styles from '../../asserts/stylesheet/Popular.module.css';
+import styles from '../../asserts/stylesheet/Home/Popular.module.css';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import Divider from '@mui/material/Divider'
-import Avatar from '@mui/material/Avatar';
-import AvatarGroup from '@mui/material/AvatarGroup';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ImageTest from '../../asserts/images/test-image.png';
 
@@ -58,7 +56,7 @@ const Popular = () => {
                     </div>
                   </div>
 
-                  <div className='event-card-likes'>
+                  <div className={styles['event-card-likes']}>
                     <FavoriteBorderIcon sx={{ marginRight: 0.3, marginTop: 0.2 }} /> 120
                   </div>
                 </Box>
