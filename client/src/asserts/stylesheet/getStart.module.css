@@ -9,6 +9,8 @@
 
 .get-start-inner-layout {
   display: flex;
+  position:relative;
+  width: 100vw;
   flex-direction: row;
 }
 
@@ -58,9 +60,6 @@
   height: 616px;
 }
 
-.get-start-btn-group {
-  text-align: center;
-}
 
 .get-start-btns {
   width: 144px;
@@ -75,17 +74,13 @@
 
 @media screen and (max-width: 1200px) {
 
-  .get-start-inner-layout {
-    display: block;
-    width: 100vw;
-    height: 50px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-  }
-
   .get-start-img {
     display: none;
+  }
+
+  .get-start-text {
+    max-width: 500px;
+    margin: 0 auto;
   }
 
   .get-start-text-1 {
