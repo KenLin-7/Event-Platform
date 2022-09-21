@@ -1,0 +1,233 @@
+/* Common Form CSS */
+.phone_ic{
+    background: url(../images/icon/Icon_call.png) no-repeat right center;
+    background-size: 28px;
+}
+.email_ic{
+    background: url(../images/icon/Icon_mail.svg) no-repeat right center;
+    background-size: 28px;
+
+}
+.user_ic{
+    background: url(../images/icon/Icon_user.svg) no-repeat right center;
+    background-size: 28px;
+
+}
+.password_ic{
+    background: url(../images/icon/Icon_closed.svg) no-repeat right center;
+    background-size: 28px;
+
+}
+
+.formInput{
+    padding:20px;
+    border-radius: 12px;
+    border: 2px solid #7780A1;
+    margin-bottom: 25px;
+}
+
+input::placeholder{
+    font-size: 16px;
+}
+.container{
+    display: flex;
+    height: 100%;
+}
+
+/* Button  Area */
+.button-area{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*  Sign up button */
+.formButton {
+    width: 100%;
+    border-radius: 12px;
+    font-size: 18px;
+    border: none;
+    background-color: #4745D0;
+    font-family: 'Sora', sans-serif;
+    padding: 16px;
+    color: white;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+/* Sign Up button hover */
+.formButton:hover {
+    width: 100%;
+    border-radius: 12px;
+    font-size: 18px;
+    border: none;
+    background-color: #322fe0;
+    font-family: 'Sora', sans-serif;
+    padding: 16px;
+    color: white;
+    margin-bottom: 15px;
+    cursor: pointer;
+
+}
+
+/* Register Page CSS */
+
+.container #left{
+    background-color: rgba(14, 11, 214, 0.1);
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.container #right{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Responesive layout */
+@media screen and (max-width: 1400px) {
+    .container{
+        display: flex;
+        height: 100%;
+        justify-content: center;
+    }
+    
+    .container #left{
+      display: none;
+    }
+    .container #right{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+  }
+
+  @media screen and (max-width: 500px) {
+    .container{
+        display: flex;
+        height: 100%;
+        justify-content: center;
+    }
+    
+    .container #left{
+      display: none;
+    }
+    .container #right{
+        width: 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+/* Common Form CSS */
+.phone_ic{
+    background: url(../images/icon/Icon_call.png) no-repeat right center;
+    background-size: 22px;
+}
+.email_ic{
+    background: url(../images/icon/Icon_mail.svg) no-repeat right center;
+    background-size: 22px;
+
+}
+.user_ic{
+    background: url(../images/icon/Icon_user.svg) no-repeat right center;
+    background-size: 22px;
+}
+.password_ic{
+    background: url(../images/icon/Icon_closed.svg) no-repeat right center;
+    background-size: 22px;
+}
+    
+  }
+
+.container #left div{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.container #right .form{
+    height: 70%;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: center;
+    padding: 20px;
+
+}
+.form #header{
+    font-family: 'Sora', sans-serif;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.form #header div{
+    margin-bottom: 5px;
+}
+#header #first{
+    color: #B0B2B9;
+    font-size: 28px;
+    font-weight: 600;
+}
+#header #second {
+    font-size: 42px;
+}
+#header #second span{
+    color: #000000;
+}
+#header #second span:nth-child(2){
+    color: #FB4539;
+}
+#header #third{
+    font-size: 18px;
+    color: #B0B2B9;
+}
+#header #third span:nth-child(2){
+    margin-left: 10px;
+    color: #1814F6;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.form #body{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+
+
+
+#body div:first-child{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+/* Nickname field */
+#body div:first-child input:nth-child(1){
+    width: 32%;
+}
+/* Phone field */
+#body div:first-child input:nth-child(2){
+    width: 50%;
+}
+
+
+#body div:nth-child(2){
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+
+/* Term and Policy */
+#body div:nth-child(3) span span {
+    color: #5956FF;
+}
+
+
