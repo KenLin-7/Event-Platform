@@ -7,7 +7,7 @@ import Login from './components/Login';
 function App() {
   return (
     <UserProvider>
-      <Login/>
+      <Register/>
     </UserProvider>
   );
 }

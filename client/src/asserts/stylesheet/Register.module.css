@@ -1,74 +1,11 @@
 /* Common Form CSS */
-.phone_ic{
-    background: url(../images/icon/Icon_call.png) no-repeat right center;
-    background-size: 28px;
-}
-.email_ic{
-    background: url(../images/icon/Icon_mail.svg) no-repeat right center;
-    background-size: 28px;
-
-}
-.user_ic{
-    background: url(../images/icon/Icon_user.svg) no-repeat right center;
-    background-size: 28px;
-
-}
-.password_ic{
-    background: url(../images/icon/Icon_closed.svg) no-repeat right center;
-    background-size: 28px;
-
-}
-
-.formInput{
-    padding:20px;
-    border-radius: 12px;
-    border: 2px solid #7780A1;
-    margin-bottom: 25px;
-}
-
-input::placeholder{
-    font-size: 16px;
-}
 .container{
     display: flex;
     height: 100%;
 }
 
-/* Button  Area */
-.button-area{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
-/*  Sign up button */
-.formButton {
-    width: 100%;
-    border-radius: 12px;
-    font-size: 18px;
-    border: none;
-    background-color: #4745D0;
-    font-family: 'Sora', sans-serif;
-    padding: 16px;
-    color: white;
-    margin-bottom: 15px;
-    cursor: pointer;
-}
-/* Sign Up button hover */
-.formButton:hover {
-    width: 100%;
-    border-radius: 12px;
-    font-size: 18px;
-    border: none;
-    background-color: #322fe0;
-    font-family: 'Sora', sans-serif;
-    padding: 16px;
-    color: white;
-    margin-bottom: 15px;
-    cursor: pointer;
 
-}
 
 /* Register Page CSS */
 
@@ -201,20 +138,20 @@ input::placeholder{
 
 
 
-
+/* Form container */
 #body div:first-child{
     display: flex;
-    width: 100%;
     justify-content: space-between;
 }
 
 /* Nickname field */
-#body div:first-child input:nth-child(1){
-    width: 32%;
+.nickname{
+    width: 50%;
+    margin-right: 10px;
 }
 /* Phone field */
-#body div:first-child input:nth-child(2){
-    width: 50%;
+.phone{
+    width: 70%;
 }
 
 

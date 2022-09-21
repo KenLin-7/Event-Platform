@@ -1,7 +1,53 @@
-import React from 'react'
+import React,{useState} from 'react'
 import styles from '../asserts/stylesheet/Register.module.css'
+import FormStyles from '../asserts/stylesheet/Form.module.css'
+import formValidate from '../utils/validation'
 import bg from '../asserts/images/register-bg.png'
 export default function Register() {
+
+    const [account,setAccount] = useState({
+        nickname:"",
+        phone:"",
+        password:"",
+        email:"",
+    })
+
+    const [isValidated,setIsValidated] = useState({
+        nickname:true,
+        phone:true,
+        password:true,
+        email:true,
+    })
+
+    const validation = ()=>{
+        const validate = {
+          email: account.email,
+          password: account.password,
+          phone: account.phone,
+          nickname: account.nickname
+        }
+        const result = formValidate(validate)
+        setIsValidated(result)  
+        return result
+    }
+
+    const onClick = ()=>{
+        
+        const result = validation()
+        // if(result.email & result.password){
+        //   signIn(account.email,account.email)
+        // }
+    }
+
+    const onChange = (e)=>{
+        setAccount({ ...account,[e.target.name]:e.target.value})
+        if(!isValidated.email || !isValidated.password
+            || !isValidated.nickname || !isValidated.phone
+            ) validation()
+    }
+
+
+
   return (
     <div className={styles.container}>
         <div id={styles['left']}>
@@ -26,15 +72,63 @@ export default function Register() {
                 </div>
                 <div id={styles["body"]}>
                     <div>
-                        <input className={`${styles.formInput} ${styles.user_ic}`}  placeholder='Nickname'/>
-                        <input className={`${styles.formInput} ${styles.phone_ic}`} placeholder='Phone Number'/>
+                        <div className={`${FormStyles.field} ${styles.nickname}`}>
+                            <input className={`${FormStyles.formInput} ${FormStyles.user_ic}`} 
+                             placeholder='nickname' name='nickname' onChange={onChange}/>
+                            {
+                               !isValidated.nickname ?(                         
+                               <div className={FormStyles['helper-text']}>
+                               <span>Helper Text</span>
+                               </div>):(
+                                <></>
+                               )
+                            }
+   
+                        </div>
+                        <div className={`${FormStyles.field} ${styles.phone}`}>
+                            <input className={`${FormStyles.formInput} ${FormStyles.phone_ic}`} 
+                            placeholder='phone number' name='phone' onChange={onChange}/>
+                            {
+                               !isValidated.phone ?(                         
+                               <div className={FormStyles['helper-text']}>
+                               <span>Helper Text</span>
+                               </div>):(
+                                <></>
+                               )
+                            }
+                        </div>
+         
                     </div>
+
                     <div>
-                        <input className={`${styles.formInput} ${styles.email_ic}`} placeholder='name@email.com' type="email"/>
-                        <input className={`${styles.formInput} ${styles.password_ic}`} placeholder='Password' type="password"/>
+                        <div className={FormStyles.field}>
+                            <input className={`${FormStyles.formInput} ${FormStyles.email_ic}`} 
+                            placeholder='name@email.com' type="email" name='email' onChange={onChange}/>
+                            {
+                               !isValidated.email ?(                         
+                               <div className={FormStyles['helper-text']}>
+                               <span>Helper Text</span>
+                               </div>):(
+                                <></>
+                               )
+                            }
+                        </div>
+                        <div className={FormStyles.field}>
+                            <input className={`${FormStyles.formInput} ${FormStyles.password_ic}`} 
+                            placeholder='password' type="password" name='password' onChange={onChange}/>
+                            {
+                               !isValidated.password ?(                         
+                               <div className={FormStyles['helper-text']}>
+                               <span>Helper Text</span>
+                               </div>):(
+                                <></>
+                               )
+                            }
+                        </div>
                     </div>
-                    <div className={styles['button-area']}>
-                        <button className={styles.formButton}>Create an account</button>
+   
+                    <div className={FormStyles['button-area']}>
+                        <button className={FormStyles.formButton} onClick={onClick}>Create an account</button>
                         <span><span>Privacy Policy </span>and <span>Terms of service</span> apply</span>
                     </div>
 
