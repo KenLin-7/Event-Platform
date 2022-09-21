@@ -34,9 +34,9 @@ export default function Register() {
     const onClick = ()=>{
         
         const result = validation()
-        // if(result.email & result.password){
+        if(result.email & result.password &result.nickname & result.phone){
         //   signIn(account.email,account.email)
-        // }
+        }
     }
 
     const onChange = (e)=>{
