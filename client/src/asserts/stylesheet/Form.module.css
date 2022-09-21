@@ -20,7 +20,8 @@
 }
 .helper-text{
     color: #f22415;
-    margin-left: 20px;
+    margin-left: 5px;
+    padding-top: 4px;
 }
 
 .formInput{

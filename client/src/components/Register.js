@@ -3,6 +3,7 @@ import styles from '../asserts/stylesheet/Register.module.css'
 import FormStyles from '../asserts/stylesheet/Form.module.css'
 import formValidate from '../utils/validation'
 import bg from '../asserts/images/register-bg.png'
+import { signUp } from '../api/UserAPI'
 export default function Register() {
 
     const [account,setAccount] = useState({
@@ -18,6 +19,9 @@ export default function Register() {
         password:true,
         email:true,
     })
+    const [emailError,setEmailError] = useState("Please enter your email")
+    const [passwordError,setPasswordError] = useState("Please enter your password")
+    const [phoneError,setPhoneError] = useState("Please enter your phone")
 
     const validation = ()=>{
         const validate = {
@@ -27,6 +31,13 @@ export default function Register() {
           nickname: account.nickname
         }
         const result = formValidate(validate)
+
+        // setting helper text
+        if(account.email !== "")     setEmailError("Please enter correct email") 
+        if(account.password !== "")  setPasswordError("Please enter correct password format")         
+        if(account.phone !== "")  setPasswordError("Please enter correct phone format") 
+
+        
         setIsValidated(result)  
         return result
     }
@@ -35,7 +46,7 @@ export default function Register() {
         
         const result = validation()
         if(result.email & result.password &result.nickname & result.phone){
-        //   signIn(account.email,account.email)
+            signUp(account)
         }
     }
 
@@ -78,7 +89,7 @@ export default function Register() {
                             {
                                !isValidated.nickname ?(                         
                                <div className={FormStyles['helper-text']}>
-                               <span>Helper Text</span>
+                               <span>Please enter a nickname</span>
                                </div>):(
                                 <></>
                                )
@@ -91,7 +102,7 @@ export default function Register() {
                             {
                                !isValidated.phone ?(                         
                                <div className={FormStyles['helper-text']}>
-                               <span>Helper Text</span>
+                               <span>{phoneError}</span>
                                </div>):(
                                 <></>
                                )
@@ -107,7 +118,7 @@ export default function Register() {
                             {
                                !isValidated.email ?(                         
                                <div className={FormStyles['helper-text']}>
-                               <span>Helper Text</span>
+                               <span>{emailError}</span>
                                </div>):(
                                 <></>
                                )
@@ -119,7 +130,7 @@ export default function Register() {
                             {
                                !isValidated.password ?(                         
                                <div className={FormStyles['helper-text']}>
-                               <span>Helper Text</span>
+                               <span>{passwordError}</span>
                                </div>):(
                                 <></>
                                )

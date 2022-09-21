@@ -36,6 +36,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        System.out.println(password);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username,password);
         return authenticationManager.authenticate(token);
     }
@@ -64,12 +65,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     // convert to String[] for jwt claim
      private  String[] convertAuthorities(Object[] authorities){
-        String[] roles = new String[authorities.length];
+         System.out.println(authorities.length);
+         String[] roles = new String[authorities.length];
         for(int i = 0 ; i  < authorities.length;i++){
             roles[i] = authorities[i].toString();
+            System.out.println(roles[i]);
         }
 
-        return roles;
+         return roles;
     }
 
 }

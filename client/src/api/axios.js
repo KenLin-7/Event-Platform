@@ -31,7 +31,7 @@ instance.interceptors.response.use(response=>{
                 break
             case 403:
                 // TODO Forbbien 
-                console.log("No authorities of ROLE_ORGANIZER");
+                console.log("No authorities");
 
                 break
             case 500:

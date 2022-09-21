@@ -11,7 +11,7 @@ function App() {
     <UserProvider>
        <Header/>
       {/* <Home/>  */}
-      <Login/>
+      <Register/>
     </UserProvider>
   )
 }

@@ -1,6 +1,6 @@
 package com.group3.event_plaza.config;
 
-import com.group3.event_plaza.common.lang.UserRole;
+import com.group3.event_plaza.common.lang.RoleUser;
 import com.group3.event_plaza.security.TokenAuthenticationEntryPoint;
 import com.group3.event_plaza.security.filter.CustomAuthenticationFilter;
 import com.group3.event_plaza.security.filter.JwtTokenFilter;
@@ -79,8 +79,8 @@ public class SecurityConfig {
         // authorize api url
         http.authorizeHttpRequests()
                 .antMatchers(URL_WHITELISTS).permitAll()
-                .antMatchers(ORGANIZER_URLS).hasAnyAuthority(UserRole.ROLE_ORGANIZER.getValue())
-                .antMatchers().hasAnyAuthority(UserRole.ROLE_ORGANIZER.getValue())
+                .antMatchers(ORGANIZER_URLS).hasAnyAuthority(RoleUser.ROLE_ORGANIZER.getValue())
+                .antMatchers(USER_URLS).hasAnyAuthority(RoleUser.ROLE_USER.getValue())
                 .anyRequest().authenticated();
         http.httpBasic().authenticationEntryPoint(tokenAuthenticationEntryPoint);
 

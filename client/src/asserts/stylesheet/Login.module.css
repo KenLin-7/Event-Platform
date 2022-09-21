@@ -81,7 +81,7 @@ label{
 }
 
 /* Register link */
-.button-area span span{
+.register-link span{
     color: #2A27C9;
     margin-left: 2px;
     text-decoration: underline;
@@ -89,7 +89,7 @@ label{
 }
 
 /* Responsive layout */
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 1700px) {
     .container #right{
         display: none;
     }
@@ -99,12 +99,12 @@ label{
         align-items: center;
         justify-content: space-around;
     }
-    .container mid{
-        width: 70%;
+    .container #mid{
+        width: 80%;
     }
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1400px) {
     .container #right{
         display: none;
     }
@@ -117,8 +117,8 @@ label{
         align-items: center;
         justify-content: space-around;
     }
-    .container mid{
-        width: 70%;
+    .container #mid{
+        width: 100%;
     }
 }
 
@@ -135,13 +135,16 @@ label{
         align-items: center;
         justify-content: space-around;
     }
-    .container mid{
+    .container #mid{
         width: 100%;
     }
-    /* Header Sign in desctiption */
-    .form p:first-child{
+}
+
+@media screen and (max-width: 800px) {
+     /* Header Sign in desctiption */
+     .form p:first-child{
         font-family: 'Sora', sans-serif;
-        font-size: 28px;
+        font-size: 35px;
         margin-top: 30px;
     }
     /* Form header Event Plaza color */

@@ -8,6 +8,8 @@ import {signIn} from '../api/UserAPI'
 export default function Login() {
   const [account,setAccount] = useState({email:"",password:""})
   const [isValidated,setIsValidated] = useState({email:true,password:true})
+  const [emailError,setEmailError] = useState("Please enter your email")
+  const [passwordError,setPasswordError] = useState("Please enter your password")
 
   const onChange = (e)=>{
     setAccount({ ...account,[e.target.name]:e.target.value})
@@ -18,7 +20,7 @@ export default function Login() {
   const onClick = ()=>{
     const result = validation()
     if(result.email & result.password){
-      signIn(account.email,account.email)
+      signIn(account.email,account.password)
     }
   }
 
@@ -29,8 +31,15 @@ export default function Login() {
     }
     const result = formValidate(validate)
     setIsValidated(result)  
+
+    // setting helper text
+    if(account.email !== "")     setEmailError("Please enter correct email") 
+    if(account.password !== "")  setPasswordError("Please enter correct password format") 
+
     return result
   }
+
+
 
 
   return (
@@ -53,7 +62,7 @@ export default function Login() {
                       {
                         !isValidated.email ? (
                           <div className={FormStyles['helper-text']}>
-                          <span>Helper Text</span>
+                          <span>{emailError}</span>
                         </div>
                         ):(
                             <></>
@@ -68,7 +77,7 @@ export default function Login() {
                       {
                         !isValidated.password ? (
                           <div className={FormStyles['helper-text']}>
-                          <span>Helper Text</span>
+                          <span>{passwordError}</span>
                         </div>
                         ):(
                             <></>
@@ -79,7 +88,7 @@ export default function Login() {
 
                     <div className={FormStyles['button-area']}>
                       <button className={FormStyles.formButton} onClick={onClick}>Sign In</button>
-                      <span>Don't have an account?<span>Register</span></span>
+                      <span className={styles['register-link']}>Don't have an account?<span>Register</span></span>
                     </div>
                   </div>
               </div>
