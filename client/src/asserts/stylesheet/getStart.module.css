@@ -34,7 +34,7 @@
 }
 
 .get-start-text-2 {
-  width: 590px;
+  width: 500px;
   font-weight: 600;
   line-height: 100%;
   font-size: 64px;
@@ -55,9 +55,10 @@
 
 .get-start-img {
   flex: 1;
+  margin-left: -350px;
   background-image: url("../images/get-start.png");
-  width: 1392px;
   height: 616px;
+  background-repeat: no-repeat;
 }
 
 

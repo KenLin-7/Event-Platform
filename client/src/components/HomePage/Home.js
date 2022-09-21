@@ -3,6 +3,7 @@ import Search from './Search'
 import '../../asserts/stylesheet/home.css'
 import LatestEvent from './LatestEvent'
 import GetStart from './GetStart'
+import Popular from './Popular'
 
 
 const Home = () => {
@@ -11,6 +12,7 @@ const Home = () => {
       <Search />
       <LatestEvent />
       <GetStart />
+      <Popular />
     </div>
   )
 }
