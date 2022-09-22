@@ -26,6 +26,8 @@
 
 }
 
+
+
 .event-card-img {
   height: 380px;
   width: 268gpx;
@@ -42,9 +44,13 @@
 .event-card-title {
   font-size: 13px;
   width: 100vw;
-  height: 50px;
+  height: 42px;
   text-align: left;
   padding: 5px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
   cursor: pointer;
 }
 
@@ -52,7 +58,7 @@
   position: absolute;
   width: 50px;
   height: 30px;
-  margin-left: 70%;
+  margin-left: 75%;
   line-height: 32px;
   margin-right: 26px;
   margin-top: 70px;
@@ -74,8 +80,9 @@
 }
 
 .event-card-participants {
+  margin-left: 12px;
   width: 279px;
-  height: 42px;
+  height: 50px;
   display: flex;
 }
 
@@ -95,8 +102,7 @@
   width: 55px;
   height: 36px;
   margin-left: auto;
-  margin-right: 0;
-  margin-right: 26px;
+  margin-right: 20px;
   margin-top: 5px;
   cursor: pointer;
 }
