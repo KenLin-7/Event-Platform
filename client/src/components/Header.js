@@ -7,6 +7,7 @@ import { Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import styles from '../asserts/stylesheet/Header.module.css'
 import { useUser } from '../context/UserContext';
+import logo from '../asserts/images/logo3.png'
 
 const items = [
   { id: 1, text: 'Latest event' },
@@ -28,7 +29,7 @@ const Header = () => {
 
         <Box className={styles["left"]}>
           <Stack direction="row" spacing={2}>
-            <AdbIcon />
+            <img src={logo}/>
             <Typography className={styles["header-logo-font"]}>
               Event Plaza
             </Typography>
