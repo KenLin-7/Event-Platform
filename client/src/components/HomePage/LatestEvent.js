@@ -35,6 +35,8 @@ const LatestEvent = () => {
                 <Box sx={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
                   <div className={styles["event-card-title"]}>
                     Vulputate felis purus viverra morbi facilisi eget
+                    Vulputate felis purus viverra morbi facilisi eget
+                    Vulputate felis purus viverra morbi facilisi eget
                   </div>
 
                   <div className={styles["event-card-people-num"]}>

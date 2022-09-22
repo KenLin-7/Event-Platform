@@ -10,7 +10,7 @@ const Search = () => {
     <section className={styles['search-section']}>
         <Paper
           component="form"
-          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 700, boxShadow: 12 }}
+          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', boxShadow: 12 }}
           className={styles['search-input']}
         >
 
