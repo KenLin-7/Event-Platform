@@ -21,15 +21,18 @@ import java.util.Set;
     @Column(name = "user_id")
     private int userId;
 
+    @NotNull
     private String nickname;
 
     @NotNull
     private String email;
 
+    @NotNull
     private String password;
 
     private String gender;
 
+    @NotNull
     private int phone;
 
     private Date dob;
