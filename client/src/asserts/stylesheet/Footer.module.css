@@ -1,7 +1,7 @@
 .footer {
   height: 350px;
   width: 1650px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Raleway', sans-serif !important;
   font-size: small;
   border-radius: 20px;
   margin: 0 auto;
@@ -70,7 +70,6 @@
   width: 144px;
   height: 52px;
   background: linear-gradient(104.42deg, #4745D0 0%, #2A27C9 60.23%);
-  box-shadow: inset -4px -4px 4px rgba(0, 0, 0, 0.1), inset 4px 4px 4px rgba(255, 255, 255, 0.1);
   border: none;
   border-radius: 12px;
   color: white;
@@ -80,4 +79,16 @@
 .footer-section-3 {
   flex: 1;
   padding: 40px;
+  margin-top: -12px;
+  color: #7780A1;
+}
+
+.footer-3-2{
+  width: 144px;
+  height: 52px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  color: #4745D0;
+  margin: 102px 0 0 320px;
 }

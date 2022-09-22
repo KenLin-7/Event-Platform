@@ -17,11 +17,11 @@ const items = [
 const Header = () => {
   return (
     <div className={styles["header-container"]}>
-      <Container maxWidth="xl" sx={{ display: "flex", padding: 3 }}>
+      <Container sx={{ display: "flex", padding: 3 }} className={styles["header-container-inner"]}>
 
         <Box className={styles["left"]}>
           <Stack direction="row" spacing={2}>
-            <AdbIcon />
+            <AdbIcon sx={{marginTop: 0.8}}/>
             <Typography className={styles["header-logo-font"]}>
               Event Plaza
             </Typography>
@@ -33,7 +33,7 @@ const Header = () => {
             items.map(item => {
               return (
                 <Button key={item.id} className={styles["header-mid-btn"]}>
-                  <Typography className="header-font" sx={{ color: 'black', fontSize: 'small' }}>
+                  <Typography className="header-font" sx={{ color: '#7780A1', fontSize: 'small' }}>
                     {item.text}
                   </Typography>
                 </Button>

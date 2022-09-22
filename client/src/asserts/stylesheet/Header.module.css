@@ -3,6 +3,10 @@
   width: 100%;
 }
 
+.header-container-inner{
+  max-width: 90vw !important;
+}
+
 .left {
   flex: 1;
 }
@@ -29,6 +33,7 @@
 }
 
 .header-logo-font {
+  font-size:25px;
   font-family: 'Raleway', sans-serif !important;
 }
 
