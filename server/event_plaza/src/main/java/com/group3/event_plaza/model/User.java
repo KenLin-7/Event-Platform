@@ -2,6 +2,7 @@ package com.group3.event_plaza.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -22,6 +23,7 @@ import java.util.Set;
 
     private String nickname;
 
+    @NotNull
     private String email;
 
     private String password;

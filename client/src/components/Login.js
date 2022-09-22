@@ -5,12 +5,21 @@ import bg1 from '../asserts/images/login-bg-1.png'
 import bg2 from '../asserts/images/login-bg-2.png'
 import formValidate from '../utils/validation'
 import {signIn} from '../api/UserAPI'
+import { Link,Navigate } from 'react-router-dom'
+import { Alert } from '@mui/material'
+import {useUser} from '../context/UserContext'
+import { useEffect } from 'react'
+
+
 export default function Login() {
   const [account,setAccount] = useState({email:"",password:""})
   const [isValidated,setIsValidated] = useState({email:true,password:true})
   const [emailError,setEmailError] = useState("Please enter your email")
   const [passwordError,setPasswordError] = useState("Please enter your password")
+  const [errorMsg,setErrorMsg] = useState("")
+  const {getAuth,auth} = useUser();
 
+  // handle input change 
   const onChange = (e)=>{
     setAccount({ ...account,[e.target.name]:e.target.value})
     if(!isValidated.email || !isValidated.password) validation()
@@ -19,11 +28,16 @@ export default function Login() {
   // Log in user
   const onClick = ()=>{
     const result = validation()
-    if(result.email & result.password){
-      signIn(account.email,account.password)
+    if(result.email && result.password){
+       signIn(account.email,account.password).then((data)=>{
+          if(data.code === "401") setErrorMsg(data.msg)
+          // set logged in user
+          else getAuth()
+       })
     }
   }
 
+  // validation form
   const validation = ()=>{
     const validate = {
       email: account.email,
@@ -39,12 +53,16 @@ export default function Login() {
     return result
   }
 
+  // useEffect(()=>{
 
+  //   console.log(auth);
+  // },[auth])
 
 
   return (
     <>
     <div className={styles.container}>
+
           <div id={styles.left}>
               <img src={bg1} alt="bg1"/>
           </div>
@@ -54,11 +72,13 @@ export default function Login() {
                     <p>Sign in to <span>Event Plaza</span></p>
                     <p>Welcome Black! <span>Log in with your account and</span></p>
                     <p>find your favourite event</p>
+                    
                   </div>
                   <div id="body">
+
                   <div className={FormStyles.field}>
                       <label>Email</label>
-                      <input className={FormStyles.formInput} type={"email"} placeholder="name@email.com" id="email" onChange={onChange} name="email"/>
+                      <input className={!isValidated.email? (FormStyles['formInput-error']):(FormStyles.formInput)} type={"email"} placeholder="name@email.com" id="email" onChange={onChange} name="email"/>
                       {
                         !isValidated.email ? (
                           <div className={FormStyles['helper-text']}>
@@ -68,12 +88,11 @@ export default function Login() {
                             <></>
                         )
                       }
-    
                     </div>
 
                     <div className={FormStyles.field}>
                       <label>Password</label>
-                      <input className={FormStyles.formInput}  type={"password"} placeholder="password" id="password" onChange={onChange} name="password"/>
+                      <input className={!isValidated.password? (FormStyles['formInput-error']):(FormStyles.formInput)}  type={"password"} placeholder="password" id="password" onChange={onChange} name="password"/>
                       {
                         !isValidated.password ? (
                           <div className={FormStyles['helper-text']}>
@@ -84,12 +103,20 @@ export default function Login() {
                         )
                       }
                     </div>
-                    <span id={styles['forgot-password']}>Forgot your password?</span>
+                    <div>
+                      <span id={styles['forgot-password']}>Forgot your password?</span>
+                    </div>
 
                     <div className={FormStyles['button-area']}>
+                      {errorMsg && <Alert severity={"error"} sx={{marginBottom:"15px",width:"90%"}}>{errorMsg}</Alert>}
                       <button className={FormStyles.formButton} onClick={onClick}>Sign In</button>
-                      <span className={styles['register-link']}>Don't have an account?<span>Register</span></span>
+                      <span className={styles['register-link']}>Don't have an account?
+                        <Link to="/register"><span className={FormStyles.link}>Register</span></Link>
+                      </span>
                     </div>
+                    {
+                      auth && <Navigate to="/" replace={true}/>
+                    }
                   </div>
               </div>
           </div>

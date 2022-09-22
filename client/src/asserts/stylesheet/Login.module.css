@@ -12,10 +12,9 @@
 .container #mid{
     display: flex;
     width: 50%;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-
 }
 
 .form{
@@ -74,6 +73,17 @@ label{
     cursor: pointer;
     margin-right: 5px;
 }
+#forgot-password:hover{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    text-decoration: underline;
+    float: right;
+    margin-bottom: 15px;
+    cursor: pointer;
+    margin-right: 5px;
+    color: #FB4539;
+}
 .field{
     display: flex;
     flex-direction: column;
@@ -84,8 +94,7 @@ label{
 .register-link span{
     color: #2A27C9;
     margin-left: 2px;
-    text-decoration: underline;
-    cursor: pointer;
+
 }
 
 /* Responsive layout */
@@ -118,7 +127,7 @@ label{
         justify-content: space-around;
     }
     .container #mid{
-        width: 100%;
+        width: 80%;
     }
 }
 

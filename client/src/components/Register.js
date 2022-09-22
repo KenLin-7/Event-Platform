@@ -4,6 +4,7 @@ import FormStyles from '../asserts/stylesheet/Form.module.css'
 import formValidate from '../utils/validation'
 import bg from '../asserts/images/register-bg.png'
 import { signUp } from '../api/UserAPI'
+import { Link } from 'react-router-dom'
 export default function Register() {
 
     const [account,setAccount] = useState({
@@ -43,10 +44,10 @@ export default function Register() {
     }
 
     const onClick = ()=>{
-        
+        signUp(account)
+
         const result = validation()
         if(result.email & result.password &result.nickname & result.phone){
-            signUp(account)
         }
     }
 
@@ -78,7 +79,7 @@ export default function Register() {
                     </div>
                     <div id={styles["third"]}>
                         <span>Already have an account?</span>
-                        <span>Log in</span>
+                        <Link to={"/login"}><span className={FormStyles.link}>Log in</span></Link>
                     </div>
                 </div>
                 <div id={styles["body"]}>

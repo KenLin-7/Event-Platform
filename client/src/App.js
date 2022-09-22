@@ -1,17 +1,22 @@
 import './App.css';
 import { UserProvider } from './context/UserContext';
-import Register from './components/Register';
-import Login from './components/Login';
 import Home from './components/HomePage/Home'
 import Header from './components/Header';
-
+import { Routes,Route,Link } from 'react-router-dom';
+import Login from './components/Login';
+import Register from './components/Register'
+import NoHeaderRoute from './route/NoHeaderRoute';
 
 function App() {
   return (
     <UserProvider>
-       <Header/>
-      {/* <Home/>  */}
-      <Register/>
+      <Routes>
+        <Route element={<NoHeaderRoute path={["/register"]}/>}>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/register' element={<Register/>}/>
+        </Route>
+      </Routes>
     </UserProvider>
   )
 

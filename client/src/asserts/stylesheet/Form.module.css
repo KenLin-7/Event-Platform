@@ -24,24 +24,33 @@
     padding-top: 4px;
 }
 
-.formInput{
-    padding:20px;
-    border-radius: 12px;
-    border: 2px solid #7780A1;
-}
-
-input::placeholder{
-    font-size: 16px;
-}
-
+/* Input feild */
 .field{
     display: flex;
     flex-direction: column;
     margin-bottom: 25px;
 }
 
+.formInput{
+    padding:20px;
+    border-radius: 12px;
+    border: 2px solid #7780A1;
+}
 
-/*  Sign in button */
+.formInput-error{
+    padding:20px;
+    border-radius: 12px;
+    border: 2px solid #FB4539;
+}
+
+input::placeholder{
+    font-size: 16px;
+}
+
+
+
+
+/*  Form button */
 .formButton {
     width: 100%;
     border-radius: 12px;
@@ -54,7 +63,7 @@ input::placeholder{
     margin-bottom: 15px;
     cursor: pointer;
 }
-/* Sign in button hover */
+/* Form button hover */
 .formButton:hover {
     width: 100%;
     border-radius: 12px;
@@ -66,7 +75,6 @@ input::placeholder{
     color: white;
     margin-bottom: 15px;
     cursor: pointer;
-
 }
 
 /* Button  Area */
@@ -75,4 +83,16 @@ input::placeholder{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.link{
+    color: #1814F6;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.link:hover{
+    color: #FB4539;
+    text-decoration: underline;
+    cursor: pointer;
 }

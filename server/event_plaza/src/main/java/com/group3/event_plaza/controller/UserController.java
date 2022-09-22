@@ -23,7 +23,6 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseResult<String> register(@RequestBody User user){
-        System.out.println(user);
         userService.register(user);
         return ResponseResult.success();
     }

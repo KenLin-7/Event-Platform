@@ -88,7 +88,7 @@ public class SecurityConfig {
 
         // validate login status
         http.addFilter(new CustomAuthenticationFilter(authenticationManager,jwtUtil));
-        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

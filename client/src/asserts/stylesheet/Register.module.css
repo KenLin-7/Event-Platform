@@ -128,12 +128,9 @@
     font-size: 18px;
     color: #B0B2B9;
 }
-/* Log in */
+/* Log in link */
 #header #third span:nth-child(2){
     margin-left: 10px;
-    color: #1814F6;
-    text-decoration: underline;
-    cursor: pointer;
 }
 .form #body{
     display: flex;

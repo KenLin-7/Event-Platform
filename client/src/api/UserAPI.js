@@ -21,9 +21,7 @@ export const getInfo  = async (email)=>{
 }
 
 export const getUser = async ()=>{
-    const result = await axios.post(API+"/current").then(()=>{
-        console.log("user getted");
-    })
+    const result = await axios.post(API+"/current")
     return result 
 }
 
