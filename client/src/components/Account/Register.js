@@ -1,9 +1,9 @@
 import React,{useState} from 'react'
-import styles from '../asserts/stylesheet/Register.module.css'
-import FormStyles from '../asserts/stylesheet/Form.module.css'
-import formValidate from '../utils/validation'
-import bg from '../asserts/images/register-bg.png'
-import { signUp } from '../api/UserAPI'
+import styles from '../../asserts/stylesheet/Register.module.css'
+import FormStyles from '../../asserts/stylesheet/Form.module.css'
+import formValidate from '../../utils/validation'
+import bg from '../../asserts/images/register-bg.png'
+import { signUp } from '../../api/UserAPI'
 import { Link } from 'react-router-dom'
 export default function Register() {
 
