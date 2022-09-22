@@ -17,10 +17,13 @@
 .event-containter{
   display: flex;
   margin-top: 140px;
+
 }
 
 .event-containter > * {
   margin-right: 40px;
+  cursor: pointer;
+
 }
 
 .event-card-img {
@@ -42,6 +45,7 @@
   height: 50px;
   text-align: left;
   padding: 5px;
+  cursor: pointer;
 }
 
 .event-card-people-num {
@@ -54,6 +58,7 @@
   margin-top: 70px;
   border-radius: 10px;
   background: rgba(42, 39, 201, 0.1);
+  cursor: pointer;
 }
 
 .event-card-date {
@@ -61,6 +66,7 @@
   margin: 24px 0 24px 0;
   font-family: 'Inter';
   font-style: normal;
+  cursor: pointer;
 }
 
 .event-card-date> :first-child {
@@ -92,4 +98,5 @@
   margin-right: 0;
   margin-right: 26px;
   margin-top: 5px;
+  cursor: pointer;
 }

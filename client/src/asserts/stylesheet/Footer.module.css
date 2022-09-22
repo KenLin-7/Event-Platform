@@ -39,14 +39,19 @@
 
 .footer-info-1 {
   flex: 1;
+  cursor: pointer;
+
 }
 
 .footer-info-2 {
   flex: 1;
+  cursor: pointer;
+
 }
 
 .footer-info-3 {
   flex: 1;
+  cursor: pointer;
 }
 
 /* section 2 ------------------------------------------- */
@@ -64,6 +69,10 @@
   font-size: 18px;
   line-height: 30px;
   font-weight: 600;
+}
+
+.footer-2-list > * {
+  cursor: pointer;
 }
 
 .get-start-btns {
