@@ -48,6 +48,9 @@ import java.util.Set;
     private List<Role> role = new ArrayList<>();
 
 
+    @OneToMany(mappedBy = "requester")
+    private List<Registration> registrations;
+
 
 
     public User() {
@@ -141,7 +144,13 @@ import java.util.Set;
         this.avatar = avatar;
     }
 
+    public List<Registration> getRegistrations() {
+        return registrations;
+    }
 
+    public void setRegistrations(List<Registration> registrations) {
+        this.registrations = registrations;
+    }
 
     @Override
     public String toString() {

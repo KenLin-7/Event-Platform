@@ -28,3 +28,7 @@ export const getUser = async ()=>{
 export const logout = async()=>{
     localStorage.removeItem("token")
 }
+
+export const remove = async()=>{
+    await axios.get(API+"/remove/role")
+}

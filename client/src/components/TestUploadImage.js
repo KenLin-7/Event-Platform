@@ -3,6 +3,7 @@ import useUpload from '../hook/useUpload'
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import formValidate from '../utils/validation';
+import {remove} from '../api/UserAPI'
 export default function TestUploadImage() {
 
     const {imageURL,uploadImage,progress,buffer} = useUpload()
@@ -11,6 +12,7 @@ export default function TestUploadImage() {
 
     const onClick = ()=>{
         // uploadImage(image,"avatar")
+        remove()
     }
 
     const onChange = (e)=>{
