@@ -2,7 +2,7 @@
   position: relative;
   height: 800px;
   width: 100vw;
-  background-image: url("../images/home.png");
+  background-image: url("../../images/home.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -14,7 +14,7 @@
   top: 70%;
   left: 50%;
   margin-top: -100px;
-  margin-left: -200px;
+  margin-left: -350px;
   border-radius: 20px;
   text-align: center;
   line-height: 50px;
