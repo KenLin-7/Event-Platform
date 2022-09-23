@@ -6,13 +6,14 @@ import Login from './components/Account/Login';
 import Register from './components/Account/Register'
 import NoHeaderRoute from './route/NoHeaderRoute';
 import TestUploadImage from './components/TestUploadImage';
+import FilterPage from './components/FilterPage/FilterPage'
 
 function App() {
   return (
     <UserProvider>
       <Routes>
         <Route element={<NoHeaderRoute path={["/register"]}/>}>
-          <Route path='/' element={<Home/>}/>
+          <Route path='/' element={<FilterPage/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/test' element={<TestUploadImage/>}/>

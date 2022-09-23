@@ -1,0 +1,32 @@
+.filter-container {
+  height: 90vh;
+  width: 100vw;
+  display: flex;
+  font-family: 'Sora';
+}
+
+.filter-left-bar {
+  flex: 1;
+  background-color: antiquewhite;
+}
+
+.filter-title {
+  width: 113px;
+  height: 48px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+}
+
+.filter-content {
+  flex: 4;
+  background-color: aqua;
+}
+
+.filter-list {
+  line-height: 100px;
+}
+
+.filter-category {
+  font-weight: 700;
+}
