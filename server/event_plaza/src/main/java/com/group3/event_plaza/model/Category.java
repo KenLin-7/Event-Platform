@@ -1,9 +1,7 @@
 package com.group3.event_plaza.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -13,4 +11,7 @@ public class Category {
     private int categoryId;
 
     private String categoryName;
+
+    @OneToMany
+    private List<Event> eventList;
 }

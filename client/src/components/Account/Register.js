@@ -88,12 +88,10 @@ export default function Register() {
                             <input className={`${FormStyles.formInput} ${FormStyles.user_ic}`} 
                              placeholder='nickname' name='nickname' onChange={onChange}/>
                             {
-                               !isValidated.nickname ?(                         
+                               !isValidated.nickname &&                        
                                <div className={FormStyles['helper-text']}>
-                               <span>Please enter a nickname</span>
-                               </div>):(
-                                <></>
-                               )
+                                <span>Please enter a nickname</span>
+                               </div>
                             }
    
                         </div>
@@ -101,12 +99,10 @@ export default function Register() {
                             <input className={`${FormStyles.formInput} ${FormStyles.phone_ic}`} 
                             placeholder='phone number' name='phone' onChange={onChange}/>
                             {
-                               !isValidated.phone ?(                         
+                               !isValidated.phone &&                        
                                <div className={FormStyles['helper-text']}>
                                <span>{phoneError}</span>
-                               </div>):(
-                                <></>
-                               )
+                               </div>
                             }
                         </div>
          
@@ -117,24 +113,20 @@ export default function Register() {
                             <input className={`${FormStyles.formInput} ${FormStyles.email_ic}`} 
                             placeholder='name@email.com' type="email" name='email' onChange={onChange}/>
                             {
-                               !isValidated.email ?(                         
+                               !isValidated.email &&                        
                                <div className={FormStyles['helper-text']}>
                                <span>{emailError}</span>
-                               </div>):(
-                                <></>
-                               )
+                               </div>
                             }
                         </div>
                         <div className={FormStyles.field}>
                             <input className={`${FormStyles.formInput} ${FormStyles.password_ic}`} 
                             placeholder='password' type="password" name='password' onChange={onChange}/>
                             {
-                               !isValidated.password ?(                         
+                               !isValidated.password &&                        
                                <div className={FormStyles['helper-text']}>
                                <span>{passwordError}</span>
-                               </div>):(
-                                <></>
-                               )
+                               </div>
                             }
                         </div>
                     </div>

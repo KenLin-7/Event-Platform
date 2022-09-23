@@ -3,17 +3,23 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
     # database connection credential
-    url:  jdbc:mysql://sql3.freesqldatabase.com:3306/sql3521049
-    username: sql3521049
-    password: yig48bFyWG
+    url: jdbc:mysql://eventweb.mysql.database.azure.com:3306/web?useSSL=true
+    username: event_plaza_619
+    password: u7nB49cULC@gU
+
 
     # config jpa
     jpa:
       properties:
         hibernate:
           dialect: org.hibernate.dialect.MySQLDialect
-          ddl-auto: create-drop
+
+logging:
+  level:
+    org.hibernate.sql: DEBUG
 app:
   jwt:
     secret: abcdefghijkk
     header: Authorization
+
+

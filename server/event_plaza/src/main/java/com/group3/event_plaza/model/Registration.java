@@ -18,6 +18,5 @@ public class Registration {
     @JoinColumn(name ="event_id")
     private Event event;
 
-
     private String status;
 }

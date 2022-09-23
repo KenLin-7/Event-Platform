@@ -43,19 +43,12 @@ export default function Login() {
     }
     const result = formValidate(validate)
     setIsValidated(result)  
-
     // setting helper text
     if(account.email !== "")     setEmailError("Please enter correct email") 
     if(account.password !== "")  setPasswordError("Please enter correct password format") 
 
     return result
   }
-
-  // useEffect(()=>{
-
-  //   console.log(auth);
-  // },[auth])
-
 
   return (
     <>
@@ -78,13 +71,10 @@ export default function Login() {
                       <label>Email</label>
                       <input className={!isValidated.email? (FormStyles['formInput-error']):(FormStyles.formInput)} type={"email"} placeholder="name@email.com" id="email" onChange={onChange} name="email"/>
                       {
-                        !isValidated.email ? (
+                        !isValidated.email &&
                           <div className={FormStyles['helper-text']}>
                           <span>{emailError}</span>
                         </div>
-                        ):(
-                            <></>
-                        )
                       }
                     </div>
 
@@ -92,13 +82,10 @@ export default function Login() {
                       <label>Password</label>
                       <input className={!isValidated.password? (FormStyles['formInput-error']):(FormStyles.formInput)}  type={"password"} placeholder="password" id="password" onChange={onChange} name="password"/>
                       {
-                        !isValidated.password ? (
-                          <div className={FormStyles['helper-text']}>
+                        !isValidated.password &&
+                        <div className={FormStyles['helper-text']}>
                           <span>{passwordError}</span>
                         </div>
-                        ):(
-                            <></>
-                        )
                       }
                     </div>
                     <div>

@@ -47,9 +47,11 @@ import java.util.Set;
     )
     private List<Role> role = new ArrayList<>();
 
-
     @OneToMany(mappedBy = "requester")
     private List<Registration> registrations;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Notification> notifications;
 
 
 

@@ -6,7 +6,15 @@ export default function formValidate (data) {
     const password_regex = ""
     const allowImageSize = 500000
 
+// {
+//     "nickname": "sdasdasd",
+//     "phone":12213123
+// }
 
+// {
+//     "nickanme":false,
+//     "phone":true
+// }
     keys.forEach(key => {
         const value = data[key]
         if(value !== "" || value === null){
@@ -15,6 +23,8 @@ export default function formValidate (data) {
                 case "email":
                     data[key] = email_regex.test(value)
                     break
+                case "phone":
+                    data[key] = phone_regex.test(value)
                 default: 
                     data[key] = true
             }
@@ -22,10 +32,6 @@ export default function formValidate (data) {
             data[key] = false
         }
     });
-    
-
-
-
     
     return data
 }
