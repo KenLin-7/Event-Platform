@@ -30,6 +30,7 @@ function useUpload(){
         },()=>{
             // Upload completed successfully, return download url 
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
+                console.log(downloadURL);
                 setImageURL(downloadURL)
             })
         })

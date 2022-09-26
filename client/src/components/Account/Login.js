@@ -28,9 +28,9 @@ export default function Login() {
     const result = validation()
     if(result.email && result.password){
        signIn(account.email,account.password).then((data)=>{
-          if(data.code === "401") setErrorMsg(data.msg)
+          if(data.code === "200") getAuth() 
           // set logged in user
-          else getAuth()
+          else setErrorMsg(data.msg)
        })
     }
   }
@@ -46,8 +46,13 @@ export default function Login() {
     // setting helper text
     if(account.email !== "")     setEmailError("Please enter correct email") 
     if(account.password !== "")  setPasswordError("Please enter correct password format") 
-
     return result
+  }
+
+  const shakeAnimation = (shake)=>{
+    if(shake){
+      
+    }
   }
 
   return (

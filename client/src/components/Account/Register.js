@@ -85,7 +85,8 @@ export default function Register() {
                 <div id={styles["body"]}>
                     <div>
                         <div className={`${FormStyles.field} ${styles.nickname}`}>
-                            <input className={`${FormStyles.formInput} ${FormStyles.user_ic}`} 
+                            <input className={!isValidated.nickname? 
+                                (`${FormStyles['formInput-error']} ${FormStyles.user_ic}`):(`${FormStyles.formInput} ${FormStyles.user_ic}`)}  
                              placeholder='nickname' name='nickname' onChange={onChange}/>
                             {
                                !isValidated.nickname &&                        
@@ -96,7 +97,8 @@ export default function Register() {
    
                         </div>
                         <div className={`${FormStyles.field} ${styles.phone}`}>
-                            <input className={`${FormStyles.formInput} ${FormStyles.phone_ic}`} 
+                            <input className={!isValidated.phone? 
+                                (`${FormStyles['formInput-error']} ${FormStyles.phone_ic}`):(`${FormStyles.formInput} ${FormStyles.phone_ic}`)} 
                             placeholder='phone number' name='phone' onChange={onChange}/>
                             {
                                !isValidated.phone &&                        
@@ -110,7 +112,8 @@ export default function Register() {
 
                     <div>
                         <div className={FormStyles.field}>
-                            <input className={`${FormStyles.formInput} ${FormStyles.email_ic}`} 
+                            <input className={!isValidated.email? 
+                                (`${FormStyles['formInput-error']} ${FormStyles.email_ic}`):(`${FormStyles.formInput} ${FormStyles.email_ic}`)} 
                             placeholder='name@email.com' type="email" name='email' onChange={onChange}/>
                             {
                                !isValidated.email &&                        
@@ -120,7 +123,8 @@ export default function Register() {
                             }
                         </div>
                         <div className={FormStyles.field}>
-                            <input className={`${FormStyles.formInput} ${FormStyles.password_ic}`} 
+                            <input className={!isValidated.password? 
+                                (`${FormStyles['formInput-error']} ${FormStyles.password_ic}`):(`${FormStyles.formInput} ${FormStyles.password_ic}`)} 
                             placeholder='password' type="password" name='password' onChange={onChange}/>
                             {
                                !isValidated.password &&                        

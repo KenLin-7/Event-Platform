@@ -34,13 +34,26 @@
       display: none;
     }
     .container #right{
-        width: 100%;
+        width: 70%;
         display: flex;
         justify-content: center;
         align-items: center;
     }
     
   }
+
+  @media screen and (max-width: 1000px) {
+
+    #body div:first-child{
+        display: flex;
+        flex-direction: column;
+    }
+    .phone{
+        width: 100% !important; 
+        margin-left: 0 !important;
+    }
+    
+}
 
   @media screen and (max-width: 500px) {
     .container{
@@ -58,27 +71,31 @@
         justify-content: center;
         align-items: center;
     }
+    #body div:first-child{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
 
-/* Common Form CSS */
-.phone_ic{
-    background: url(../images/icon/Icon_call.png) no-repeat right center;
-    background-size: 22px;
-}
-.email_ic{
-    background: url(../images/icon/Icon_mail.svg) no-repeat right center;
-    background-size: 22px;
+    .phone_ic{
+        background: url(../images/icon/Icon_call.png) no-repeat right center;
+        background-size: 22px;
+    }
+    .email_ic{
+        background: url(../images/icon/Icon_mail.svg) no-repeat right center;
+        background-size: 22px;
 
-}
-.user_ic{
-    background: url(../images/icon/Icon_user.svg) no-repeat right center;
-    background-size: 22px;
-}
-.password_ic{
-    background: url(../images/icon/Icon_closed.svg) no-repeat right center;
-    background-size: 22px;
-}
+    }
+    .user_ic{
+        background: url(../images/icon/Icon_user.svg) no-repeat right center;
+        background-size: 22px;
+    }
+    .password_ic{
+        background: url(../images/icon/Icon_closed.svg) no-repeat right center;
+        background-size: 22px;
+    }
     
-  }
+}
 
 .container #left div{
     display: flex;
@@ -148,20 +165,21 @@
 
 /* Nickname field */
 .nickname{
-    width: 50%;
-    margin-right: 10px;
+    /* margin-right: 5px;
+    width: 40%; */
 }
 /* Phone field */
 .phone{
     width: 70%;
+    margin-left: 10px;
 }
 
 
-#body div:nth-child(2){
+/* #body div:nth-child(2){
     display: flex;
     width: 100%;
     flex-direction: column;
-}
+} */
 
 
 /* Term and Policy */

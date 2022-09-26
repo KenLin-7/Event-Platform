@@ -89,6 +89,7 @@ input::placeholder{
     color: #1814F6;
     text-decoration: underline;
     cursor: pointer;
+    margin-left: 10px;
 }
 
 .link:hover{

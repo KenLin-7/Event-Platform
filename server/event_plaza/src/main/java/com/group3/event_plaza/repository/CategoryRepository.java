@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface CategoryRepository extends JpaRepository<Category,Integer> {
 
     Category findByCategoryId(int id);
+
+
 }
