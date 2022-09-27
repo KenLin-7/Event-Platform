@@ -1,5 +1,6 @@
 package com.group3.event_plaza.controller;
 
+import com.group3.event_plaza.common.ResponseResult;
 import com.group3.event_plaza.model.User;
 import com.group3.event_plaza.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class TestController {
 
 
     @GetMapping("/info")
-    public User getUserInfo(String email){
-        return  userService.getUserInfo(email);
+    public ResponseResult<User> getUserInfo(String email){
+        return ResponseResult.success(userService.getUserInfo("126@qq.com"));
     }
 
 }

@@ -1,5 +1,5 @@
 import React,{useContext,useEffect,useState} from 'react'
-import { getUser } from '../api/UserAPI'
+import { getUser, logout } from '../api/UserAPI'
 
 
 const UserContext = React.createContext()
@@ -11,19 +11,31 @@ export  function useUser(){
 }
 
 export function UserProvider({children}){
-    const [user,setUser] = useState(null)
-    
+    const [auth,setAuth] = useState(null)
 
+    // get logged in user email
+    const getAuth = async()=>{
+        await getUser().then(res=>{
+            setAuth(res.data)
+        })
+    }
+
+
+    // logout user 
+    const signOut = ()=>{
+        setAuth(null)
+        logout()
+    }
     useEffect(()=>{
-        
-        const getCurrentUser = async ()=>{
-            setUser(await getUser())
-        }
-       if(localStorage.getItem("token") !=null) getCurrentUser()
+       if(localStorage.getItem("token") !=null) getAuth()
     },[])
 
+
+
     const value = {
-        user
+        auth,
+        getAuth,
+        signOut
     }
 
     return(

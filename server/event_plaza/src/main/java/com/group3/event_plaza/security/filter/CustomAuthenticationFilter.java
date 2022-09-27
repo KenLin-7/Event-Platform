@@ -64,12 +64,12 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     // convert to String[] for jwt claim
      private  String[] convertAuthorities(Object[] authorities){
-        String[] roles = new String[authorities.length];
+         String[] roles = new String[authorities.length];
         for(int i = 0 ; i  < authorities.length;i++){
             roles[i] = authorities[i].toString();
         }
 
-        return roles;
+         return roles;
     }
 
 }

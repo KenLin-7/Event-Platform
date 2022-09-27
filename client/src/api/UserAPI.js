@@ -1,13 +1,16 @@
 import axios from "./axios"
 const API = '/api/user'
 
-
 export const signIn = async (email,password)=>{
     const formData = new FormData()
     formData.append("username","wasd@wasd.com")
     formData.append("password","123456")
     const result = await axios.post("/login",formData,{headers:{"content-type":"application/x-www-form-urlencoded"}})
-    
+    return result
+}
+
+export const signUp = async (user)=>{
+    const result = await axios.post(API+"/register",user)
     return result
 }
 
@@ -29,4 +32,8 @@ export const updateUser = async (name, email, phoneNumber, dob, gender)=>{
 
 export const logout = async()=>{
     localStorage.removeItem("token")
+}
+
+export const remove = async()=>{
+    await axios.get(API+"/remove/role")
 }

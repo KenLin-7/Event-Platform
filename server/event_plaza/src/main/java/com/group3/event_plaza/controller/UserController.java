@@ -6,18 +6,13 @@ import com.group3.event_plaza.model.User;
 import com.group3.event_plaza.service.Impl.UserServiceImpl;
 import com.group3.event_plaza.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-
-
 
     @Autowired
     UserService userService;
@@ -36,5 +31,13 @@ public class UserController {
         return ResponseResult.success(principal.getName());
     }
 
+<<<<<<< HEAD
+=======
+    @GetMapping("/remove/role")
+    public ResponseResult<String> removeRole(Principal principal){
+        userService.removeRole(principal.getName());
+        return ResponseResult.success();
+    }
+>>>>>>> master
 
 }

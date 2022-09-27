@@ -1,0 +1,103 @@
+.footer {
+  height: 350px;
+  width: 1650px;
+  font-family: 'Raleway', sans-serif !important;
+  font-size: small;
+  border-radius: 20px;
+  margin: 0 auto;
+  border: 1px #E2E2ED solid;
+  display: flex;
+
+}
+
+.footer-section-1 {
+  flex: 1;
+  padding: 40px;
+}
+
+.footer-icon {
+  height: 35px;
+  width: 35px;
+  background-color: gray;
+  margin-left: 60px;
+}
+
+.footer-title {
+  width: 162px;
+  height: 35px;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 32px;
+  margin-left: 15px;
+}
+
+.support-service-license {
+  display: flex;
+  margin-top: 220px;
+  text-align: center;
+}
+
+.footer-info-1 {
+  flex: 1;
+  cursor: pointer;
+
+}
+
+.footer-info-2 {
+  flex: 1;
+  cursor: pointer;
+
+}
+
+.footer-info-3 {
+  flex: 1;
+  cursor: pointer;
+}
+
+/* section 2 ------------------------------------------- */
+
+.footer-section-2 {
+  flex: 1;
+  padding: 40px;
+  border-left: 1px #E2E2ED solid;
+  border-right: 1px #E2E2ED solid;
+
+}
+
+.footer-2-list {
+  margin-top: -10px;
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 600;
+}
+
+.footer-2-list > * {
+  cursor: pointer;
+}
+
+.get-start-btns {
+  width: 144px;
+  height: 52px;
+  background: linear-gradient(104.42deg, #4745D0 0%, #2A27C9 60.23%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  margin: 120px 0 0 -5px;
+}
+
+.footer-section-3 {
+  flex: 1;
+  padding: 40px;
+  margin-top: -12px;
+  color: #7780A1;
+}
+
+.footer-3-2{
+  width: 144px;
+  height: 52px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  color: #4745D0;
+  margin: 102px 0 0 320px;
+}

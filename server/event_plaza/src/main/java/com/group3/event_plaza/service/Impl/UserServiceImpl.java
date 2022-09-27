@@ -1,6 +1,6 @@
 package com.group3.event_plaza.service.Impl;
 
-import com.group3.event_plaza.common.lang.UserRole;
+import com.group3.event_plaza.common.lang.RoleUser;
 import com.group3.event_plaza.model.Role;
 import com.group3.event_plaza.model.User;
 import com.group3.event_plaza.repository.RoleRepository;
@@ -36,11 +36,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         @Override
         public void register(User user) {
-                Role role = roleRepository.findByRoleId(UserRole.ROLE_USER.getId());
-                user.getRoles().add(role);
+                Role role = roleRepository.findByRoleId(RoleUser.ROLE_USER.getId());
+                user.getRole().add(role);
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
                 userRepository.save(user);
-
         }
 
         @Override
@@ -57,6 +56,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 }
         }
 
+
+
+        @Override
+        public void removeRole(String email){
+                Role role = roleRepository.findByRoleId(RoleUser.ROLE_USER.getId());
+                User user = userRepository.findUserByEmail(email);
+                user.getRole().remove(role);
+                userRepository.save(user);
+        }
+
         @Override
         public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
                 User currentUser = userRepository.findUserByEmail(email);
@@ -70,7 +79,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         private Collection<? extends GrantedAuthority> getAuthorities(User user){
 
                 List<GrantedAuthority> authorities = new ArrayList<>();
-                for(Role role: user.getRoles()){
+                for(Role role: user.getRole()){
                         authorities.add(new SimpleGrantedAuthority(role.getRoleName().toString()));
                 }
                 return  authorities;

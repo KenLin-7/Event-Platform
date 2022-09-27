@@ -1,9 +1,8 @@
 package com.group3.event_plaza.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.GenericGenerator;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -14,7 +13,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
  public class User {
 
     @Id
@@ -22,14 +21,18 @@ import java.util.Set;
     @Column(name = "user_id")
     private int userId;
 
+    @NotNull
     private String nickname;
 
+    @NotNull
     private String email;
 
+    @NotNull
     private String password;
 
     private String gender;
 
+    @NotNull
     private int phone;
 
     private Date dob;
@@ -37,12 +40,20 @@ import java.util.Set;
     private String avatar;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("user")
     @JoinTable(name = "user_role",
-                joinColumns = {@JoinColumn(name = "user_id")},
-                inverseJoinColumns = {@JoinColumn(name = "role_id")}
+            joinColumns = {@JoinColumn(name="user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
     )
-    @JsonIgnoreProperties(value = "user")
-    private List<Role> roles = new ArrayList<>();
+    private List<Role> role = new ArrayList<>();
+
+    @OneToMany(mappedBy = "requester")
+    private List<Registration> registrations;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Notification> notifications;
+
+
 
     public User() {
     }
@@ -119,12 +130,12 @@ import java.util.Set;
         this.dob = dob;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public List<Role> getRole() {
+        return role;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRole(List<Role> role) {
+        this.role = role;
     }
 
     public String getAvatar() {
@@ -133,6 +144,14 @@ import java.util.Set;
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public List<Registration> getRegistrations() {
+        return registrations;
+    }
+
+    public void setRegistrations(List<Registration> registrations) {
+        this.registrations = registrations;
     }
 
     @Override
@@ -146,7 +165,7 @@ import java.util.Set;
                 ", phone=" + phone +
                 ", dob=" + dob +
                 ", avatar='" + avatar + '\'' +
-                ", roles=" + roles +
+                ", roles=" + role +
                 '}';
     }
 }
