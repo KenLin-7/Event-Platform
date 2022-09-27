@@ -50,7 +50,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         @Override
         public void updateUserInfo(User user) {
-
+                User currentUser = userRepository.findUserByEmail(user.getEmail());
+                if (currentUser != null){
+                        currentUser = user;
+                        userRepository.save(currentUser);
+                }
         }
 
         @Override
