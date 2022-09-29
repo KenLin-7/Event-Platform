@@ -6,6 +6,7 @@ import Login from './components/Account/Login';
 import Register from './components/Account/Register'
 import NoHeaderRoute from './route/NoHeaderRoute';
 import TestUploadImage from './components/TestUploadImage';
+import EventPost from "./components/EventPost/EventPost";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/test' element={<TestUploadImage/>}/>
+          <Route path='/eventpost' element={<EventPost/>} />
         </Route>
       </Routes>
     </UserProvider>
