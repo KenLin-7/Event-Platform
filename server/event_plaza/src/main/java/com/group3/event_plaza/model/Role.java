@@ -1,14 +1,12 @@
 package com.group3.event_plaza.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.group3.event_plaza.common.lang.UserRole;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "Role")
+@Entity(name = "role")
 public class Role {
     @Id
     private int roleId;
@@ -16,9 +14,10 @@ public class Role {
     @Column(name = "role_name")
     private String roleName;
 
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "roles")
-    @JsonIgnoreProperties(value = "roles")
+    @ManyToMany(cascade = CascadeType.PERSIST,mappedBy = "role")
+    @JsonIgnoreProperties(value = "role")
     private Set<User> user = new HashSet<>();
+
 
 
     protected Role() {
@@ -44,12 +43,6 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public Set<User> getUser() {
 
-        return user;
-    }
 
-    public void setUser(Set<User> user) {
-        this.user = user;
-    }
 }
