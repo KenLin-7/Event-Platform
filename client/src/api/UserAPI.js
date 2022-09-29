@@ -20,13 +20,18 @@ export const getInfo  = async (email)=>{
     return result 
 }
 
-export const getUser = async ()=>{
-    const result = await axios.post(API+"/current")
+export const getUser = async (email)=>{
+    const result = await axios.post(API+"/current",{params:{email}})
     return result 
 }
 
-export const updateUser = async (name, email, phoneNumber, dob, gender)=>{
-    const result = await axios.post(API+"/updateUser",{params:{name,email,phoneNumber,dob,gender}})
+export const profile = async (email)=>{
+    const result = await axios.post(API+"/profile",{params:{email}})
+    return result 
+}
+
+export const updateUser = async (user)=>{
+    const result = await axios.post(API+"/updateUser",user)
     return result 
 }
 

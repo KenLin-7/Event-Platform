@@ -16,14 +16,11 @@ public class UserController {
 
     @Autowired
     UserService userService;
-    UserServiceImpl userServiceimpl;
 
     @PostMapping("/register")
     public ResponseResult<String> register(@RequestBody User user){
         userService.register(user);
-        userServiceimpl.register(user);
         return ResponseResult.success();
-
     }
 
     @PostMapping("/current")
@@ -31,13 +28,21 @@ public class UserController {
         return ResponseResult.success(principal.getName());
     }
 
-<<<<<<< HEAD
-=======
+    @PostMapping("/updateUser")
+    public ResponseResult<User> updateUser(@RequestBody User user){
+        userService.updateUserInfo(user);
+        return ResponseResult.success();
+    }
+
+    @PostMapping("/profile")
+    public ResponseResult<User> profile(@RequestBody String email){
+        User userProfile = userService.getUserInfo(email);
+        return ResponseResult.success(userProfile);
+    }
+
     @GetMapping("/remove/role")
     public ResponseResult<String> removeRole(Principal principal){
         userService.removeRole(principal.getName());
         return ResponseResult.success();
     }
->>>>>>> master
-
 }

@@ -18,7 +18,7 @@ import IconButton from '@mui/material/IconButton';
 export default function Profile(){
   const drawerWidth = 240;
   const [open, setOpen] = useState(false);
-  const [fields, setFields] = useState({ name: "asd", email: "", phoneNumber: "", dob: "", gender: ""});
+  const [fields, setFields] = useState({ name: "", email: "", phoneNumber: "", dob: "", gender: ""});
   const [init, setInit] = useState({ name: "", email: "", phoneNumber: "", dob: "", gender: ""});
   const [errors, setErrors] = useState({ name_err_msg: "", email_err_msg: "", phoneNumber_err_msg: "", dob_err_msg: "", gender_err_msg: "" })
   const [password, setPassword] = useState("")
@@ -118,159 +118,18 @@ export default function Profile(){
   }
 
     return (
-    <Box sx={{ display: 'flex' }}>
-      <AppBar
-        position="fixed" elevation={0}
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px`, backgroundColor:'white', color:'black' }}
-      >
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Password
+      <Box sx={{ display: 'flex' }}>
+        <SiderBar></SiderBar>
+        <Box sx={{width:1, mt:3,}}>
+          <Typography variant="h6" noWrap component="div" sx={{width:1,height:40,}}>
+                My Account
           </Typography>
-        </Toolbar>
-        <Divider></Divider> 
-      </AppBar>
-      
-      <SiderBar></SiderBar>
-      
-      <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>
-        <Toolbar />
-        
-        <ThemeProvider theme={theme}>
-          <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <Box
-              sx={{
-                marginTop: 8,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              <IconButton>
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 100, height: 100}}><PermIdentityIcon sx={{width: 50, height: 50}} /></Avatar>
-              </IconButton>
-              <Box component="form" noValidate sx={{ mt: 3 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      autoComplete="name"
-                      name="name"
-                      required
-                      fullWidth
-                      id="name"
-                      label="Name"
-                      autoFocus
-                      onChange={handleInputChange}
-                      value={fields.name}
-                      InputProps={{readOnly: true}}
-                    />
-                    {errors.name_err_msg && <FormHelperText error>{errors.name_err_msg}</FormHelperText>}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                      onChange={handleInputChange}
-                      value={fields.email}
-                      InputProps={{readOnly: true}}
-                    />
-                    {errors.email_err_msg && <FormHelperText error>{errors.email_err_msg}</FormHelperText>}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="phoneNumber"
-                      label="Phone Number"
-                      name="phoneNumber"
-                      autoComplete="phoneNumber"
-                      onChange={handleInputChange}
-                      value={fields.phoneNumber}
-                      InputProps={{readOnly: true}}
-                    />
-                    {errors.phoneNumber_err_msg && <FormHelperText error>{errors.phoneNumber_err_msg}</FormHelperText>}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="dob"
-                      label="Birthdate"
-                      name="dob"
-                      autoComplete="dob"
-                      onChange={handleInputChange}
-                      value={fields.dob}
-                      InputProps={{readOnly: true}}
-                    />
-                    {errors.dob_err_msg && <FormHelperText error>{errors.dob_err_msg}</FormHelperText>}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="gender"
-                      label="Gender"
-                      name="gender"
-                      autoComplete="gender"
-                      onChange={handleInputChange}
-                      value={fields.gender}
-                      InputProps={{readOnly: true}}
-                    />
-                    {errors.gender_err_msg && <FormHelperText error>{errors.gender_err_msg}</FormHelperText>}
-                  </Grid>
-                  <Grid item xs={12}>
-                    {alertForChange && <Alert severity="warning">You didn't make any change</Alert>}
-                    {alertForPwdDanger.show && <Alert severity="error">{alertForPwdDanger.content}</Alert>}
-                    {alertForPwdSuccess && <Alert severity="success">Profile is updated successfully!</Alert>}
-                  </Grid>
+          <Divider></Divider>
+        </Box>
 
-                </Grid>
-                <Button
-                  type="submit"
-                  fullWidth
-                  id='buttom'
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={handleClickOpen}
-                >
-                  Edit
-                </Button>
+        <Box sx={{display:'block', backgroundColor: '#757ce8',width:50, height:50}}>
 
-                <Dialog open={open} onClose={handleClose}>
-                  <DialogTitle>Password confirmation</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText>
-                      To change your profile, please enter your password here.
-                    </DialogContentText>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="name"
-                      label="My password"
-                      type="password"
-                      fullWidth
-                      variant="standard"
-                      onChange={handlePasswordConfirm}
-                    />
-                    {pwdHelper && <FormHelperText error>Please enter your password</FormHelperText>}
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleCloseDialog}>Cancel</Button>
-                    <Button onClick={handleClose}>Confirm</Button>
-                  </DialogActions>
-                </Dialog>
-
-              </Box>
-            </Box>
-          </Container>
-        </ThemeProvider>
-        
+        </Box>
       </Box>
-    </Box>
     );
 }
