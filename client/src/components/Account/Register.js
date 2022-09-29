@@ -44,10 +44,10 @@ export default function Register() {
     }
 
     const onClick = ()=>{
-        signUp(account)
 
         const result = validation()
         if(result.email & result.password &result.nickname & result.phone){
+            signUp(account)
         }
     }
 

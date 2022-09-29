@@ -7,12 +7,10 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 @Component
-public class JwtUtil {
+public class JwtUtils {
 
     private static final long EXPIRE_DURATION = 24*60*60*1000; // 24h
 

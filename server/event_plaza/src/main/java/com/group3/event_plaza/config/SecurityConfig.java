@@ -5,7 +5,7 @@ import com.group3.event_plaza.security.TokenAuthenticationEntryPoint;
 import com.group3.event_plaza.security.filter.CustomAuthenticationFilter;
 import com.group3.event_plaza.security.filter.JwtTokenFilter;
 import com.group3.event_plaza.security.handler.LogoutSuccessfulHandler;
-import com.group3.event_plaza.util.JwtUtil;
+import com.group3.event_plaza.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +30,7 @@ public class SecurityConfig {
             "/",
             "/api/user/register",
             "/api/user/logout",
+            "/ws/socket/**"
     };
 
     private static final String[] ORGANIZER_URLS = {
@@ -42,7 +43,7 @@ public class SecurityConfig {
 
 
     @Autowired
-    private JwtUtil jwtUtil;
+    private JwtUtils jwtUtils;
 
     @Autowired
     private JwtTokenFilter jwtTokenFilter;
@@ -87,7 +88,7 @@ public class SecurityConfig {
         http.logout().logoutUrl("/api/user/logout").logoutSuccessHandler(logoutSuccessfulHandler);
 
         // validate login status
-        http.addFilter(new CustomAuthenticationFilter(authenticationManager,jwtUtil));
+        http.addFilter(new CustomAuthenticationFilter(authenticationManager, jwtUtils));
         http.addFilterAfter(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

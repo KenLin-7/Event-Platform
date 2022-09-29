@@ -14,9 +14,8 @@ export default function formValidate (data) {
                 case "email":
                     data[key] = email_regex.test(value)
                     break
-                case "phone":
-                    data[key] = phone_regex.test(value)
-                
+                // case "phone":
+                //     data[key] = phone_regex.test(value)
                 default: 
                     data[key] = true
             }

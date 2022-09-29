@@ -27,8 +27,11 @@ export function UserProvider({children}){
         logout()
     }
     useEffect(()=>{
-       if(localStorage.getItem("token") !=null) getAuth()
-    },[])
+       if(localStorage.getItem("token") !=null){
+        getAuth() 
+        console.log("User getted")
+       } 
+    },[auth])
 
 
 

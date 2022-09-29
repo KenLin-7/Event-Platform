@@ -27,10 +27,10 @@ export default function Login() {
   const onClick = ()=>{
     const result = validation()
     if(result.email && result.password){
-       signIn(account.email,account.password).then((data)=>{
-          if(data.code === "200") getAuth() 
+       signIn(account.email,account.password).then(data=>{
+          if(data.code === "401") setErrorMsg(data.msg)
           // set logged in user
-          else setErrorMsg(data.msg)
+          else getAuth() 
        })
     }
   }

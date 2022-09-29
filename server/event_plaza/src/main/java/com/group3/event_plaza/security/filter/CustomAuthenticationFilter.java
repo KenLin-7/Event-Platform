@@ -2,12 +2,11 @@ package com.group3.event_plaza.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group3.event_plaza.common.ResponseResult;
-import com.group3.event_plaza.util.JwtUtil;
+import com.group3.event_plaza.util.JwtUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -16,20 +15,19 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 
     private AuthenticationManager authenticationManager;
 
-    private JwtUtil jwtUtil;
+    private JwtUtils jwtUtils;
 
 
 
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager,JwtUtil jwtUtil){
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, JwtUtils jwtUtils){
         this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
+        this.jwtUtils = jwtUtils;
     }
 
     @Override
@@ -43,9 +41,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         // create token
-        String token = jwtUtil.createJwt(authResult.getName(), request.getRequestURL().toString(), convertAuthorities(authResult.getAuthorities().toArray()));
+        String token = jwtUtils.createJwt(authResult.getName(), request.getRequestURL().toString(), convertAuthorities(authResult.getAuthorities().toArray()));
         response.setHeader("access_token",token);
         response.setContentType("application/json;charset=UTF-8");
+        ServletOutputStream outputStream = response.getOutputStream();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(outputStream,ResponseResult.success("Successfully login"));
+        outputStream.flush();
+        outputStream.close();
     }
 
     @Override
@@ -68,7 +71,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         for(int i = 0 ; i  < authorities.length;i++){
             roles[i] = authorities[i].toString();
         }
-
          return roles;
     }
 
