@@ -1,49 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
-import { signIn,getInfo,logout,getUser} from './api/UserAPI';
 import { UserProvider } from './context/UserContext';
-
-const login = ()=>{
-  signIn()
-}
-const getUserInfo = ()=>{
-    getInfo("13@qq.com")
-}
-
-const log2 = ()=>{
-  logout()
-}
-
-const currentUser = ()=>{
-  getUser()
-}
+import Home from './components/HomePage/Home'
+import { Routes,Route,Link } from 'react-router-dom';
+import Login from './components/Account/Login';
+import Register from './components/Account/Register'
+import NoHeaderRoute from './route/NoHeaderRoute';
+import TestUploadImage from './components/TestUploadImage';
 
 function App() {
   return (
     <UserProvider>
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <button onClick={login}>Sign in</button>
-        <button onClick={getUserInfo}>Get Info</button>
-        <button onClick={log2}>logout</button>
-        <button onClick={currentUser}>get Login</button>
-
-      </header>
-    </div>
+      <Routes>
+        <Route element={<NoHeaderRoute path={["/register"]}/>}>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/register' element={<Register/>}/>
+          <Route path='/test' element={<TestUploadImage/>}/>
+        </Route>
+      </Routes>
     </UserProvider>
-  );
-}
+  )
 
+}
 export default App;

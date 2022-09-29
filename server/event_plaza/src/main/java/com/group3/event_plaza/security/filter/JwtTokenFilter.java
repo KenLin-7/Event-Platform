@@ -66,7 +66,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(String[] roles){
-
         List<GrantedAuthority> authorities = new ArrayList<>();
         for(int i = 0; i < roles.length; i++){
             authorities.add(new SimpleGrantedAuthority(roles[i]));

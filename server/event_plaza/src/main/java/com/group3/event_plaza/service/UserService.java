@@ -11,5 +11,7 @@ public interface UserService {
 
     void updateUserInfo(User user);
 
+    void removeRole(String email);
+
 
 }

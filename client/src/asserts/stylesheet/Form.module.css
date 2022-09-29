@@ -1,0 +1,98 @@
+/* Form Common CSS */
+.phone_ic{
+    background: url(../images/icon/Icon_call.png) no-repeat right center;
+    background-size: 28px;
+}
+.email_ic{
+    background: url(../images/icon/Icon_mail.svg) no-repeat right center;
+    background-size: 28px;
+
+}
+.user_ic{
+    background: url(../images/icon/Icon_user.svg) no-repeat right center;
+    background-size: 28px;
+
+}
+.password_ic{
+    background: url(../images/icon/Icon_closed.svg) no-repeat right center;
+    background-size: 28px;
+
+}
+.helper-text{
+    color: #f22415;
+    margin-left: 5px;
+    padding-top: 4px;
+}
+
+/* Input feild */
+.field{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+}
+
+.formInput{
+    padding:20px;
+    border-radius: 12px;
+    border: 2px solid #7780A1;
+}
+
+.formInput-error{
+    padding:20px;
+    border-radius: 12px;
+    border: 2px solid #FB4539;
+}
+
+input::placeholder{
+    font-size: 16px;
+}
+
+
+
+
+/*  Form button */
+.formButton {
+    width: 100%;
+    border-radius: 12px;
+    font-size: 18px;
+    border: none;
+    background-color: #4745D0;
+    font-family: 'Sora', sans-serif;
+    padding: 16px;
+    color: white;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+/* Form button hover */
+.formButton:hover {
+    width: 100%;
+    border-radius: 12px;
+    font-size: 18px;
+    border: none;
+    background-color: #322fe0;
+    font-family: 'Sora', sans-serif;
+    padding: 16px;
+    color: white;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+/* Button  Area */
+.button-area{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.link{
+    color: #1814F6;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.link:hover{
+    color: #FB4539;
+    text-decoration: underline;
+    cursor: pointer;
+}

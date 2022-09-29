@@ -1,0 +1,44 @@
+.statistic-section {
+  margin-top: 150px;
+  width: 100vw;
+  height: 180px;
+  font-family: 'Raleway', sans-serif !important;
+}
+
+.statistic-items {
+  display: flex;
+  width: 920px;
+  height: 135px;
+
+  margin: 0 auto;
+  text-align: center;
+}
+
+.statistic-user-active {
+  width: 212px;
+  height: 131px;
+  margin-top: 25px;
+}
+
+.statistic-finished-events {
+  width: 212px;
+  height: 131px;
+}
+
+.statistic-time-spent {
+  width: 212px;
+  height: 131px;
+}
+
+.statistic-data{
+  font-size: 30px;
+}
+
+.statistic-icon{
+  font-size: 35px;
+}
+
+.statistic-title{
+  margin-top: 8px;
+  color: #7780A1 !important;
+}
