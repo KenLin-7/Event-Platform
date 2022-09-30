@@ -36,7 +36,7 @@ public class UserController {
 
     @PostMapping("/profile")
     public ResponseResult<User> profile(@RequestBody String email){
-        User userProfile = userService.getUserInfo(email);
+        User userProfile = userService.getUserInfo("378031309@qq.com");
         return ResponseResult.success(userProfile);
     }
 

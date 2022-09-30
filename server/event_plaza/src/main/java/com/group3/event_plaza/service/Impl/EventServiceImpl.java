@@ -33,7 +33,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public void createEvent(Principal user,Event event) {
-        User owner =  userRepository.findUserByEmail(user.getName());
+        User owner =  userRepository.findByEmail(user.getName());
         Role organizer = roleRepository.findByRoleId(RoleUser.ROLE_ORGANIZER.getId());
         owner.getRole().add(organizer);
         event.setOwner(owner);

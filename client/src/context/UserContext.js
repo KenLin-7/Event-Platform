@@ -6,16 +6,21 @@ const UserContext = React.createContext()
 
 
 
-export  function useUser(){
+export function useUser(){
     return useContext(UserContext)
 }
 
 export function UserProvider({children}){
     const [auth,setAuth] = useState(null)
 
+    useEffect(()=>{
+        if(localStorage.getItem("token") !=null) getAuth()
+     },[])
+
     // get logged in user email
     const getAuth = async()=>{
-        await getUser().then(res=>{
+        // await getUser().then(res=>{
+        getUser().then(res=>{
             setAuth(res.data)
         })
     }
@@ -26,9 +31,7 @@ export function UserProvider({children}){
         setAuth(null)
         logout()
     }
-    useEffect(()=>{
-       if(localStorage.getItem("token") !=null) getAuth()
-    },[])
+   
 
 
 
@@ -44,4 +47,3 @@ export function UserProvider({children}){
         </UserContext.Provider>
     )
 }
-

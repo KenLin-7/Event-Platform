@@ -4,8 +4,9 @@ import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
 import React, { useState, useEffect } from 'react'
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-import { Container, Grid, CssBaseline, Avatar, Box, Typography, TextField, Button, ThemeProvider, createTheme } from '@mui/material'
-import { getUser, updateUser } from '../../api/UserAPI';
+import { Container, Grid, Avatar, Box, Typography, TextField, Button, ThemeProvider, createTheme } from '@mui/material'
+import {getUser, profile, updateUser } from '../../api/UserAPI';
+import {useUser} from '../../context/UserContext';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -14,13 +15,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import FormHelperText from '@mui/material/FormHelperText'
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
+import formValidate from '../../utils/validation'
 
 export default function Profile(){
-  const drawerWidth = 240;
   const [open, setOpen] = useState(false);
-  const [fields, setFields] = useState({ name: "", email: "", phoneNumber: "", dob: "", gender: ""});
-  const [init, setInit] = useState({ name: "", email: "", phoneNumber: "", dob: "", gender: ""});
-  const [errors, setErrors] = useState({ name_err_msg: "", email_err_msg: "", phoneNumber_err_msg: "", dob_err_msg: "", gender_err_msg: "" })
+  const [init, setInit] = useState({ nickname: "", email: "", phone: "", dob: "", gender: ""});
+  const [errors, setErrors] = useState({ name_err_msg: "", email_err_msg: "", phone: "", dob_err_msg: "", gender_err_msg: "" })
   const [password, setPassword] = useState("")
   const [alertForChange, setAlertForChange] = useState(false)
   const [alertForPwdDanger, setAlertForpwdDanger] = useState({show:false,content:''})
@@ -28,107 +28,152 @@ export default function Profile(){
   const [pwdHelper, setPwdHelper] = useState(false)
   const [control, setControl] = useState(false)
 
+  const [fields, setFields] = useState({ nickname: "", email: "", phone: "", dob: "", gender: ""});
+  const {auth} = useUser();
+  const [isValidated,setIsValidated] = useState({nickname:true,phone:true,dob:true,email:true,gender:true,});
+  const [emailError,setEmailError] = useState("Please enter your email");
+  const [passwordError,setPasswordError] = useState("Please enter your nickname");
+  const [phoneError,setPhoneError] = useState("Please enter your phone");
+  const [dobError,setDobError] = useState("Please enter your dob");
+  const [genderError,setGenderError] = useState("Please enter your gender");
 
   const handleInputChange = (e) => {
     setFields({ ...fields, [e.target.name]: e.target.value });
   };
 
-  const theme = createTheme();
-
   useEffect(() => {
-    const loadUser = async () => {
-      const user = await getUser()
-      setFields({ name: user.name, email: user.email, phoneNumber: user.phoneNumber, dob: user.dob, gender: user.gender})
-      setInit({ name: user.name, email: user.email, phoneNumber: user.phoneNumber, dob: user.dob, gender: user.gender})
-    }
-    loadUser()
-  }, [control]);
+      // profile(auth).then((res) => {
+      //   setFields({ name: res.data.nickname, email: res.data.email, phoneNumber: res.data.phone, dob: res.data.dob, gender: res.data.gender})
+      //   setInit({ name: res.data.nickname, email: res.data.email, phoneNumber: res.data.phone, dob: res.data.dob, gender: res.data.gender})
+      // })
+      
+  },[]);
 
-  // open and close dialog
-  const handleClickOpen = (e) => {
-    e.preventDefault()
-    let buttom = document.getElementById('buttom')
-    if(buttom.innerText === 'EDIT'){
-      buttom.innerText = 'Update';
-      document.getElementById('name').readOnly = false;
-      document.getElementById('email').readOnly = false;
-      document.getElementById('phoneNumber').readOnly = false;
-      document.getElementById('dob').readOnly = false;
-      document.getElementById('gender').readOnly = false;
-    }else{
-      setPwdHelper(false)
-        // check user updated or not 
-      if(fields.name === init.name && fields.email === init.email && fields.phoneNumber === init.phoneNumber && fields.dob === init.dob && fields.gender === init.gender){
-        setAlertForChange(true)
-        setTimeout(() => setAlertForChange(false), 2000)
-      }else{
-        if(fields.name===""){setErrors.name_err_msg="Name cannot be empty"}
-        if(fields.email===""){setErrors.email_err_msg="Email cannot be empty"}
-        if(fields.phoneNumber===""){setErrors.phoneNumber_err_msg="phoneNumber cannot be empty"}
-        if(fields.dob===""){setErrors.dob_err_msg="Birthdate cannot be empty"}
-        if(fields.gender===""){setErrors.gender_err_msg="Gender cannot be empty"}
-        if (errors.email_err_msg === "" && errors.name_err_msg === "" && errors.dob_err_msg === "" && errors.gender_err_msg === "" && errors.phoneNumber_err_msg === "") {
-          setOpen(true)
-        }
-      }
+  const validation = ()=>{
+    const validate = {
+      email: fields.email,
+      dob: fields.dob,
+      phone: fields.phone,
+      nickname: fields.nickname,
+      gender: fields.gender
     }
-  };
+    const result = formValidate(validate)
 
-  const handleClose = async () => {
-    if(password === ""){
-      setPwdHelper(true)
-      return
-    }
-    // check user update or not 
-    if(fields.name === init.name && fields.email === init.email && fields.phoneNumber === init.phoneNumber && fields.dob === init.dob && fields.gender === init.gender){
-      setAlertForChange(true)
-      setTimeout(() => setAlertForChange(false), 2000)
-    } else {
-        const result = await updateUser(fields.name, fields.email, fields.phoneNumber, fields.dob, fields.gender)
-        if (result.data) {
-          setAlertForpwdSuccess(true)
-          setTimeout(() => setAlertForpwdSuccess(false), 2000)
-          setControl(!control)
-          document.getElementById('buttom').innerText = 'Edit';
-          document.getElementById('name').readOnly = true;
-          document.getElementById('email').readOnly = true;
-          document.getElementById('phoneNumber').readOnly = true;
-          document.getElementById('dob').readOnly = true;
-          document.getElementById('gender').readOnly = true;
-          setFields({ firstName: init.firstName, lastName: init.lastName, email: init.email })
-        } else {
-          setAlertForpwdDanger({
-            show: true,
-            content: result.msg
-          })
-          setTimeout(() => setAlertForpwdDanger(false), 2000)
-          setFields({ firstName: init.firstName, lastName: init.lastName, email: init.email })       
-        }
-    }
-    setOpen(false);
-  };
+    // setting helper text
+    if(fields.email !== "")     setEmailError("Please enter correct email") 
+    if(fields.nickname !== "")  setPasswordError("Please enter correct password format")         
+    if(fields.dob !== "")       setPasswordError("Please enter correct phone format") 
+    if(fields.phone !== "")     setPasswordError("Please enter correct phone format") 
+    if(fields.gender !== "")    setPasswordError("Please enter correct phone format") 
 
-  const handleCloseDialog = () =>{
-    setOpen(false);
-    setPassword("")
-  }
+    
+    setIsValidated(result)  
+    return result
+}
 
-  const handlePasswordConfirm = (e) => {
-    setPassword(e.target.value)
-  }
 
     return (
       <Box sx={{ display: 'flex' }}>
         <SiderBar></SiderBar>
-        <Box sx={{width:1, mt:3,}}>
-          <Typography variant="h6" noWrap component="div" sx={{width:1,height:40,}}>
-                My Account
-          </Typography>
-          <Divider></Divider>
-        </Box>
+        <Box sx={{width:1, mt:5, display:'block', height:50,}}>
 
-        <Box sx={{display:'block', backgroundColor: '#757ce8',width:50, height:50}}>
+          <Typography variant="h6" noWrap component="div" sx={{width:1,height:40, ml:5,}}>My Account</Typography>
+          {/* <Divider></Divider> */}
+          <Box component="main" sx={{display:'flex', flexDirection: 'column', alignItems: 'center',}}>
+            <Container component="div" maxWidth="xs">
+              <Box sx={{mt:10, display:'flex', alignItems:'flex-end', justifyContent:'space-evenly', flexDirection:'row-reverse', }}>
+                <IconButton sx={{ display: 'inline', m:0, p:0 }}>
+                  <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 100, height: 100}}><PermIdentityIcon sx={{width: 50, height: 50}} /></Avatar>
+                </IconButton>
+                <Typography variant="h6" noWrap component="div" sx={{height:40, display:'inline', m:0, p:0}}>{auth}</Typography>
+              </Box>
 
+              <Box name="asd" sx={{pt:5, pb:5, pl:5, pr:1, mt:5, display:'flex',backgroundColor:'#eceff1', borderRadius:10,}}>
+                <Grid Grid item xs={12} >
+                      <TextField
+                        required
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        onChange={handleInputChange}
+                        value={fields.email}
+                        InputProps={{readOnly: false}}
+                        sx={{width: 6/8}}
+                      />
+                      <Button
+                        type="submit"
+                        fullWidth
+                        id='buttom'
+                        variant="contained"
+                        sx={{width: 1/8, height:3/4,m:1,}}
+                        // onClick={handleClickOpen}
+                      >
+                        Edit
+                      </Button>
+                      {errors.email_err_msg && <FormHelperText error>{errors.email_err_msg}</FormHelperText>}
+                </Grid>
+              </Box>  
+
+              <Box component="form" noValidate sx={{backgroundColor:'#eceff1', pt:5, pb:5, pl:5, pr:5, mb:5, mt:3, borderRadius:10,}}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TextField
+                        autoComplete="nickname"
+                        name="nickname"
+                        required
+                        fullWidth
+                        id="nickname"
+                        label="Nickname"
+                        value={fields.name}
+                        onChange={handleInputChange}
+                        InputProps={{readOnly: false}}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="phoneNumber"
+                        label="Phone Number"
+                        name="phoneNumber"
+                        autoComplete="phoneNumber"
+                        onChange={handleInputChange}
+                        value={fields.phoneNumber}
+                        InputProps={{readOnly: true}}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="dob"
+                        label="Birthdate"
+                        name="dob"
+                        autoComplete="dob"
+                        onChange={handleInputChange}
+                        value={fields.dob}
+                        InputProps={{readOnly: true}}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="gender"
+                        label="Gender"
+                        name="gender"
+                        autoComplete="gender"
+                        onChange={handleInputChange}
+                        value={fields.gender}
+                        InputProps={{readOnly: true}}
+                      />
+                    </Grid>
+                  </Grid>
+              </Box>
+
+            </Container>
+          </Box>
         </Box>
       </Box>
     );

@@ -16,8 +16,8 @@ import styles from '../../asserts/stylesheet/Profile.module.css'
 export default function SiderBar() {
   return (
     
-    <Box sx={{ display: 'flex', mt:3, }}>
-        <Drawer sx={{backgroundColor: 'primary.dark', width: 240,flexShrink: 0,'& .MuiDrawer-paper': {width: 240,boxSizing: 'border-box', position: 'relative', border: 0, },}}variant="permanent"anchor="left">
+    <Box sx={{ display: 'flex', pt:10,}}>
+        <Drawer sx={{backgroundColor: '#cfd8dc', width: 240,flexShrink: 0,'& .MuiDrawer-paper': {width: 240,boxSizing: 'border-box', position: 'relative', borderRignt: 1, },}}variant="permanent"anchor="left">
             <List style={{ flexDirection: 'row', padding: 0, display:"inline-block" }}>
                 <ListItem disablePadding>
                 <ListItemButton component={Link} to="/profile" sx={{pb:2,pt:2}}>

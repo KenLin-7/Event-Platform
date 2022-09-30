@@ -44,12 +44,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         @Override
         public User getUserInfo(String email) {
-            return userRepository.findUserByEmail(email);
+                User user = userRepository.findByEmail(email);
+            return user;
         }
 
         @Override
         public void updateUserInfo(User user) {
-                User currentUser = userRepository.findUserByEmail(user.getEmail());
+                User currentUser = userRepository.findByEmail(user.getEmail());
                 if (currentUser != null){
                         currentUser = user;
                         userRepository.save(currentUser);
@@ -61,14 +62,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         @Override
         public void removeRole(String email){
                 Role role = roleRepository.findByRoleId(RoleUser.ROLE_USER.getId());
-                User user = userRepository.findUserByEmail(email);
+                User user = userRepository.findByEmail(email);
                 user.getRole().remove(role);
                 userRepository.save(user);
         }
 
         @Override
         public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-                User currentUser = userRepository.findUserByEmail(email);
+                User currentUser = userRepository.findByEmail(email);
                 if(currentUser != null){
                         return new org.springframework.security.core.userdetails.User(
                                 currentUser.getEmail(),currentUser.getPassword(),getAuthorities(currentUser));
