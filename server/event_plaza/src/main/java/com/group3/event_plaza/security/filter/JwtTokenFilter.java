@@ -32,7 +32,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().equals("/login")  || request.getServletPath().equals("/ws/socket") ){
+        if(request.getServletPath().equals("/login")){
             filterChain.doFilter(request,response);
         }else{
             String header = request.getHeader("Authorization");

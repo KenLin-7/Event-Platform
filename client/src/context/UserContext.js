@@ -29,7 +29,6 @@ export function UserProvider({children}){
     useEffect(()=>{
        if(localStorage.getItem("token") !=null){
         getAuth() 
-        console.log("User getted")
        } 
     },[auth])
 

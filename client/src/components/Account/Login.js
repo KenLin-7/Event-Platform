@@ -5,10 +5,10 @@ import bg1 from '../../asserts/images/login-bg-1.png'
 import bg2 from '../../asserts/images/login-bg-2.png'
 import formValidate from '../../utils/validation'
 import {signIn} from '../../api/UserAPI'
-import { Link,Navigate } from 'react-router-dom'
+import { Link,Navigate, useNavigation } from 'react-router-dom'
 import { Alert } from '@mui/material'
 import {useUser} from '../../context/UserContext'
-
+import { useNotification } from '../../context/NotificationContext'
 export default function Login() {
   const [account,setAccount] = useState({email:"",password:""})
   const [isValidated,setIsValidated] = useState({email:true,password:true})
@@ -16,6 +16,7 @@ export default function Login() {
   const [passwordError,setPasswordError] = useState("Please enter your password")
   const [errorMsg,setErrorMsg] = useState("")
   const {getAuth,auth} = useUser();
+  const {socketConn} = useNotification()
 
   // handle input change 
   const onChange = (e)=>{
@@ -28,9 +29,12 @@ export default function Login() {
     const result = validation()
     if(result.email && result.password){
        signIn(account.email,account.password).then(data=>{
-          if(data.code === "401") setErrorMsg(data.msg)
+          if(data.code === "200"){
+              getAuth()
+              socketConn()
+          } 
           // set logged in user
-          else getAuth() 
+          else setErrorMsg(data.msg)
        })
     }
   }

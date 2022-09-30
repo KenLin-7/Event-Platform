@@ -15,9 +15,9 @@ public class NotificationJob {
     @Autowired
     private MessageService messageService;
 
-    @Scheduled(fixedRate = 1000, initialDelay = 1000)
+//    @Scheduled(fixedRate = 1000, initialDelay = 1000)
     public void sendNotification(){
         log.info("Start");
-        messageService.notifyUser(new Notification(),"ken@test.com");
+        messageService.notifyUser("ken@test.com","test");
     }
 }

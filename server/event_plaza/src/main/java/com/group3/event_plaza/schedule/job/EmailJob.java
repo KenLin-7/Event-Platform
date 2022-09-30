@@ -16,10 +16,11 @@ public class EmailJob {
     private MessageService messageService;
 
 
-    @Scheduled(cron = "0 53 22 * * *")
+//    @Scheduled(fixedRate = 1000, initialDelay = 1000)
     public void sendEmail(){
         log.info("Email sent");
-        messageService.notifyUser(new Notification(),"ken@test.com");
+        messageService.notifyUser("ken@test.com","User Test");
+        messageService.eventNotification("1","test");
 
     }
 }

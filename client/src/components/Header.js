@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import styles from '../asserts/stylesheet/Header.module.css'
 import { useUser } from '../context/UserContext';
 import logo from '../asserts/images/logo3.png'
+import { useNotification } from '../context/NotificationContext';
 
 const items = [
   { id: 1, text: 'Latest event' },
@@ -20,7 +21,21 @@ const items = [
 const Header = () => {
 
   const {auth,signOut} = useUser();
+  const {subscribeEvent,sendEventMessage,sendUserMessage,disconnect} = useNotification();
 
+  const TESTsendNotificiton =()=>{
+    // sendEventMessage("1","Send Test")
+    sendUserMessage("ken@test.com","User test")
+  }
+
+  const TESTSubscribe = ()=>{
+    subscribeEvent(5)
+  }
+
+  const logout = ()=>{
+    signOut()
+    disconnect()
+  }
 
 
   return (
@@ -57,8 +72,12 @@ const Header = () => {
             <Link to="/register"><Button variant="contained" sx={{ borderRadius: 2 }} className="header-btn">Register</Button></Link>
           </Stack>):(
           <Stack className={styles["right-stack"]} direction="row" spacing={2}>
-            <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={signOut} className="header-btn">Log out</Button>
+            <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={logout} className="header-btn">Log out</Button>
+            <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={TESTSubscribe} className="header-btn">Test</Button>
+            <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={TESTsendNotificiton} className="header-btn">Send</Button>
+
           </Stack>
+
           )
           }
  

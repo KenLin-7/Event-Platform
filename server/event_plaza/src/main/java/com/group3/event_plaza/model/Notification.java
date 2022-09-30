@@ -12,7 +12,7 @@ public class Notification {
 
     private String message;
 
-    private String type;
+    private String status;
 
     @ManyToOne()
     @JoinColumn(name = "user_id")
@@ -20,12 +20,14 @@ public class Notification {
 
     private Timestamp createdTime;
 
+    private boolean isRead;
+
     public Notification() {
     }
 
-    public Notification(String message, String type, User receiver) {
+    public Notification(String message, String status, User receiver) {
         this.message = message;
-        this.type = type;
+        this.status = status;
         this.receiver = receiver;
     }
 
@@ -45,12 +47,12 @@ public class Notification {
         this.message = message;
     }
 
-    public String getType() {
-        return type;
+    public String getStatus() {
+        return status;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setStatus(String type) {
+        this.status = type;
     }
 
     public User getReceiver() {
@@ -67,5 +69,13 @@ public class Notification {
 
     public void setCreatedTime(Timestamp createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
     }
 }
