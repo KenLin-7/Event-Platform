@@ -14,12 +14,43 @@ export const signUp = async (user)=>{
     return result
 }
 export const profile = async (email)=>{
-    const result = await axios.post(API+"/profile",{params:{email}})
+    // const result = await axios.post(API+'/profile', {email: email})
+    // const result = await axios.post(API+'/profile', {params:{email}})
+    // const result = await axios.post(API+'/profile', {params:{email:email}})
+    const result = await axios.post(API+'/profile', email)
     return result 
 }
 
 export const updateUser = async (user)=>{
     const result = await axios.post(API+"/updateUser",user)
+    return result 
+}
+
+export const updateUserEmail = async (email,code)=>{
+    var formdata = new FormData();
+    formdata.append("email", email);
+    formdata.append("code", code);
+    // const result = await axios.post(API+'/updateEmail', {email: email, code:code})
+    // const result = await axios.post(API+'/updateEmail', {params:{email,code}})
+    // const result = await axios.post(API+'/updateEmail', {params:{email:email, code:code}})
+    // const result = await axios.post(API+'/updateEmail', formdata)
+    const result = await axios.post(API+'/updateEmail', {email:email, code:code})
+    return result 
+}
+
+export const sendEmail = async (email)=>{
+    const result = await axios.post(API+'/sendEmail', email)
+    return result 
+}
+
+export const updateUserPassword = async (password,code)=>{
+    //const result = await axios.post(API+"/updatePassword", password,code)
+    const result = await axios.post(API+'/updatePassword', {password:password,code:code})
+    return result 
+}
+
+export const updateUserAvatar = async (avatar)=>{
+    const result = await axios.post(API+"/updateAvatar", avatar)
     return result 
 }
 

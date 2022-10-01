@@ -19,7 +19,7 @@ export function UserProvider({children}){
 
     // get logged in user email
     const getAuth = async()=>{
-        // await getUser().then(res=>{
+        //await getUser().then(res=>{
         getUser().then(res=>{
             setAuth(res.data)
         })

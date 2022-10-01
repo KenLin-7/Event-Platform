@@ -3,6 +3,7 @@ import { Alert } from "@mui/material";
 import { Navigate } from "react-router-dom";
 const instance = axios.create({
     baseURL:'http://localhost:8080',
+    headers:'content-type:application/json'
 })
 
 instance.interceptors.request.use(request=>{
