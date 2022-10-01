@@ -1,14 +1,16 @@
-import {Button, Container, MenuItem, TextField, Typography} from "@mui/material";
+import {Button, Container, MenuItem, TextField, Typography, Stack} from "@mui/material";
 import Paper from "@mui/material/Paper";
-import {Stack} from "@mui/system";
 import {useState} from "react";
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Divider from "@mui/material/Divider";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import {CalendarMonth} from "@mui/icons-material";
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import TimeLabel from "../EventPost/TimeLabel";
 import TimeNumber from "./TimeNumber";
+import UploadImage from "./UploadImage";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 
 export default function EventPost() {
 
@@ -33,7 +35,7 @@ export default function EventPost() {
 
 
     const [category, setCurrency] = useState('EUR');
-
+    const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-07'));
     const handleChange = (event) => {
         setCurrency(event.target.value);
     };
@@ -108,6 +110,13 @@ export default function EventPost() {
                         />
 
                     </Stack>
+                    <Stack>
+
+                        <UploadImage></UploadImage>
+
+                    </Stack>
+
+
                     <Divider sx={{marginX: 6, marginY: 2}} variant="middle"/>
 
                     <Stack direction={"row"} sx={{padding: 1, marginX: 6, marginTop: 2}}>
@@ -179,11 +188,13 @@ export default function EventPost() {
                     </Stack>
                     <Stack direction={"row"} sx={{padding: 1, marginLeft: 6, marginRight: 40}}>
 
-                        <TextField
-                            required
-                            fullWidth
-                            label="End Date"
-                            helperText="DD/MM/YYYY"
+                        <DesktopDatePicker
+                            label="For desktop"
+
+                            onChange={(newValue) => {
+                                setValue(newValue);
+                            }}
+                            renderInput={(params) => <TextField {...params} />}
                         />
                         <TimeNumber></TimeNumber>
                         <TimeLabel></TimeLabel>
