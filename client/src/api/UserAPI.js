@@ -54,6 +54,11 @@ export const updateUserAvatar = async (avatar)=>{
     return result 
 }
 
+export const forgotPassword = async (email,password,code)=>{
+    const result = await axios.post(API+"/forgotPassword", {email:email,password:password,code:code})
+    return result 
+}
+
 export const getInfo  = async (email)=>{
     const result = await axios.get("/test/info",{params:{email}})
     return result 

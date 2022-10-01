@@ -102,7 +102,7 @@ export default function Login() {
                       }
                     </div>
                     <div>
-                      <span id={styles['forgot-password']}>Forgot your password?</span>
+                      <span id={styles['forgot-password']}><Link to="/forgotPassword">Forgot your password?</Link></span>
                     </div>
 
                     <div className={FormStyles['button-area']}>

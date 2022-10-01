@@ -87,7 +87,7 @@ public class UserController {
         String result;
         String password = map.get("password");
         String code = map.get("code");
-        System.out.println("email: "+password);
+        System.out.println("password: "+password);
         System.out.println("code: "+code);
         if(sessionCode.equals(code)){
             result = userService.updateUserPassword(principal.getName(), password);
@@ -101,6 +101,25 @@ public class UserController {
     @PostMapping("/updateAvatar")
     public ResponseResult<String> updateAvatar(Principal principal, @RequestBody String avatar){
         String result = userService.updateUserAvatar(principal.getName(), avatar);
+        return ResponseResult.success(result);
+    }
+
+    @PostMapping("/forgotPassword")
+    public ResponseResult<String> forgotPassword(@RequestBody Map<String,String> map){
+        String sessionCode = (String)session.getAttribute("code");
+        String result;
+        String email = map.get("email");
+        String password = map.get("password");
+        String code = map.get("code");
+        System.out.println("email: "+email);
+        System.out.println("password: "+password);
+        System.out.println("code: "+code);
+        if(sessionCode.equals(code)){
+            result = userService.updateUserPassword(email, password);
+            session.invalidate();
+        }else{
+            result = "code not match";
+        }
         return ResponseResult.success(result);
     }
 

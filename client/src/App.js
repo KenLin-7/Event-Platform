@@ -8,7 +8,7 @@ import NoHeaderRoute from './route/NoHeaderRoute';
 import TestUploadImage from './components/TestUploadImage';
 import Profile from './components/UserManagement/Profile';
 import Password from './components/UserManagement/Password';
-
+import ForgotPassword from './components/UserManagement/ForgotPassword';
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
           <Route path='/test' element={<TestUploadImage/>}/>
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/password' element={<Password/>}/>
+          <Route path='/forgotPassword' element={<ForgotPassword/>}/>
         </Route>
       </Routes>
     </UserProvider>
