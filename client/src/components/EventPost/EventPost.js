@@ -34,6 +34,8 @@ export default function EventPost() {
     ];
 
     const [category, setCurrency] = useState('NSW');
+    const participant_regex = /(^[1-9]\d*$)/
+
     const [event, setEvent] = useState({
         eventTitle: "",
         participant: 1,
@@ -50,7 +52,6 @@ export default function EventPost() {
     })
     const [isValidated, setIsValidated] = useState({
         eventTitle: true,
-        participant: true,
         address1: true,
         suburb: true,
         postcode: true
@@ -67,14 +68,25 @@ export default function EventPost() {
         show: false,
         content: "enter the street address"
     })
-    const [suburbError, setSuburbError] = useState("Please enter your phone")
-    const [postcodeError, setPostcodeError] = useState("Please enter your phone")
+
+    const [participantError, setParticipantError] = useState({
+        show: false,
+        content: "enter the participant number"
+    })
+
+    const [suburbError, setSuburbError] = useState({
+        show: false,
+        content: ""
+    })
+    const [postcodeError, setPostcodeError] = useState({
+        show: false,
+        content: ""
+    })
 
 
     const validation = () => {
         const validate = {
             eventTitle: event.eventTitle,
-            participant: event.participant,
             address1: event.address1,
             suburb: event.suburb,
             postcode: event.postcode
@@ -84,7 +96,7 @@ export default function EventPost() {
         // setting helper text
 
 
-        if (event.suburb !== "") setSuburbError("Please enter correct phone format")
+
         if (event.postcode !== "") setPostcodeError("Please enter correct phone format")
 
 
@@ -96,34 +108,52 @@ export default function EventPost() {
         const result = validation()
         console.log(result)
 
-            if (!result.eventTitle) {
-                setEventTitleError(
-                    {
-                        show: true,
-                        content: "please enter the right event title"
-                    }
-                )
+        if (!result.eventTitle) {
+            setEventTitleError(
+                {
+                    show: true,
+                    content: "please enter the right event title"
+                }
+            )
 
 
-            }
-            if (!result.address1) {
+        }
+        if (!result.address1) {
 
-                setAddress1Error(
-                    {
-                        show: true,
-                        content: "please enter the address"
-                    }
-                )
+            setAddress1Error(
+                {
+                    show: true,
+                    content: "please enter the address"
+                }
+            )
 
-            } else if (result.suburb) {
-            } else if (result.postcode) {
-            } else if (result.participant) {
-            }
+        }
+        if (!result.suburb) {
+
+            setSuburbError(
+                {
+                    show: true,
+                    content: "suburb is incorrect"
+                }
+            )
+
+        }
+        if (!result.postcode) {
+
+            setPostcodeError(
+
+                {
+                    show: true,
+                    content: "postcode is incorrect"
+                }
+
+            )
+        }
 
     }
 
 
-    const handleChange = (e) => {
+    const handleSateChange = (e) => {
         setCurrency(e.target.value)
         setEvent({...event, ["state"]: e.target.value})
     };
@@ -131,21 +161,43 @@ export default function EventPost() {
         setEvent({...event, [e.target.name]: e.target.value})
 
         if (!isValidated.eventTitle || !isValidated.address1
-            ||!isValidated.suburb||!isValidated.postcode
-             ||!isValidated.participant
+            || !isValidated.suburb || !isValidated.postcode
         ) validation()
         console.log(event)
     }
 
-    const onClickEventTitleError = (e) =>{
-            setEventTitleError(
-                {
-                    show: false,
-                    content: "please enter the event title"
-                }
-            )
+    const handleParticipantChange = (e) => {
+        let value = true
+        if (e.target.value != null && e.target.value != '') {
+            value = participant_regex.test(e.target.value)
+            if (value) {
+                setParticipantError({
+                        show: false,
+                        content: "enter the participant number"
+                    }
+                )
+                setEvent({...event, ["participant"]: e.target.value})
+            } else {
+                setParticipantError(
+                    {
+                        show: true,
+                        content: "number is not correct"
+                    }
+                )
+                e.target.value = 0
+            }
+        }
     }
-    const onClickAddressLine1Error = (e) =>{
+
+    const onClickEventTitleError = (e) => {
+        setEventTitleError(
+            {
+                show: false,
+                content: "please enter the event title"
+            }
+        )
+    }
+    const onClickAddressLine1Error = (e) => {
         setAddress1Error(
             {
                 show: false,
@@ -154,6 +206,23 @@ export default function EventPost() {
         )
     }
 
+    const onClickSuburbError = (e) =>{
+        setSuburbError(
+            {
+                show: false,
+                content: ""
+            }
+        )
+    }
+
+    const onClickPostcodeError = (e) =>{
+        setPostcodeError(
+            {
+                show: false,
+                content: ""
+            }
+        )
+    }
 
 
     return (
@@ -202,7 +271,9 @@ export default function EventPost() {
                                 name={"participant"}
                                 label="Participant"
                                 defaultValue={1}
-                                onChange={onChange}
+                                onChange={handleParticipantChange}
+                                error={participantError.show}
+                                helperText={participantError.content}
                                 type={"number"}
 
                             />
@@ -216,7 +287,7 @@ export default function EventPost() {
                                 required
                                 label="Category"
                                 value={category}
-                                onChange={handleChange}
+                                onChange={handleSateChange}
                                 helperText="Please select a category"
                             >
                                 {categories.map((option) => (
@@ -290,7 +361,9 @@ export default function EventPost() {
                             fullWidth
                             label="Suburb"
                             onChange={onChange}
-                            helperText=""
+                            onClick={onClickSuburbError}
+                            error={suburbError.show}
+                            helperText={suburbError.content}
                         />
 
                         {/*    state    */}
@@ -302,7 +375,7 @@ export default function EventPost() {
                                    fullWidth
                                    label="State"
                                    value={category}
-                                   onChange={handleChange}
+                                   onChange={handleSateChange}
 
                         >
                             {categories.map((option) => (
@@ -319,7 +392,9 @@ export default function EventPost() {
                                    fullWidth
                                    label="Postcode"
                                    onChange={onChange}
-                                   helperText=""
+                                   onClick={onClickPostcodeError}
+                                   error={postcodeError.show}
+                                   helperText={postcodeError.content}
                         />
                     </Stack>
 

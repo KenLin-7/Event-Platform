@@ -5,8 +5,8 @@ console.log(data)
     const phone_regex = ""
     const password_regex = ""
     const suburb_regex=/[A-Za-z]/
-    const postcode_regex = /[0-9][0-9][0-9][0-9]/
-    const participant_regex = /(^[1-9]\d*$)/
+    const postcode_regex = /^[0-9]{4}$/
+
     const allowImageSize = 500000
 
 // {
@@ -28,9 +28,6 @@ console.log(data)
                     break
                 case "phone":
                     data[key] = phone_regex.test(value)
-                    break
-                case "participant":
-                     data[key] = participant_regex.test(value)
                     break
                 case "suburb":
                     data[key]= suburb_regex.test(value)
