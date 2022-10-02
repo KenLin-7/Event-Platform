@@ -18,7 +18,7 @@ export default function CalendarCPN(props) {
                 <DesktopDatePicker
                     label={timeLabel}
                     value={value}
-                    minDate={dayjs('2017-01-01')}
+                    minDate={dayjs('2022-01-01')}
                     onChange={(newValue) => {
                         setValue(newValue);
                     }}
