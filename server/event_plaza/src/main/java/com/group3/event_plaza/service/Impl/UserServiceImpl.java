@@ -52,8 +52,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         }
 
-
-
         @Override
         public void removeRole(String email){
                 Role role = roleRepository.findByRoleId(RoleUser.ROLE_USER.getId());

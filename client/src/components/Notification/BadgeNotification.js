@@ -19,15 +19,22 @@ export default function BadgeNotification() {
   },[])
   
   const toggleDrawer = ()=>{
-    setOpen(!open)
+    if(!open){
+      setOpen(true)
+    }
   }
+
+  const closeDrawer = ()=>{
+    setOpen(false)
+  }
+
   
     return (
-    <IconButton onClick={toggleDrawer}>
+    <IconButton onClick={toggleDrawer} >
         <Badge  badgeContent={total} color="primary">
            <NotificationsRoundedIcon/> 
         </Badge>
-        <DrawerNotification toggleDrawer={toggleDrawer} open={open} />
+        <DrawerNotification toggleDrawer={closeDrawer} open={open} />
     </IconButton>
   )
 }

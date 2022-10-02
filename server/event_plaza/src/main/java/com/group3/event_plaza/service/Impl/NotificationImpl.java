@@ -61,8 +61,8 @@ public class NotificationImpl implements NotificationService, MessageService {
 
     @Override
     public List<Notification> getAll(String email) {
-//        User receiver = userRepository.findUserByEmail(email);
-        return notificationRepository.findAllByReceiver_UserId(2);
+        User receiver = userRepository.findUserByEmail(email);
+        return notificationRepository.findAllByReceiver_UserId(receiver.getUserId());
     }
 
 

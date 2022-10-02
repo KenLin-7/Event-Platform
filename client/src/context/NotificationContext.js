@@ -22,7 +22,6 @@ export const NotificationProvider = ({children})=>{
     const [notifications,setNotifications] = useState([]);
     const [currentNotification,setCurrentNotification] = useState("")
     const [connected,setConnected] = useState(false)
-    const [total,setTotal] = useState(0)
 
 
     // connect to web socket to recieve notification
@@ -39,14 +38,18 @@ export const NotificationProvider = ({children})=>{
 
     // connect socket and subscribe the default
     const onConnected = ()=>{
-        setConnected(true)
-        // subscribe user socket to recieve user private notifications
-        stompClient.subscribe(`/user/${auth}/notification`,handlePayload)
-        if(eventIds.length>0 && auth ==="ken@test.com"){
-            eventIds.forEach(eventId => {
-                stompClient.subscribe(`/event/${eventId}/notification`,handlePayload)
-            });
+        
+        if(auth !=null && stompClient !=null){
+            setConnected(true)
+            // subscribe user socket to recieve user private notifications
+            stompClient.subscribe(`/user/${auth}/notification`,handlePayload)
+            if(eventIds.length>0 && auth ==="ken@test.com"){
+                eventIds.forEach(eventId => {
+                    stompClient.subscribe(`/event/${eventId}/notification`,handlePayload)
+                });
+            }
         }
+ 
     }
 
     // handle notificaition payload 
