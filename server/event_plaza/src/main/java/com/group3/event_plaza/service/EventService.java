@@ -8,4 +8,6 @@ import java.security.Principal;
 public interface EventService {
 
     void createEvent(Principal user ,Event event);
+
+    // TODO Find method need to be throw DataNotFoundException
 }

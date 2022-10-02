@@ -15,7 +15,7 @@ export default function formValidate (data) {
                     data[key] = email_regex.test(value)
                     break
                 // case "phone":
-                //     data[key] = phone_regex.test(value)
+                //     data[key] = value > 0 && value < 10
                 default: 
                     data[key] = true
             }

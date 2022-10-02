@@ -1,4 +1,4 @@
-package com.group3.event_plaza.common.exception;
+package com.group3.event_plaza.common.exception.authorization;
 
 import org.springframework.security.core.AuthenticationException;
 

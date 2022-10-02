@@ -37,6 +37,10 @@ public class ResponseResult<T> {
     public static <T>ResponseResult<T> fail(){
         return new ResponseResult<>(HttpStatus.FAIL);
     }
+    public static <T>ResponseResult<T> fail(String msg){
+        return new ResponseResult<>(msg, HttpStatus.FAIL);
+    }
+
 
     /**
      * Return 401 response with custom msg
@@ -78,6 +82,17 @@ public class ResponseResult<T> {
      */
     public ResponseResult(String msg, HttpStatus code){
         this.msg = msg;
+        this.code = code.getStatusCode();
+    }
+
+    /**
+     * response with custom data and status
+     * @param data
+     * @param code
+     */
+
+    public ResponseResult(T data, HttpStatus code){
+        this.data = data;
         this.code = code.getStatusCode();
     }
 

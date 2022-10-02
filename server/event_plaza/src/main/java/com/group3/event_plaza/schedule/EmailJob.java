@@ -1,11 +1,9 @@
-package com.group3.event_plaza.schedule.job;
+package com.group3.event_plaza.schedule;
 
-import com.group3.event_plaza.model.Notification;
 import com.group3.event_plaza.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component

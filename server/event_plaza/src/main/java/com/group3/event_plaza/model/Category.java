@@ -14,4 +14,15 @@ public class Category {
 
     @OneToMany
     private List<Event> eventList;
+
+    // TODO Create no-arg constructor
+
+
+    // TODO Create custom constructor
+
+
+    // TODO create getter setter
+
+
+    // TODO check association with other entity
 }

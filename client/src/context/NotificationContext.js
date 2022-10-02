@@ -82,7 +82,7 @@ export const NotificationProvider = ({children})=>{
 
 
     // notify participant if event information has been upadated
-    const sendEventMessage = (eventId,message,recieverEmail)=>{
+    const sendEventMessage = (eventId,message)=>{
         if(stompClient){
             let notification = {
                 message:message,
@@ -90,8 +90,6 @@ export const NotificationProvider = ({children})=>{
             }
             stompClient.send(`/event/${eventId}/notification`,{},JSON.stringify(notification))
         }
-        createNotification(recieverEmail,message,"status")
-
     }
 
 

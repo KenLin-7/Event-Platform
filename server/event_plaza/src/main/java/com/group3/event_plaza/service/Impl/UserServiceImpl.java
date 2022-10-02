@@ -1,5 +1,6 @@
 package com.group3.event_plaza.service.Impl;
 
+import com.group3.event_plaza.common.exception.business.DataNotFoundException;
 import com.group3.event_plaza.common.lang.RoleUser;
 import com.group3.event_plaza.model.Role;
 import com.group3.event_plaza.model.User;
@@ -43,7 +44,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
 
         @Override
-        public User getUserInfo(String email) {
+        public User getUserInfo(String email) throws DataNotFoundException {
+                User user = userRepository.findUserByEmail(email);
+                if(user == null){
+                        throw new DataNotFoundException("Can not found user with "+email);
+                }
             return userRepository.findUserByEmail(email);
         }
 

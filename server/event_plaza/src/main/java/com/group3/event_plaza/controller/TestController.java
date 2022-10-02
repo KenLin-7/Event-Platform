@@ -1,6 +1,7 @@
 package com.group3.event_plaza.controller;
 
 import com.group3.event_plaza.common.ResponseResult;
+import com.group3.event_plaza.common.exception.business.DataNotFoundException;
 import com.group3.event_plaza.model.User;
 import com.group3.event_plaza.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,9 @@ public class TestController {
 
 
     @PostMapping("/info")
-    public ResponseResult<User> getUserInfo(@RequestBody String email){
+    public ResponseResult<User> getUserInfo(@RequestBody String email) throws DataNotFoundException {
         System.out.println(email);
-        return ResponseResult.success(userService.getUserInfo("ken@test.com"));
+        return ResponseResult.success(userService.getUserInfo("ken22@test.com"));
     }
 
 }

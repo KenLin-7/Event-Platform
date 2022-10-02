@@ -1,5 +1,6 @@
 package com.group3.event_plaza.service.Impl;
 
+import com.group3.event_plaza.common.exception.business.DataNotFoundException;
 import com.group3.event_plaza.model.Notification;
 import com.group3.event_plaza.model.User;
 import com.group3.event_plaza.repository.NotificationRepository;
@@ -68,7 +69,7 @@ public class NotificationImpl implements NotificationService, MessageService {
 
 
     @Override
-    public void update(Notification notification) {
+    public void update(int notificationId) {
 
     }
 
@@ -77,4 +78,11 @@ public class NotificationImpl implements NotificationService, MessageService {
         User user = userRepository.findUserByEmail(email);
         return notificationRepository.countByReceiver_UserId(user.getUserId());
     }
+
+    @Override
+    public void createNotifications(int eventId) {
+        // TODO get participant email to save notification
+    }
+
+
 }

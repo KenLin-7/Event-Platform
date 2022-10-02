@@ -1,8 +1,7 @@
 package com.group3.event_plaza.security.filter;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.group3.event_plaza.common.exception.TokenAuthenticationFailException;
-import com.group3.event_plaza.schedule.job.EmailJob;
+import com.group3.event_plaza.common.exception.authorization.TokenAuthenticationFailException;
 import com.group3.event_plaza.security.TokenAuthenticationEntryPoint;
 import com.group3.event_plaza.util.JwtUtils;
 import org.slf4j.Logger;

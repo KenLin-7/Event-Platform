@@ -84,7 +84,7 @@ const Header = () => {
           <Stack className={styles["right-stack"]} direction="row" spacing={2}>
             <BadgeNotification/>
             <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={logout} className="header-btn">Log out</Button>
-            <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={TESTSubscribe} className="header-btn">Test</Button>
+            <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={TESTUSer} className="header-btn">Test</Button>
             <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={TESTSendMESS} className="header-btn">Send</Button>
             <Button onClick={TESTUSer}>Test User</Button>
 
