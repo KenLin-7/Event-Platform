@@ -1,10 +1,15 @@
 package com.group3.event_plaza.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
-public class Notification {
+public class Notification implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,10 +19,12 @@ public class Notification {
 
     private String status;
 
-    @ManyToOne()
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receiver")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User receiver;
 
+    @CreationTimestamp
     private Timestamp createdTime;
 
     private boolean isRead;
@@ -25,11 +32,11 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(String message, String status, User receiver) {
+    public Notification(String message, String status) {
         this.message = message;
         this.status = status;
-        this.receiver = receiver;
     }
+
 
     public int getNotificationId() {
         return notificationId;
@@ -77,5 +84,17 @@ public class Notification {
 
     public void setRead(boolean read) {
         isRead = read;
+    }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "notificationId=" + notificationId +
+                ", message='" + message + '\'' +
+                ", status='" + status + '\'' +
+                ", receiver=" + receiver +
+                ", createdTime=" + createdTime +
+                ", isRead=" + isRead +
+                '}';
     }
 }

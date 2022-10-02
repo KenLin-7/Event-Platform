@@ -39,6 +39,7 @@ public class SecurityConfig {
 
     private static final String[] USER_URLS = {
             "/api/user/current",
+            "/api/notification/all"
     };
 
 

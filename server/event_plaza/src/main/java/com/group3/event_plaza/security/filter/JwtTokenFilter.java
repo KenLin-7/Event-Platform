@@ -2,8 +2,11 @@ package com.group3.event_plaza.security.filter;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.group3.event_plaza.common.exception.TokenAuthenticationFailException;
+import com.group3.event_plaza.schedule.job.EmailJob;
 import com.group3.event_plaza.security.TokenAuthenticationEntryPoint;
 import com.group3.event_plaza.util.JwtUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,6 +28,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    private static final Logger log = LoggerFactory.getLogger(JwtTokenFilter.class);
 
 
     @Autowired
@@ -49,7 +54,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                     filterChain.doFilter(request,response);
                 } catch (Exception e) {
-                    logger.error(e.getMessage());
+                    log.error(e.getMessage());
                     authenticationEntryPoint.commence(request,response,new TokenAuthenticationFailException("Incorrect login status"));
                 }
 

@@ -51,6 +51,7 @@ export default function Register() {
         }
     }
 
+    // Handle form change
     const onChange = (e)=>{
         setAccount({ ...account,[e.target.name]:e.target.value})
         if(!isValidated.email || !isValidated.password

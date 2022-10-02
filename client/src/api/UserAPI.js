@@ -16,7 +16,7 @@ export const signUp = async (user)=>{
 
 
 export const getInfo  = async (email)=>{
-    const result = await axios.get("/test/info",{params:{email}})
+    const result = await axios.post("/test/info",email)
     return result 
 }
 

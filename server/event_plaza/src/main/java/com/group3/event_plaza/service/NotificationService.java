@@ -7,11 +7,13 @@ import java.util.List;
 
 public interface NotificationService {
 
-        void create();
+        void create(Notification notification,String email);
 
-        List<Notification> getAll();
+        List<Notification> getAll(String email);
 
         void update(Notification notification);
+
+        Integer getCount(String email);
 
 
 }

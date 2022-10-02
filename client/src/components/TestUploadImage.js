@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import formValidate from '../utils/validation';
 import {remove} from '../api/UserAPI'
+import { getNotifications } from '../api/NotificationAPI';
 export default function TestUploadImage() {
 
     const {imageURL,uploadImage,progress,buffer} = useUpload()
@@ -31,6 +32,8 @@ export default function TestUploadImage() {
         {
             image && <img src={URL.createObjectURL(image)} alt="avatar"/>
         }
+
+        <button onClick={getNotifications}>Get Notifications</button>
     </div>
   )
 }

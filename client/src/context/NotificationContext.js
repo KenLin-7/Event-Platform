@@ -4,7 +4,7 @@ import { useUser } from './UserContext';
 import Button from '@mui/material/Button';
 import { SnackbarProvider} from 'notistack';
 import Notification from '../components/Notification';
-
+import { createNotification } from '../api/NotificationAPI';
 
 const Stomp = require('stompjs')
 // import Stomp from 'stomp-websocket'
@@ -22,7 +22,7 @@ export const NotificationProvider = ({children})=>{
     const [notifications,setNotifications] = useState([]);
     const [currentNotification,setCurrentNotification] = useState("")
     const [connected,setConnected] = useState(false)
-
+    const [total,setTotal] = useState(0)
 
 
     // connect to web socket to recieve notification
@@ -79,14 +79,15 @@ export const NotificationProvider = ({children})=>{
 
 
     // notify participant if event information has been upadated
-    const sendEventMessage = (eventId,content)=>{
+    const sendEventMessage = (eventId,message,recieverEmail)=>{
         if(stompClient){
             let notification = {
-                message:content,
+                message:message,
                 eventId:eventId
             }
             stompClient.send(`/event/${eventId}/notification`,{},JSON.stringify(notification))
         }
+        createNotification(recieverEmail,message,"status")
 
     }
 
@@ -99,6 +100,7 @@ export const NotificationProvider = ({children})=>{
                 email:email
             }
             stompClient.send(`/user/${email}/notification`,{},JSON.stringify(notification))
+            createNotification(email,message,"status")
         }
     }
 

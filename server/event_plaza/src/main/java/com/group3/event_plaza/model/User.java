@@ -3,6 +3,8 @@ package com.group3.event_plaza.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -47,10 +49,11 @@ import java.util.Set;
     )
     private List<Role> role = new ArrayList<>();
 
-    @OneToMany(mappedBy = "requester")
+    @OneToMany(mappedBy = "requester",fetch = FetchType.LAZY)
     private List<Registration> registrations;
 
-    @OneToMany(mappedBy = "receiver")
+    @OneToMany(mappedBy = "receiver",fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("notifications")
     private List<Notification> notifications;
 
 

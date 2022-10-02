@@ -1,0 +1,44 @@
+.container{
+    background: #FFFFFF;
+    margin: 10px 0px;
+    padding: 12px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.container:hover{
+    background-color:#E5E5E5;
+    cursor: pointer;
+}
+
+.event{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.event .content{
+    width: 100%;
+    padding: 5px 10px;
+    background-color: #fdfafafb;
+    border-radius: 0 8px  8px 0; 
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.time{
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    margin-top:10px ;
+    font-size: 12px;
+}
+
+.message{
+    margin-bottom: 10px;
+}
+.title{
+    font-family: Sora;
+    margin-bottom: 10px;
+}

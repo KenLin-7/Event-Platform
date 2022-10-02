@@ -22,6 +22,7 @@ public class NotificationImpl implements NotificationService, MessageService {
     @Autowired
     private  UserRepository userRepository;
 
+    @Autowired
     private NotificationRepository notificationRepository;
 
 
@@ -36,8 +37,11 @@ public class NotificationImpl implements NotificationService, MessageService {
 
     }
 
-
-
+    /**
+     * Send notification when event has been updated
+     * @param eventId
+     * @param content
+     */
     @Override
     public void eventNotification(String eventId,String content){
             simpMessagingTemplate.convertAndSend("/event/"+eventId+"/notification","Event Update");
@@ -46,17 +50,31 @@ public class NotificationImpl implements NotificationService, MessageService {
 
 
     @Override
-    public void create() {
+    public void create(Notification notification,String email) {
+        notification.setRead(false);
+        User receiver = userRepository.findUserByEmail(email);
+        notification.setReceiver(receiver);
+
+        notificationRepository.save(notification);
 
     }
 
     @Override
-    public List<Notification> getAll() {
-        return notificationRepository.findAll();
+    public List<Notification> getAll(String email) {
+//        User receiver = userRepository.findUserByEmail(email);
+        return notificationRepository.findAllByReceiver_UserId(2);
     }
+
+
 
     @Override
     public void update(Notification notification) {
 
+    }
+
+    @Override
+    public Integer getCount(String email) {
+        User user = userRepository.findUserByEmail(email);
+        return notificationRepository.countByReceiver_UserId(user.getUserId());
     }
 }

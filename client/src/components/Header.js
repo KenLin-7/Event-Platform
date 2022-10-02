@@ -9,6 +9,9 @@ import styles from '../asserts/stylesheet/Header.module.css'
 import { useUser } from '../context/UserContext';
 import logo from '../asserts/images/logo3.png'
 import { useNotification } from '../context/NotificationContext';
+import BadgeNotification from './Notification/BadgeNotification';
+import { getInfo } from '../api/UserAPI';
+import { createNotification } from '../api/NotificationAPI';
 
 const items = [
   { id: 1, text: 'Latest event' },
@@ -37,6 +40,13 @@ const Header = () => {
     disconnect()
   }
 
+  const TESTUSer = ()=>{
+    getInfo("ken@test.com")
+  }
+
+  const TESTSendMESS = ()=>{
+    sendUserMessage("ken@test.com","Message Sent")
+  }
 
   return (
     <div className={styles["header-container"]}>
@@ -72,9 +82,11 @@ const Header = () => {
             <Link to="/register"><Button variant="contained" sx={{ borderRadius: 2 }} className="header-btn">Register</Button></Link>
           </Stack>):(
           <Stack className={styles["right-stack"]} direction="row" spacing={2}>
+            <BadgeNotification/>
             <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={logout} className="header-btn">Log out</Button>
             <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={TESTSubscribe} className="header-btn">Test</Button>
-            <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={TESTsendNotificiton} className="header-btn">Send</Button>
+            <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={TESTSendMESS} className="header-btn">Send</Button>
+            <Button onClick={TESTUSer}>Test User</Button>
 
           </Stack>
 
