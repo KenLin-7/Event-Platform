@@ -5,6 +5,8 @@ import formValidate from '../../utils/validation'
 import bg from '../../asserts/images/register-bg.png'
 import { signUp } from '../../api/UserAPI'
 import { Link } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
+import { Alert } from '@mui/material'
 export default function Register() {
 
     const [account,setAccount] = useState({
@@ -24,6 +26,8 @@ export default function Register() {
     const [passwordError,setPasswordError] = useState("Please enter your password")
     const [phoneError,setPhoneError] = useState("Please enter your phone")
 
+    const [message,setMessage] = useState({show:false,content:"",severity:""})
+
     const validation = ()=>{
         const validate = {
           email: account.email,
@@ -38,7 +42,6 @@ export default function Register() {
         if(account.password !== "")  setPasswordError("Please enter correct password format")         
         if(account.phone !== "")  setPasswordError("Please enter correct phone format") 
 
-        
         setIsValidated(result)  
         return result
     }
@@ -47,7 +50,13 @@ export default function Register() {
 
         const result = validation()
         if(result.email & result.password &result.nickname & result.phone){
-            signUp(account)
+            signUp(account).then((res)=>{
+                if(res.code == 200){
+                    setMessage({show:true,message:"Register succcessfully",severity:"success"})
+                }else{
+                    setMessage({show:true,message:"Email was taken",severity:"error"})
+                }
+            })
         }
     }
 
@@ -135,12 +144,14 @@ export default function Register() {
                             }
                         </div>
                     </div>
-   
+                    {message.show && <Alert severity={"error"} sx={{marginBottom:"15px"}}>{message.content}</Alert>} 
                     <div className={FormStyles['button-area']}>
                         <button className={FormStyles.formButton} onClick={onClick}>Create an account</button>
                         <span><span>Privacy Policy </span>and <span>Terms of service</span> apply</span>
                     </div>
-
+                    {/* {
+                      auth && <Navigate to="/login" replace={true}/>
+                    } */}
                 </div>
 
             </div>
