@@ -12,11 +12,10 @@ public class ControllerExceptionHandler {
 
 
     /**
-     * Handle Data not found in database exception
+     * Handle data not found in database exception
      * @param exception
      * @return
      */
-
     @ExceptionHandler(DataNotFoundException.class)
     public ResponseResult<String> handleDataNotFound(DataNotFoundException exception){
         return ResponseResult.fail(exception.getMessage());
