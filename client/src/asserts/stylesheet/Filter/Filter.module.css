@@ -7,7 +7,8 @@
 
 .filter-left-bar {
   flex: 1;
-  background-color: antiquewhite;
+  padding-left: 50px;
+  padding-top: 50px;
 }
 
 .filter-title {
@@ -19,14 +20,103 @@
 }
 
 .filter-content {
-  flex: 4;
-  background-color: aqua;
+  flex: 5;
 }
 
 .filter-list {
   line-height: 100px;
+  margin-left: 30px;
 }
 
 .filter-category {
   font-weight: 700;
+  font-size: 25px;
+  margin-left: -20px;
+  margin-bottom: -20px;
+}
+
+.search-input {
+  width: 600px;
+  margin: 0 auto;
+  margin-top: 25px;
+}
+
+.event-card {
+  margin: 0 auto;
+  width: 964px;
+  height: 260px;
+  margin-top: 40px;
+  display: flex;
+}
+
+.event-card-left {
+  flex: 2;
+}
+
+.event-card-img {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+
+  cursor: pointer;
+
+}
+
+.event-image {
+  width: 100%;
+  height: 100%;
+}
+
+.event-card-title {
+  font-size: 20px;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.event-card-time {
+  color: red;
+  margin-top: 10px;
+  padding-left: 15px;
+}
+
+.filter-items{
+  cursor: pointer;
+}
+
+.filter-items:hover, .filter-items:focus, .filter-items:active {
+  -webkit-transform: scale(0.9);
+  transform: scale(0.9);
+}
+
+.event-card-description {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 150%;
+  margin-top: 10px;
+  padding-left: 15px;
+  cursor: pointer;
+}
+
+.event-card-participants {
+  display: flex;
+  padding-left: 10px;
+}
+
+.avatars-group-text {
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 200px;
+  color: #7780A1;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.pagination{
+  width: 200px;
+  padding-top: 20px;
+  margin: 0 auto;
 }
