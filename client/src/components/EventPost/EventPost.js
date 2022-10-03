@@ -1,20 +1,57 @@
-import {Button, Container, MenuItem, TextField, Typography, Stack, Card} from "@mui/material";
+import {
+    Button,
+    Container,
+    MenuItem,
+    TextField,
+    Typography,
+    Stack,
+    Card,
+    Dialog,
+    DialogContent,
+    DialogContentText, DialogTitle, DialogActions
+} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import {useState} from "react";
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Divider from "@mui/material/Divider";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import TimePickerCPN from "./TimePickerCPN";
 import UploadImage from "./UploadImage";
 import CalendarCPN from "./CalendarCPN";
 import formValidate from "../../utils/validation";
 import React from "react";
-
+import dayjs from "dayjs";
+import {postEvent} from "../../api/EventAPI";
+import {useUser} from "../../context/UserContext";
 
 export default function EventPost() {
 
+    const [category, setCategory] = useState('Sports');
     const categories = [
+        {
+            value: 'Sports',
+            label: 'Sports'
+        },
+        {
+            value: 'Music',
+            label: 'Music'
+        },
+        {
+            value: 'Arts',
+            label: 'Arts'
+        },
+
+    ];
+
+    const handleCategoryChange = (e) => {
+        setCategory(e.target.value)
+        setEvent({...event, ["category"]: e.target.value})
+    };
+
+
+
+    const [state, setState] = useState('NSW');
+    const states = [
         {
             value: 'NSW',
             label: 'NSW'
@@ -32,9 +69,15 @@ export default function EventPost() {
             label: 'QLD'
         },
     ];
+    const handleSateChange = (e) => {
+        setState(e.target.value)
+        setEvent({...event, ["state"]: e.target.value})
+    };
 
-    const [category, setCurrency] = useState('NSW');
+
+
     const participant_regex = /(^[1-9]\d*$)/
+    const [uploadingImageFlag, setUploadingImageFlag] = useState(0)
 
     const [event, setEvent] = useState({
         eventTitle: "",
@@ -47,9 +90,11 @@ export default function EventPost() {
         suburb: "",
         state: 'NSW',
         postcode: "",
-        dateAndTime: ""
+        dateAndTime: dayjs('2022-11-01T00:00')
 
     })
+
+
     const [isValidated, setIsValidated] = useState({
         eventTitle: true,
         address1: true,
@@ -71,7 +116,7 @@ export default function EventPost() {
 
     const [participantError, setParticipantError] = useState({
         show: false,
-        content: "enter the participant number"
+        content: "How many participant"
     })
 
     const [suburbError, setSuburbError] = useState({
@@ -92,13 +137,6 @@ export default function EventPost() {
             postcode: event.postcode
         }
         const result = formValidate(validate)
-
-        // setting helper text
-
-
-
-        if (event.postcode !== "") setPostcodeError("Please enter correct phone format")
-
 
         setIsValidated(result)
         return result
@@ -141,22 +179,36 @@ export default function EventPost() {
         if (!result.postcode) {
 
             setPostcodeError(
-
                 {
                     show: true,
                     content: "postcode is incorrect"
                 }
-
             )
         }
 
+        if(result.suburb&&result.postcode&&result.eventTitle&&result.address1){
+            let address = ""
+            if(event.address2!=null&&event.address2!="") {
+                address = event.address1 + "/" + event.address2 + "/" + event.suburb + "/" + event.state + "/" + event.postcode
+            }else {
+                address = event.address1 + "/" + "NoAddress2" + "/" + event.suburb + "/" + event.state + "/" + event.postcode
+            }
+            const databaseEvent = {
+
+                title:event.eventTitle,
+                image:event.image,
+                status:"1",
+                startDate: event.dateAndTime,
+                maxParticipant: event.participant ,
+                description:event.description,
+                location:address
+            }
+            postEvent(databaseEvent)
+        }
     }
 
 
-    const handleSateChange = (e) => {
-        setCurrency(e.target.value)
-        setEvent({...event, ["state"]: e.target.value})
-    };
+
     const onChange = (e) => {
         setEvent({...event, [e.target.name]: e.target.value})
 
@@ -173,21 +225,16 @@ export default function EventPost() {
             if (value) {
                 setParticipantError({
                         show: false,
-                        content: "enter the participant number"
+                        content: "How many participant"
                     }
                 )
                 setEvent({...event, ["participant"]: e.target.value})
             } else {
-                setParticipantError(
-                    {
-                        show: true,
-                        content: "number is not correct"
-                    }
-                )
-                e.target.value = 0
+                e.target.value = 1
             }
         }
     }
+
 
     const onClickEventTitleError = (e) => {
         setEventTitleError(
@@ -206,7 +253,7 @@ export default function EventPost() {
         )
     }
 
-    const onClickSuburbError = (e) =>{
+    const onClickSuburbError = (e) => {
         setSuburbError(
             {
                 show: false,
@@ -215,7 +262,7 @@ export default function EventPost() {
         )
     }
 
-    const onClickPostcodeError = (e) =>{
+    const onClickPostcodeError = (e) => {
         setPostcodeError(
             {
                 show: false,
@@ -223,6 +270,19 @@ export default function EventPost() {
             }
         )
     }
+
+    const [open, setOpen] = useState(false);
+    const onCancelClick = (e) => {
+        setOpen(true);
+    }
+    const handleCancelNo = () => {
+        setOpen(false);
+    };
+
+    const handleCancelYes = () => {
+        setOpen(false);
+        // go back to the previous page
+    };
 
 
     return (
@@ -287,7 +347,7 @@ export default function EventPost() {
                                 required
                                 label="Category"
                                 value={category}
-                                onChange={handleSateChange}
+                                onChange={handleCategoryChange}
                                 helperText="Please select a category"
                             >
                                 {categories.map((option) => (
@@ -315,7 +375,9 @@ export default function EventPost() {
                     <Stack spacing={1} sx={{padding: 1, marginLeft: 6, marginRight: 40, marginTop: 1}}>
                         <Typography fontSize={20} fontWeight={300}> Upload an image:</Typography>
                         <Card>
-                            <UploadImage name={"image"}></UploadImage>
+                            <UploadImage onImage={(image) => setEvent({...event, ["image"]: image})}
+                                         onFlag={(uploadingFlag) => setUploadingImageFlag(uploadingFlag)}
+                                         name={"image"}></UploadImage>
                         </Card>
                     </Stack>
 
@@ -374,11 +436,11 @@ export default function EventPost() {
                                    required
                                    fullWidth
                                    label="State"
-                                   value={category}
+                                   value={state}
                                    onChange={handleSateChange}
 
                         >
-                            {categories.map((option) => (
+                            {states.map((option) => (
                                 <MenuItem key={option.value} value={option.value}>
                                     {option.label}
                                 </MenuItem>
@@ -407,36 +469,60 @@ export default function EventPost() {
                     </Stack>
 
                     {/*         Line 1: start date and time     */}
-                    <Stack direction={"row"} sx={{padding: 1, marginLeft: 6, marginRight: 40}}>
-
-                        <Stack>
-                            <CalendarCPN label={"Start time"}></CalendarCPN>
+                    <Stack sx={{padding: 1, marginLeft: 6, marginRight: 40}}>
+                        <Stack sx={{marginBottom: 2}}>
+                            <Typography fontSize={18}> Please select the Date and Time: </Typography>
                         </Stack>
-                        <Stack sx={{marginLeft: 3}}>
-                            <TimePickerCPN></TimePickerCPN>
-                        </Stack>
-
-                    </Stack>
-
-                    {/*         Line 2: end date and time     */}
-                    <Stack direction={"row"} sx={{padding: 1, marginLeft: 6, marginRight: 40, marginTop: 2}}>
-                        <Stack>
-                            <CalendarCPN label={"End time"}></CalendarCPN>
-                        </Stack>
-                        <Stack sx={{marginLeft: 3}}>
-                            <TimePickerCPN></TimePickerCPN>
+                        <Stack sx={{marginRight: 40}}>
+                            <CalendarCPN
+                                onTime={(time) => setEvent({...event, ["dateAndTime"]: time})}
+                                         ></CalendarCPN>
                         </Stack>
                     </Stack>
+
 
                     {/*      *****       Last two buttons    *****      */}
-                    <Stack direction={"row"} sx={{padding: 1, marginLeft: 6, marginRight: 50, marginY: 5}}>
+                    <Stack direction={"row"}
+                           sx={{padding: 1, marginLeft: 85, marginRight: 6, marginTop: 8, marginBottom: 4}}>
 
                         {/*        cancel button      */}
-                        <Button variant={"outlined"} align={"right"}> Cancel </Button>
+                        <Button variant={"outlined"} align={"right"} onClick={onCancelClick}> Cancel </Button>
+                        <Dialog
+                            open={open}
+                            onClose={handleCancelNo}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">
+                                {"Do you want to Cancel?"}
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    Click Yes to confirm cancel, the information will not be saved.
+                                    Click No to go back
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleCancelNo}>No</Button>
+                                <Button onClick={handleCancelYes} autoFocus>
+                                    Yes
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
 
                         {/*        confirm button      */}
-                        <Button onClick={onClick} variant={"contained"} align={"right"}
-                                sx={{marginLeft: 2}}> Confirm </Button>
+                        {console.log(uploadingImageFlag)}
+                        {uploadingImageFlag === 1 ?
+
+                            <Button disabled variant={"contained"} align={"right"}
+                                    sx={{marginLeft: 2}}
+                            > Confirm </Button>
+
+                            : <Button onClick={onClick} variant={"contained"} align={"right"}
+                                      sx={{marginLeft: 2}}
+                            > Confirm </Button>
+
+                        }
                     </Stack>
 
                 </Paper>
