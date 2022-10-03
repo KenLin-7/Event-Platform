@@ -5,12 +5,11 @@ import com.group3.event_plaza.common.ResponseResult;
 import com.group3.event_plaza.model.Event;
 import com.group3.event_plaza.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/event")
@@ -24,5 +23,12 @@ public class EventController {
         eventService.createEvent(principal,event);
         return ResponseResult.success();
     }
+
+    @GetMapping("/search")
+    public ResponseResult<String> search(String id){
+
+        return ResponseResult.success(id);
+    }
+
 
 }

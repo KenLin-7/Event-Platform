@@ -27,14 +27,16 @@ const Header = () => {
     <div className={styles["header-container"]}>
       <Container sx={{ display: "flex", padding: 3 }} className={styles["header-container-inner"]}>
 
+      <Link to="/">
         <Box className={styles["left"]}>
           <Stack direction="row" spacing={2}>
-            <img src={logo}/>
+            <img src={logo} alt="" />
             <Typography className={styles["header-logo-font"]}>
               Event Plaza
             </Typography>
           </Stack>
         </Box>
+      </Link>
 
         <div className={styles["mid"]}>
           {

@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class EventServiceImpl implements EventService {
 
@@ -40,5 +43,10 @@ public class EventServiceImpl implements EventService {
         Category category = categoryRepository.findByCategoryId(1);
         event.setCategory(category);
         eventRepository.save(event);
+    }
+
+    @Override
+    public List<Event> searchEvent(String keyword){
+        return new ArrayList<>();
     }
 }

@@ -32,11 +32,17 @@ const FilterPage = () => {
   const PER_PAGE = 2;
   const count = Math.ceil(cards.length / PER_PAGE);
   const _DATA = usePagination(cards, PER_PAGE);
+  const [searchInput, setSearchInput] = useState();
+
 
   const handleChange = (e, p) => {
     setPage(p);
     _DATA.jump(p);
   };
+
+  const onSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  }
 
   return (
     <div className={styles['filter-container']}>
@@ -72,6 +78,7 @@ const FilterPage = () => {
             sx={{ ml: 1, flex: 1 }}
             placeholder="Search Events"
             inputProps={{ 'aria-label': 'search google maps' }}
+            onChange={onSearchInputChange}
           />
           <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
             <SearchIcon />
