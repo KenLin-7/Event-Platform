@@ -33,18 +33,17 @@ export default function EventDetail() {
 
     useEffect(() => {
 
-
-    })
-        const testGetEvent= () => {
             getEvent(eventId).then(
                 (res) => {
                     setEvent(res)
                     setLoading(false)
-                    console.log(event)
                 }
             )
 
-    }
+    })
+
+
+
 
     return (
 
@@ -97,7 +96,7 @@ export default function EventDetail() {
                                                                 <Typography align={'center'} sx={{marginTop: 2}}
                                                                             fontWeight={500}> Event Time </Typography>
 
-                                                                <Button onClick={testGetEvent} fullWidth align={'center'} sx={{marginY: 3}}
+                                                                <Button  fullWidth align={'center'} sx={{marginY: 3}}
                                                                          variant="contained" size="large">Regist
                                                                     Now</Button>
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/event")
@@ -22,12 +23,10 @@ public class EventController {
         return ResponseResult.success();
     }
 
-    @GetMapping("/eventDetail")
-    public ResponseResult<Event> getEventDetail(int eventId){
-        System.out.println(eventId+2.23232323232);
-        Event event =  eventService.getEvent(eventId);
-        return (ResponseResult.success(event));
+    @PostMapping("/eventDetail")
+    public ResponseResult<Event> getEventDetail(@RequestBody Map<String,String> map){
+        int newId = Integer.parseInt(map.get("eventId"));
+        Event event = eventService.getEvent(newId);
+        return ResponseResult.success(event);
     }
-
-
 }

@@ -3,7 +3,7 @@ const API = '/api/event'
 
 
 export const getEvent = async (eventId)=>{
-    const result = await axios.get(API+"/eventDetail",eventId)
-    console.log(232323232323);
+
+    const result = await axios.post(API+"/eventDetail", {eventId:eventId})
     return result
 }
