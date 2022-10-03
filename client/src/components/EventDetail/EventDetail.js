@@ -43,8 +43,6 @@ export default function EventDetail() {
     })
 
 
-
-
     return (
 
         <div>{
@@ -96,7 +94,7 @@ export default function EventDetail() {
                                                                 <Typography align={'center'} sx={{marginTop: 2}}
                                                                             fontWeight={500}> Event Time </Typography>
 
-                                                                <Button  fullWidth align={'center'} sx={{marginY: 3}}
+                                                                <Button fullWidth align={'center'} sx={{marginY: 3}}
                                                                          variant="contained" size="large">Regist
                                                                     Now</Button>
 
