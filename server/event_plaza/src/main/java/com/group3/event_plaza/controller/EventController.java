@@ -5,10 +5,7 @@ import com.group3.event_plaza.common.ResponseResult;
 import com.group3.event_plaza.model.Event;
 import com.group3.event_plaza.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -24,5 +21,13 @@ public class EventController {
         eventService.createEvent(principal,event);
         return ResponseResult.success();
     }
+
+    @GetMapping("/eventDetail")
+    public ResponseResult<Event> getEventDetail(int eventId){
+        System.out.println(eventId+2.23232323232);
+        Event event =  eventService.getEvent(eventId);
+        return (ResponseResult.success(event));
+    }
+
 
 }

@@ -41,4 +41,12 @@ public class EventServiceImpl implements EventService {
         event.setCategory(category);
         eventRepository.save(event);
     }
+
+    @Override
+    public Event getEvent(int eventId) {
+
+        Event event= eventRepository.findByEventId(eventId);
+
+        return event;
+    }
 }
