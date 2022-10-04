@@ -15,7 +15,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import ParticipantCPN from "./ParticipantCPN";
 import {getEvent} from "../../api/EventAPI";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import {getParticipants} from "../../api/RegistrationAPI";
+
 
 
 export default function EventDetail(effect, deps) {
@@ -36,6 +36,7 @@ export default function EventDetail(effect, deps) {
     const [eventPoster, setEventPoster] = useState({nickname: "", email: "", avatar: AccountCircleIcon})
     const [participants,setParticipants] =useState(null)
     const [pendFlag,setPendFlag] = useState(true)
+    const [pendingFlag,setPendingFlag] = useState(false)
 
     useEffect(() => {
         getEvent(eventId).then(
@@ -57,7 +58,7 @@ export default function EventDetail(effect, deps) {
             processParticipants(event.eventId)
 
         }
-    }, [event])
+    }, [event],[pendingFlag],[pendFlag])
 
 
     const processTime = (timeString) => {
@@ -112,7 +113,16 @@ export default function EventDetail(effect, deps) {
         //     }
         //
         // )
+        setParticipants(0)
+        if (participants>=event.maxParticipant){
+            setPendFlag(false)}
+            else{
+                setPendFlag(true)
+            }
+    }
 
+    const onPendClick = () =>{
+        setPendingFlag(true)
     }
 
 
@@ -175,11 +185,35 @@ export default function EventDetail(effect, deps) {
                                                                 <Typography align={'center'}
                                                                 > {location.suburb + ", " + location.state + " " + location.postcode} </Typography>
                                                                 <Typography align={'center'} sx={{marginTop: 2}}
-                                                                            fontWeight={500}>Available: 0 / {event.maxParticipant} </Typography>
-                                                                <Button fullWidth align={'center'} sx={{marginY: 3}}
-                                                                        variant="contained" size="large">
+                                                                            fontWeight={500}>Available: {participants} / {event.maxParticipant} </Typography>
+                                                                {
+                                                                    pendFlag?
+                                                                        (
+                                                                            pendingFlag?
+                                                                                <Button disabled fullWidth align={'center'} sx={{marginY: 3}}
+                                                                                        variant="contained" size="large">
+                                                                                    pending</Button>
+                                                                        :
+                                                                                <Button onClick={onPendClick} fullWidth align={'center'} sx={{marginY: 3}}
+                                                                                        variant="contained" size="large">
 
-                                                                    Regist Now</Button>
+                                                                                    Regist Now</Button>
+
+                                                                        )
+
+
+                                                                        :
+
+                                                                        <Button disabled fullWidth align={'center'} sx={{marginY: 3}}
+                                                                                variant="contained" size="large">
+
+                                                                            Full</Button>
+
+
+                                                                }
+
+
+
 
                                                             </Container>
                                                         </Card>
