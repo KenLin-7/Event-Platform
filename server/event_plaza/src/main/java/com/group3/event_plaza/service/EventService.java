@@ -11,4 +11,10 @@ public interface EventService {
     void createEvent(Principal user ,Event event);
 
     List<Event> searchEvent(String keyword);
+
+    List<Event> getLatestEvent();
+
+    List<Event> getCurrentUserEvents(int id);
+
+    List<Event> getAllEvent();
 }

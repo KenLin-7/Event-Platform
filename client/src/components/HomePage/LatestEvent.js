@@ -11,9 +11,9 @@ import ImageTest from '../../asserts/images/test-image.png';
 import CircularProgress from '@mui/material/CircularProgress';
 import humanDateConvert from '../../utils/humanDateConvert';
 
-const LatestEvent = ({ latestEvents, flag }) => {
+const LatestEvent = ({ latestEvents, flag, ref }) => {
   return (
-    <div className={styles['latest-event-secion']}>
+    <div className={styles['latest-event-secion']} ref={ref}>
       <div className={styles['latest-event-title']}>Latest event</div>
 
       {

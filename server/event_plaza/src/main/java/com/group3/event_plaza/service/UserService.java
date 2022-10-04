@@ -13,5 +13,4 @@ public interface UserService {
 
     void removeRole(String email);
 
-
 }

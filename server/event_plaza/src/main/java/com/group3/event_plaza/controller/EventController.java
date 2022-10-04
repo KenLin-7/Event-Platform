@@ -31,4 +31,22 @@ public class EventController {
         return ResponseResult.success(list);
     }
 
+    @GetMapping("/latestEvent")
+    public ResponseResult<List<Event>> getLatestEvent(){
+        List<Event> list = eventService.getLatestEvent();
+        return ResponseResult.success(list);
+    }
+
+    @GetMapping("/getAllEvent")
+    public ResponseResult<List<Event>> getAllEvent(){
+        List<Event> list = eventService.getAllEvent();
+        return ResponseResult.success(list);
+    }
+
+    @GetMapping("/currentUserEvents")
+    public ResponseResult<List<Event>> getCurrentUserEvents(int id){
+        List<Event> list = eventService.getCurrentUserEvents(id);
+        return ResponseResult.success(list);
+    }
+
 }

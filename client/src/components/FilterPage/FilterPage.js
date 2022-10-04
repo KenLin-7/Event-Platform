@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom'
 import { search } from '../../api/FilterAPI'
 import humanDateConvert from '../../utils/humanDateConvert';
 import CircularProgress from '@mui/material/CircularProgress';
+import { getAllEvent } from '../../api/EventAPI';
 
 
 const items = [
@@ -42,10 +43,17 @@ const FilterPage = () => {
     const getFilteredEvent = () => {
       setLoading(true);
       const keyword = params.keyword
-      search(keyword).then((data) => {
-        setFilteredEventList(data.data);
-        setLoading(false);
-      });
+      if (keyword === undefined) {
+        getAllEvent().then((data) => {
+          setFilteredEventList(data.data);
+          setLoading(false);
+        })
+      } else {
+        search(keyword).then((data) => {
+          setFilteredEventList(data.data);
+          setLoading(false);
+        });
+      }
     }
 
     getFilteredEvent();

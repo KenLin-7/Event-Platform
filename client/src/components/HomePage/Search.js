@@ -6,17 +6,18 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom'
 
+
 const Search = () => {
   const navigate = useNavigate();
-  const [searchInput, setSearchInput] = useState();
+  const [searchInput, setSearchInput] = useState("");
 
   const onSearchInputChange = (e) => {
     setSearchInput(e.target.value)
   }
 
   const onSearchInputClick = () => {
-    if(searchInput === undefined){
-      return
+    if(searchInput === ""){
+      navigate('/filter/')
     }
     navigate(`/filter/${searchInput}`)
   }

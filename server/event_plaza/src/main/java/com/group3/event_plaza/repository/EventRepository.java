@@ -12,4 +12,10 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
     Event findEventByEventId(int id);
 
     List<Event> findByTitleContains(String keyword);
+
+    List<Event> findTop9ByOrderByEventIdDesc();
+
+    List<Event> findEventByOwner(int id);
+
+    List<Event> findAll();
 }

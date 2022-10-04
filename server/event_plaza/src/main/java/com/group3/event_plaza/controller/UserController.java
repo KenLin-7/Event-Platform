@@ -33,4 +33,9 @@ public class UserController {
         return ResponseResult.success();
     }
 
+    @GetMapping("/loggedIn-userInfo")
+    public ResponseResult<User> getLoggedInUserInfo(String email){
+        User user = userService.getUserInfo(email);
+        return ResponseResult.success(user);
+    }
 }

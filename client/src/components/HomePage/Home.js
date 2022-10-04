@@ -7,7 +7,7 @@ import Popular from './Popular'
 import Statistic from './Statistic'
 import { getLatestEvents } from '../../api/FilterAPI'
 
-const Home = () => {
+const Home = ({ref}) => {
   const [latestEvents, setLastestEvents] = useState([]);
   const [others, setOthers] = useState([])
   const [flag, setFlag] = useState(false);
@@ -30,7 +30,7 @@ const Home = () => {
   return (
     <div className={styles['home-container']}>
       <Search />
-      <LatestEvent latestEvents={latestEvents} flag={flag}/>
+      <LatestEvent latestEvents={latestEvents} ref={ref} flag={flag}/>
       <GetStart />
       <Popular others={others} flag={flag}/>
       <Statistic />

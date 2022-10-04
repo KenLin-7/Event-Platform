@@ -21,12 +21,10 @@ const items = [
 ];
 
 
-const Header = () => {
+const Header = ({handleClick}) => {
 
   const { auth, signOut } = useUser();
-
-
-
+  
   return (
     <div className={styles["header-container"]}>
       <Container sx={{ display: "flex", padding: 3 }} className={styles["header-container-inner"]}>
@@ -46,7 +44,7 @@ const Header = () => {
           {
             items.map(item => {
               return (
-                <Button key={item.id} className={styles["header-mid-btn"]}>
+                <Button key={item.id} className={styles["header-mid-btn"]} onClick={handleClick}>
                   <Typography className="header-font" sx={{ color: '#7780A1', fontSize: 'small' }}>
                     {item.text}
                   </Typography>
@@ -66,7 +64,7 @@ const Header = () => {
               <Stack direction={"row"} spacing={1} sx={{ marginRight: 5 }}>
                 <div className={styles['dropdown']}>
                   <Stack direction={"row"}>
-                    <Avatar sx={{ width: 40, height: 40, cursor: "pointer" }} src="" />
+                    <Avatar sx={{ width: 40, height: 40 }} src="" />
                     <KeyboardArrowDownIcon sx={{marginTop: 1.5, marginLeft:0.4, fontSize: 18}}/>
                   </Stack>
 

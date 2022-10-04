@@ -50,4 +50,22 @@ public class EventServiceImpl implements EventService {
         List<Event> list = eventRepository.findByTitleContains(keyword);
         return list;
     }
+
+    @Override
+    public  List<Event> getLatestEvent(){
+        List<Event> list = eventRepository.findTop9ByOrderByEventIdDesc();
+        return list;
+    }
+
+    @Override
+    public List<Event> getCurrentUserEvents(int id){
+        List<Event> list = eventRepository.findEventByOwner(id);
+        return list;
+    }
+
+    @Override
+    public List<Event> getAllEvent(){
+        List<Event> list = eventRepository.findAll();
+        return list;
+    }
 }
