@@ -4,10 +4,8 @@ import {
     Box,
     Button,
     Card,
-    CardActionArea,
-    CardMedia, Chip,
+    CardMedia,
     Container, Divider,
-    Grid, imageListClasses,
     Paper,
     Stack,
     Typography
@@ -16,9 +14,11 @@ import img from "./xxxxxxxx.png"
 import Grid2 from "@mui/material/Unstable_Grid2";
 import ParticipantCPN from "./ParticipantCPN";
 import {getEvent} from "../../api/EventAPI";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {getParticipants} from "../../api/RegistrationAPI";
 
 
-export default function EventDetail() {
+export default function EventDetail(effect, deps) {
 
     const eventIntro = "See the night sky light up with spectacular fireworks displays every Saturday night.\n" +
         "\n" +
@@ -27,20 +27,93 @@ export default function EventDetail() {
         "Time: 8.30pm then at 9pm from 8 October 2022"
 
 
-    const [eventId, setEventId] = useState(6)
+    const [eventId, setEventId] = useState(7)
+    const [loading, setLoading] = useState(true);
     const [event, setEvent] = useState(null)
-    const [loading, setLoading] = useState(false);
+    const [eventDate, setEventDate] = useState("")
+    const [eventImg, setEventImg] = useState(img)
+    const [location, setLocation] = useState({street: "", suburb: "", state: "", postcode: ""})
+    const [eventPoster, setEventPoster] = useState({nickname: "", email: "", avatar: AccountCircleIcon})
+    const [participants,setParticipants] =useState(null)
+
 
     useEffect(() => {
+        getEvent(eventId).then(
+            (res) => {
+                setEvent(res.data)
 
-            getEvent(eventId).then(
-                (res) => {
-                    setEvent(res)
-                    setLoading(false)
-                }
-            )
+                setLoading(false)
+            })
 
-    })
+
+    }, [eventId])
+
+    useEffect(() => {
+        if (!loading) {
+            processTime(event.startDate)
+            processLocation(event.location)
+            processImage(event.image)
+            processOwner(event.owner)
+            processParticipants(event.eventId)
+
+        }
+    }, [event])
+
+
+    const processTime = (timeString) => {
+        const timeDate = new Date(timeString)
+        const date = timeDate.getUTCFullYear() + "/" + timeDate.getUTCMonth() + "/" + timeDate.getUTCDay()
+        let hours = ""
+        if (timeDate.getMinutes() === 0) {
+
+            hours = timeDate.getUTCHours() + ":" + "00"
+        } else {
+            hours = timeDate.getUTCHours() + ":" + timeDate.getMinutes()
+        }
+
+
+
+        setEventDate(date + " " + hours)
+    }
+
+    const processLocation = (locationString) => {
+
+        const splitString = locationString.split("+")
+        if (splitString.length === 5) {
+            if (splitString[1] === "NoAddress2") {
+                setLocation({
+                    street: splitString[0],
+                    suburb: splitString[2],
+                    state: splitString[3],
+                    postcode: splitString[4]
+                })
+            } else {
+                const street = splitString[0] + " " + splitString[1]
+                setLocation({street: street, suburb: splitString[2], state: splitString[3], postcode: splitString[4]})
+            }
+        }
+    }
+
+    const processImage = (imageURL) => {
+        if (imageURL && imageURL != "") {
+            setEventImg(imageURL)
+        }
+    }
+
+    const processOwner = (owner) => {
+        setEventPoster({nickname: owner.nickname, email: owner.email, avatar: owner.avatar})
+    }
+
+    const processParticipants= (eventId) =>{
+        // getParticipants(eventId).then(
+        //     (res) =>{
+        //         setParticipants(res.data)
+        //         console.log(participants)
+        //     }
+        //
+        // )
+
+    }
 
 
     return (
@@ -63,9 +136,13 @@ export default function EventDetail() {
                                                 <CardMedia
                                                     component="img"
                                                     height="450"
-                                                    image={img}
-                                                    alt="eventpic"
+                                                    width="100%"
+                                                    alt="green iguana"
+                                                    image={eventImg}
                                                 />
+
+                                                {/*<img src={eventImg}*/}
+                                                {/*    width="100%" alt="iphone11"  height={450}/>*/}
                                             </Card>
                                         </Grid2>
 
@@ -73,30 +150,36 @@ export default function EventDetail() {
 
                                             <Container>
                                                 <Stack direction={"row"} sx={{marginLeft: 2, marginTop: 8}} spacing={1}>
-                                                    <Avatar sx={{width: 50, height: 50}} src={img}/>
+                                                    <Avatar sx={{width: 50, height: 50}} src={eventPoster.avatar}/>
                                                     <Stack>
-                                                        <Typography align={"left"} fontSize={16}> Hoster
-                                                            name </Typography>
+                                                        <Typography align={"left"}
+                                                                    fontSize={16}> {eventPoster.nickname} </Typography>
                                                         <Typography align={"left"} fontSize={12}
-                                                                    fontWeight={500}> @xxxxx Account
-                                                            Number </Typography>
+                                                                    fontWeight={500}> {eventPoster.email}
+                                                        </Typography>
                                                     </Stack>
                                                 </Stack>
                                                 <Container>
-                                                    <Stack sx={{marginTop: 6}}>
+                                                    <Stack sx={{marginTop: 4}}>
 
                                                         <Card elevation={5}>
                                                             <Container>
 
-                                                                <Typography align={'center'} sx={{marginTop: 5}}
-                                                                            fontSize={25}> EVENT NAME </Typography>
+                                                                <Typography align={'center'} sx={{marginTop: 3}}
+                                                                            fontSize={25}> {event.title} </Typography>
 
                                                                 <Typography align={'center'} sx={{marginTop: 2}}
-                                                                            fontWeight={500}> Event Time </Typography>
-
+                                                                            fontWeight={500}> {eventDate} </Typography>
+                                                                <Typography align={'center'} sx={{marginTop: 2}}
+                                                                > {location.street} </Typography>
+                                                                <Typography align={'center'}
+                                                                > {location.suburb + ", " + location.state + " " + location.postcode} </Typography>
+                                                                <Typography align={'center'} sx={{marginTop: 2}}
+                                                                            fontWeight={500}>Available: 0 / {event.maxParticipant} </Typography>
                                                                 <Button fullWidth align={'center'} sx={{marginY: 3}}
-                                                                         variant="contained" size="large">Regist
-                                                                    Now</Button>
+                                                                        variant="contained" size="large">
+
+                                                                    Regist Now</Button>
 
                                                             </Container>
                                                         </Card>
@@ -114,7 +197,7 @@ export default function EventDetail() {
                                 <Typography align={'center'} fontSize={25} fontWeight={500}> Event
                                     Introduction </Typography>
                                 <Typography align={'center'} fontSize={18}
-                                            sx={{marginTop: 2}}> {eventIntro} </Typography>
+                                            sx={{marginTop: 2}}> {event.description} </Typography>
 
                             </Stack>
 

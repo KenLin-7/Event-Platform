@@ -17,7 +17,7 @@ function App() {
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/register' element={<Register/>}/>
                     <Route path='/test' element={<TestUploadImage/>}/>
-                    <Route path='/eventDetail' element={<EventDetail/>} />
+                    <Route path='/eventdetail' element={<EventDetail/>} />
                 </Route>
             </Routes>
         </UserProvider>
