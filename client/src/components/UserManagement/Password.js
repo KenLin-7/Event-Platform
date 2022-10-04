@@ -1,5 +1,6 @@
 import SiderBar from '../UserManagement/SiderBar'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import {useNavigate}  from "react-router-dom";
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { Container, Grid, Avatar, Box, Typography, TextField, Button, Alert} from '@mui/material'
 import { Snackbar, CircularProgress} from '@mui/material'
@@ -10,6 +11,7 @@ import formValidate from '../../utils/validation';
 import FormStyles from '../../asserts/stylesheet/Form.module.css';
 
 export default function Password(){
+  const navigate = useNavigate()
   const {auth, signOut} = useUser();
   const [password,setPassword] = useState("")
   const [code,setCode] = useState("")
@@ -23,20 +25,31 @@ export default function Password(){
   const [errorMsg,setErrorMsg] = useState("")
   const [codeDisabled, setCodeDisabled] = React.useState(false);
 
+  const onChange = (e) =>{
+    setPassword(e.target.value)
+    if(!isValidated) validation()
+    setCode(e.target.value)
+    if(code!==''){setIsValidatedCode(true)}
+  }
+
+  const onChangeCode = (e) =>{
+    setCode(e.target.value)
+    if(code!==''){setIsValidatedCode(true)}
+  }
+
   const validation = ()=>{
     const validate = {
       password: password, 
     }
     const result = formValidate(validate)
-    setIsValidated(result)
-    if(password !== "")  setPasswordError("Please enter correct password")        
+    setIsValidated(result.password)
+    if(password !== "")  setPasswordError("Please enter correct password")
     return result
   }
 
   const buttonClick = (e) => {
     e.preventDefault()
     const result = validation()
-    console.log(result.password);
       if(result.password && code!==""){
         setOpen(true);
         updateUserPassword(password,code).then((data)=>{
@@ -44,18 +57,15 @@ export default function Password(){
             timer.current = window.setTimeout(() => {
               setLoading(true)
             }, 2000);
-            timer.current = window.setTimeout(() => {
-              setOpen(false);
-            }, 2000);Password("");
+            setLoading(false)
             clearTimeout(timer.current);
             signOut();
+            navigate('/')
           }else{
             // timer.current = window.setTimeout(() => {
-            //   setLoading(true)
+            //   setOpen(false);
             // }, 2000);
-            timer.current = window.setTimeout(() => {
-              setOpen(false);
-            }, 2000);
+            setOpen(false);
             setErrorMsg(data.msg)
           }
         })
@@ -66,7 +76,7 @@ export default function Password(){
 
   const sendCode = (e) => {
     e.preventDefault()
-    sendEmail(auth).then((data)=>{
+    sendEmail().then((data)=>{
       if(data.code === "200"){
         setCodeDisabled(true)
         setIsValidatedCode(false)
@@ -97,10 +107,10 @@ export default function Password(){
   };
   
     return (
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', height:700,}}>
         <SiderBar></SiderBar>
         <Box sx={{width:1, mt:5, display:'block', height:50,}}>
-          <Typography variant="h6" noWrap component="div" sx={{width:1,height:40, ml:5,}}>Password</Typography>
+          <Typography variant="h6" noWrap component="div" sx={{width:1,height:40, ml:5,}}>Update your Password</Typography>
           <Box component="main" sx={{display:'flex', flexDirection: 'column', alignItems: 'center',}}>
             <Container component="div" maxWidth="xs">
 
@@ -111,17 +121,17 @@ export default function Password(){
                 <Typography variant="h6" noWrap component="div" sx={{height:40, display:'inline', m:0, p:0}}>{auth}</Typography>
               </Box>
 
-              <Box sx={{pt:5, pb:5, pl:5, pr:5, mt:5, display:'flex',backgroundColor:'#eceff1', borderRadius:10,}}>
+              <Box sx={{pt:7, pb:7, pl:7, pr:7, mt:5, display:'flex',backgroundColor:'#fbfbfb', borderRadius:5, width:350}}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} >
                       <TextField
                           required
                           fullWidth
                           id="password"
-                          label="Password "
+                          label="New password "
                           name="password"
-                          autoComplete="password"
-                          onChange={event => setPassword(event.target.value)}
+                          autoComplete="new password"
+                          onChange={onChange}
                       />
                       {
                         !isValidated ? (
@@ -142,7 +152,7 @@ export default function Password(){
                           label="Validation code "
                           name="code"
                           autoComplete="code"
-                          onChange={event => setCode(event.target.value)}
+                          onChange={onChangeCode}
                           sx={{width: 11/20}}
                       />
                       <Button
@@ -166,7 +176,7 @@ export default function Password(){
                         )
                       }
                   </Grid>
-                  {errorMsg && <Alert severity={"error"} sx={{marginBottom:"15px",width:"90%", mt:1,}}>{errorMsg}</Alert>}
+                  {errorMsg && <Alert severity={"error"} sx={{marginBottom:"15px",width:"90%", mt:1, ml:2,}}>{errorMsg}</Alert>}
                   <Grid item xs={12} >
                     
                     <Button

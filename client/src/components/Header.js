@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import styles from '../asserts/stylesheet/Header.module.css'
 import { useUser } from '../context/UserContext';
 import logo from '../asserts/images/logo3.png'
+import {useNavigate}  from "react-router-dom";
 
 const items = [
   { id: 1, text: 'Latest event' },
@@ -20,8 +21,11 @@ const items = [
 const Header = () => {
 
   const {auth,signOut} = useUser();
-
-
+  const navigate = useNavigate()
+  const onclick = () =>{
+    signOut()
+    navigate('/')
+  }
 
   return (
     <div className={styles["header-container"]}>
@@ -57,7 +61,7 @@ const Header = () => {
             <Link to="/register"><Button variant="contained" sx={{ borderRadius: 2 }} className="header-btn">Register</Button></Link>
           </Stack>):(
           <Stack className={styles["right-stack"]} direction="row" spacing={2}>
-            <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={signOut} className="header-btn">Log out</Button>
+            <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={onclick} className="header-btn">Log out</Button>
           </Stack>
           )
           }

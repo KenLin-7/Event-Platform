@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -51,7 +50,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         @Override
         public User getUserInfo(String email) {
                 User user = userRepository.findByEmail(email);
-            return user;
+
+                return user;
         }
 
         @Override
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 for(int i=0;i<6;i++){
                         s.append(random.nextInt(10));
                 }
-                //String result = emailService.sendSimpleMail(email,"The validation code for updating email address: "+s, "You are updating your email address!");
+                String result = emailService.sendSimpleMail(email,"The validation code for updating email address: "+s, "You are updating your email address!");
                 return s;
         }
 

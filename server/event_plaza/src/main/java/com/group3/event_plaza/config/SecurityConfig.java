@@ -30,6 +30,10 @@ public class SecurityConfig {
             "/",
             "/api/user/register",
             "/api/user/logout",
+            "/api/user/forgotPassword",
+            "/api/user/sendEmail",
+            "/api/user/resetPassword",
+
     };
 
     private static final String[] ORGANIZER_URLS = {

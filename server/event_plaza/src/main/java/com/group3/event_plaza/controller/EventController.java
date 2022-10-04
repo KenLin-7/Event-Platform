@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/event")
@@ -22,6 +23,31 @@ public class EventController {
     @PostMapping("/create")
     public ResponseResult<String> postEvent(Principal principal, @RequestBody Event event){
         eventService.createEvent(principal,event);
+        return ResponseResult.success();
+    }
+
+    @PostMapping("/events")
+    public ResponseResult<List<Event>> events(Principal principal){
+        List<Event> events = eventService.userEvents(principal);
+        return ResponseResult.success(events);
+    }
+
+    @PostMapping("/event")
+    public ResponseResult<Event> event(Principal principal, String id){
+        Event event = eventService.eventDetail(principal,id);
+        return ResponseResult.success(event);
+    }
+
+    @PostMapping("/eventDelete")
+    public ResponseResult<Event> eventDelete(Principal principal, String id){
+        eventService.deleteEvent(principal,id);
+        return ResponseResult.success();
+    }
+
+    @PostMapping("/updateEvent")
+    public ResponseResult<Event> eventUpdate(Principal principal, String id, Event event){
+        Event oldevent = eventService.eventDetail(principal,id);
+        eventService.
         return ResponseResult.success();
     }
 

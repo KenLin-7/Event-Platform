@@ -3,19 +3,9 @@ package com.group3.event_plaza.controller;
 
 import com.group3.event_plaza.common.ResponseResult;
 import com.group3.event_plaza.model.User;
-import com.group3.event_plaza.service.Impl.UserServiceImpl;
 import com.group3.event_plaza.service.UserService;
-import com.nimbusds.oauth2.sdk.Request;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.mail.Multipart;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
@@ -56,12 +46,20 @@ public class UserController {
     }
 
     @PostMapping("/sendEmail")
-    public ResponseResult<String> sendEmail(HttpServletRequest request, Principal principal){
+    public ResponseResult<String> sendEmail(HttpServletRequest request, Principal principal, String email){
         session = request.getSession();
-        String s = userService.sendMail(principal.getName()).toString();
-        session.setAttribute("code",s);
-        String code = (String)session.getAttribute("code");
-        return ResponseResult.success(code);
+        String s;
+        if(email!=null){
+            s = userService.sendMail(email).toString();
+            session.setAttribute("code",s);
+            return ResponseResult.success();
+        }else if(principal!=null){
+            s = userService.sendMail(principal.getName()).toString();
+            session.setAttribute("code",s);
+            return ResponseResult.success();
+        }else{
+            return ResponseResult.unAuthenticated("You haven't login");
+        }
     }
 
     @PostMapping("/updateEmail")
@@ -70,15 +68,13 @@ public class UserController {
         String result;
         String email = map.get("email");
         String code = map.get("code");
-        System.out.println("email: "+email);
-        System.out.println("code: "+code);
-        if(sessionCode.equals(code)){
+        if(sessionCode != null && sessionCode.equals(code)){
             result = userService.updateUserEmail(principal.getName(), email);
             session.invalidate();
+            return ResponseResult.success(result);
         }else{
-            result = "code not match";
+            return ResponseResult.success("code not match");
         }
-        return ResponseResult.success(result);
     }
 
     @PostMapping("/updatePassword")
@@ -87,14 +83,20 @@ public class UserController {
         String result;
         String password = map.get("password");
         String code = map.get("code");
-        System.out.println("password: "+password);
-        System.out.println("code: "+code);
-        if(sessionCode.equals(code)){
+        if(sessionCode != null && sessionCode.equals(code)){
             result = userService.updateUserPassword(principal.getName(), password);
             session.invalidate();
+            return ResponseResult.success(result);
         }else{
-            result = "code not match";
+            return ResponseResult.success("code not match");
         }
+    }
+
+    @PostMapping("/resetPassword")
+    public ResponseResult<String> resetPassword(@RequestBody String password){
+        String email = (String)session.getAttribute("resetPassword");
+        String result;
+        result = userService.updateUserPassword(email, password);
         return ResponseResult.success(result);
     }
 
@@ -105,22 +107,23 @@ public class UserController {
     }
 
     @PostMapping("/forgotPassword")
-    public ResponseResult<String> forgotPassword(@RequestBody Map<String,String> map){
+    public ResponseResult<String> forgotPassword(HttpServletRequest request, @RequestBody Map<String,String> map){
         String sessionCode = (String)session.getAttribute("code");
         String result;
         String email = map.get("email");
-        String password = map.get("password");
         String code = map.get("code");
-        System.out.println("email: "+email);
-        System.out.println("password: "+password);
-        System.out.println("code: "+code);
-        if(sessionCode.equals(code)){
-            result = userService.updateUserPassword(email, password);
-            session.invalidate();
+        if(userService.getUserInfo(email) == null){
+            return ResponseResult.unAuthenticated("email not exists");
         }else{
-            result = "code not match";
+            if(sessionCode != null && sessionCode.equals(code)){
+                session = request.getSession();
+                session.setAttribute("resetPassword",email);
+                session.removeAttribute("code");
+                return ResponseResult.success("code match");
+            }else{
+                return ResponseResult.unAuthenticated("code not match");
+            }
         }
-        return ResponseResult.success(result);
     }
 
     @GetMapping("/remove/role")

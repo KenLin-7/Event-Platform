@@ -9,6 +9,7 @@ import TestUploadImage from './components/TestUploadImage';
 import Profile from './components/UserManagement/Profile';
 import Password from './components/UserManagement/Password';
 import ForgotPassword from './components/UserManagement/ForgotPassword';
+import ResetPassword from './components/UserManagement/ResetPassword';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/password' element={<Password/>}/>
           <Route path='/forgotPassword' element={<ForgotPassword/>}/>
+          <Route path='/resetPassword' element={<ResetPassword/>}/>
         </Route>
       </Routes>
     </UserProvider>

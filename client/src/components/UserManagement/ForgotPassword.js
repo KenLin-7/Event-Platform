@@ -6,12 +6,11 @@ import {forgotPassword, sendEmail} from '../../api/UserAPI';
 import IconButton from '@mui/material/IconButton';
 import formValidate from '../../utils/validation';
 import FormStyles from '../../asserts/stylesheet/Form.module.css';
+import {useNavigate}  from "react-router-dom";
 
-export default function Password(){
-  const [password,setPassword] = useState("")
+export default function ForgotPassword(){
   const [code,setCode] = useState("")
   const [email,setEmail] = useState("")
-  const [passwordError, setPasswordError] = useState("Please enter your passowrd");
   const [emailError, setEmailError] = useState("Please enter your email");
   const [codeError, setCodeError] = useState("Please enter validation code");
   const [isValidated,setIsValidated] = useState({email:true,password:true})
@@ -21,40 +20,34 @@ export default function Password(){
   const timer = React.useRef();
   const [errorMsg,setErrorMsg] = useState("")
   const [codeDisabled, setCodeDisabled] = React.useState(false);
+  const navigate = useNavigate()
 
   const validation = ()=>{
     const validate = {
-      password: password, 
       email: email,
     }
     const result = formValidate(validate)
     setIsValidated(result)
-    if(password !== "")  setPasswordError("Please enter correct password")
-    if(password !== "")  setEmailError("Please enter correct email format")
+    if(email !== "")  setEmailError("Please enter correct email format")
     return result
   }
 
   const buttonClick = (e) => {
     e.preventDefault()
     const result = validation()
-      if(result.password && code!=="" && result.email){
+      if(code!=="" && result.email){
         setOpen(true);
-        forgotPassword(email,password,code).then((data)=>{
+        forgotPassword(email,code).then((data)=>{
            if(data.code === "200"){
             timer.current = window.setTimeout(() => {
               setLoading(true)
             }, 2000);
-            timer.current = window.setTimeout(() => {
-              setOpen(false);
-            }, 2000);Password("");
+            setLoading(false)
             clearTimeout(timer.current);
+            setErrorMsg(data.data)
+            navigate('/resetPassword')
           }else{
-            // timer.current = window.setTimeout(() => {
-            //   setLoading(true)
-            // }, 2000);
-            timer.current = window.setTimeout(() => {
-              setOpen(false);
-            }, 2000);
+            setOpen(false);
             setErrorMsg(data.msg)
           }
         })
@@ -96,18 +89,18 @@ export default function Password(){
   };
   
     return (
-        <Box sx={{width:1, mt:5, display:'block', height:50,}}>
-        <Typography variant="h6" noWrap component="div" sx={{width:1,height:40, ml:5,}}>Password</Typography>
+        <Box sx={{width:1, mt:5, display:'block', height:700,}}>
+        <Typography variant="h6" noWrap component="div" sx={{width:1,height:40, ml:5,}}>Forgot Password</Typography>
         <Box component="main" sx={{display:'flex', flexDirection: 'column', alignItems: 'center',}}>
           <Container component="div" maxWidth="xs">
 
-            <Box sx={{mt:10, display:'flex', alignItems:'flex-end', justifyContent:'space-evenly', flexDirection:'row-reverse', }}>
+            <Box sx={{mt:10, width:1, display:'flex', justifyContent:'center', flexDirection:'row-reverse', }}>
               <IconButton sx={{ display: 'inline', m:0, p:0 }}>
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 100, height: 100}}><PermIdentityIcon sx={{width: 50, height: 50}} /></Avatar>
               </IconButton>
             </Box>
 
-            <Box sx={{pt:5, pb:5, pl:5, pr:5, mt:5, display:'flex',backgroundColor:'#eceff1', borderRadius:10,}}>
+            <Box sx={{pt:5, pb:5, pl:5, pr:5, mt:5, display:'flex',backgroundColor:'#fbfbfb', borderRadius:5}}>
               <Grid container spacing={2}>
                 <Grid item xs={12} >
                         <TextField
@@ -129,27 +122,6 @@ export default function Password(){
                         )
                         }
                 </Grid>
-                <Grid item xs={12} >
-                    <TextField
-                        required
-                        fullWidth
-                        id="password"
-                        label="Password "
-                        name="password"
-                        autoComplete="password"
-                        onChange={event => setPassword(event.target.value)}
-                    />
-                    {
-                      !isValidated.password ? (
-                        <div className={FormStyles['helper-text']}>
-                        <span>{passwordError}</span>
-                      </div>
-                      ):(
-                          <></>
-                      )
-                    }
-                </Grid>
-
                 <Grid item xs={12}>
                     <TextField
                         required
@@ -182,7 +154,7 @@ export default function Password(){
                       )
                     }
                 </Grid>
-                {errorMsg && <Alert severity={"error"} sx={{marginBottom:"15px",width:"90%", mt:1,}}>{errorMsg}</Alert>}
+                {errorMsg && <Alert severity={"error"} sx={{marginBottom:"15px",width:"90%", mt:1, ml:2,}}>{errorMsg}</Alert>}
                 <Grid item xs={12} >
                   
                   <Button
@@ -193,7 +165,7 @@ export default function Password(){
                       onClick={buttonClick}
                       sx={{mt:1,}}
                   >
-                      Update
+                      Submit
                   </Button>
                 </Grid>
                 
