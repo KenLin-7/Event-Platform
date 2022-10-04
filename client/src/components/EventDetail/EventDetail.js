@@ -35,7 +35,7 @@ export default function EventDetail(effect, deps) {
     const [location, setLocation] = useState({street: "", suburb: "", state: "", postcode: ""})
     const [eventPoster, setEventPoster] = useState({nickname: "", email: "", avatar: AccountCircleIcon})
     const [participants,setParticipants] =useState(null)
-
+    const [pendFlag,setPendFlag] = useState(true)
 
     useEffect(() => {
         getEvent(eventId).then(
