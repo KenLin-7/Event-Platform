@@ -47,6 +47,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> searchEvent(String keyword){
-        return new ArrayList<>();
+        List<Event> list = eventRepository.findByTitleContains(keyword);
+        return list;
     }
 }

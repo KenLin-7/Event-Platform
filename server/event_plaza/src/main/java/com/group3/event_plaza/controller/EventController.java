@@ -11,6 +11,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/event")
 public class EventController {
@@ -24,11 +25,10 @@ public class EventController {
         return ResponseResult.success();
     }
 
-    @GetMapping("/search")
-    public ResponseResult<String> search(String id){
-
-        return ResponseResult.success(id);
+    @GetMapping("/search/{keyword}")
+    public ResponseResult<List<Event>> search(@PathVariable String keyword){
+        List<Event> list = eventService.searchEvent(keyword);
+        return ResponseResult.success(list);
     }
-
 
 }

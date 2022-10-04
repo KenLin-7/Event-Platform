@@ -14,6 +14,7 @@ function App() {
       <Routes>
         <Route element={<NoHeaderRoute path={["/register"]} />}>
           <Route path='/' element={<Home />} />
+          <Route path='/filter' element={<FilterPage />} />
           <Route path='/filter/:keyword' element={<FilterPage />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />

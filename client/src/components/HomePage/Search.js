@@ -4,7 +4,6 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import { search } from '../../api/FilterAPI'
 import { useNavigate } from 'react-router-dom'
 
 const Search = () => {
@@ -13,11 +12,6 @@ const Search = () => {
 
   const onSearchInputChange = (e) => {
     setSearchInput(e.target.value)
-  }
-
-  const onClickSearch = async () => {
-    const res = await search(searchInput);
-    console.log(res)
   }
 
   const onSearchInputClick = () => {

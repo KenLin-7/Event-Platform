@@ -51,6 +51,9 @@
 
 .event-card-left {
   flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .event-card-img {
@@ -79,11 +82,13 @@
   padding-left: 15px;
 }
 
-.filter-items{
+.filter-items {
   cursor: pointer;
 }
 
-.filter-items:hover, .filter-items:focus, .filter-items:active {
+.filter-items:hover,
+.filter-items:focus,
+.filter-items:active {
   -webkit-transform: scale(0.9);
   transform: scale(0.9);
 }
@@ -115,8 +120,15 @@
   font-size: 15px;
 }
 
-.pagination{
-  width: 200px;
+.pagination {
+  width: 400px;
   padding-top: 20px;
   margin: 0 auto;
+}
+
+.circularProgress{
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  line-height: 500px;
 }
