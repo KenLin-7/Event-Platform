@@ -8,6 +8,7 @@ import NoHeaderRoute from './route/NoHeaderRoute';
 import TestUploadImage from './components/TestUploadImage';
 import EventPost from "./components/EventPost/EventPost";
 import EventDetail from "./components/EventDetail/EventDetail";
+import EventEdit from "./components/EventEdit";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                     <Route path='/test' element={<TestUploadImage/>}/>
                   <Route path='/eventpost' element={<EventPost/>} />
                     <Route path='/eventdetail' element={<EventDetail/>} />
+                    <Route path='/eventedit' element={<EventEdit/>}/>
                 </Route>
             </Routes>
         </UserProvider>

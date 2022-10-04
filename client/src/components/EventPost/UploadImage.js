@@ -35,7 +35,7 @@ export default function UploadImage(props) {
         if (uploadingFlag === 2) setUploadingFlag(3)
         props.onImage(imageURL)
         props.onFlag(uploadingFlag)
-    }, [imageURL])
+    }, [imageURL],[uploadingFlag])
 
 
     return (
@@ -46,7 +46,11 @@ export default function UploadImage(props) {
             <Typography sx={{marginLeft: 2}}> Remember to click submit, or the image will not be kept</Typography>
 
             {
-
+                props.img && uploadingFlag===4?
+                    <Stack sx={{padding: 1}}>
+                        <img src={props.img} alt="event"/>
+                    </Stack>
+                    :
 
                 (uploadingFlag === 1 ?
 
