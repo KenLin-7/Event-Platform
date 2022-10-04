@@ -7,6 +7,7 @@ import Register from './components/Account/Register'
 import NoHeaderRoute from './route/NoHeaderRoute';
 import TestUploadImage from './components/TestUploadImage';
 import FilterPage from './components/FilterPage/FilterPage'
+import UserPage from './components/UserPage/UserPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/test' element={<TestUploadImage />} />
+          <Route path='/user-personal-page' element={<UserPage />} />
         </Route>
       </Routes>
     </UserProvider>
