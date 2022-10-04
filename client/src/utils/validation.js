@@ -1,6 +1,6 @@
 export default function formValidate (data) {
     let keys = Object.keys(data)
-console.log(data)
+
     const email_regex = /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/
     const phone_regex = /^[0-9]{11}$/
     const password_regex = ""

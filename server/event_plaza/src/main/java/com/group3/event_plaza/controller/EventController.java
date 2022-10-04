@@ -5,12 +5,10 @@ import com.group3.event_plaza.common.ResponseResult;
 import com.group3.event_plaza.model.Event;
 import com.group3.event_plaza.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/event")
@@ -25,4 +23,10 @@ public class EventController {
         return ResponseResult.success();
     }
 
+    @PostMapping("/eventDetail")
+    public ResponseResult<Event> getEventDetail(@RequestBody Map<String,String> map){
+        int newId = Integer.parseInt(map.get("eventId"));
+        Event event = eventService.getEvent(newId);
+        return ResponseResult.success(event);
+    }
 }
