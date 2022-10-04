@@ -26,13 +26,6 @@ const items = [
   { id: 4, title: "Film & Media" },
 ]
 
-const cards = [
-  { id: 1, image: "image", title: "Title", remainingTime: "remaining time", position: "5/7", liked: 120 },
-  { id: 2, image: "image", title: "Title", remainingTime: "remaining time", position: "5/7", liked: 120 },
-  { id: 3, image: "image", title: "Title", remainingTime: "remaining time", position: "5/7", liked: 120 },
-  { id: 4, image: "image", title: "Title", remainingTime: "remaining time", position: "5/8", liked: 120 },
-];
-
 const FilterPage = () => {
   const params = useParams()
   let [page, setPage] = useState(1);
@@ -51,7 +44,6 @@ const FilterPage = () => {
       const keyword = params.keyword
       search(keyword).then((data) => {
         setFilteredEventList(data.data);
-        console.log(data.data)
         setLoading(false);
       });
     }

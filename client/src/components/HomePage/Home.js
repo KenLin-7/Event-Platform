@@ -1,19 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Search from './Search'
 import styles from '../../asserts/stylesheet/Home/Home.module.css'
 import LatestEvent from './LatestEvent'
 import GetStart from './GetStart'
 import Popular from './Popular'
 import Statistic from './Statistic'
-
+import { getLatestEvents } from '../../api/FilterAPI'
 
 const Home = () => {
+  const [latestEvents, setLastestEvents] = useState([]);
+  const [others, setOthers] = useState([])
+  const [flag, setFlag] = useState(false);
+
+  useEffect(() => {
+    const fetch = () => {
+      setFlag(true)
+      getLatestEvents().then((data) => {
+        const list = data.data
+        const latestEventList = list.slice(0,4)
+        const othersList = list.slice(4, list.length)
+        setLastestEvents(latestEventList);
+        setOthers(othersList)
+        setFlag(false)
+      });
+    }
+    fetch();
+  }, [])
+
   return (
     <div className={styles['home-container']}>
       <Search />
-      <LatestEvent />
+      <LatestEvent latestEvents={latestEvents} flag={flag}/>
       <GetStart />
-      <Popular />
+      <Popular others={others} flag={flag}/>
       <Statistic />
     </div>
   )

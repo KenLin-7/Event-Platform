@@ -1,7 +1,7 @@
 import './App.css';
 import { UserProvider } from './context/UserContext';
 import Home from './components/HomePage/Home'
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Login from './components/Account/Login';
 import Register from './components/Account/Register'
 import NoHeaderRoute from './route/NoHeaderRoute';
@@ -20,7 +20,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/test' element={<TestUploadImage />} />
-          <Route path='/user-personal-page' element={<UserPage />} />
+          <Route path='/user-post-history' element={<UserPage />} />
         </Route>
       </Routes>
     </UserProvider>

@@ -16,6 +16,23 @@
   width: 100vw;
 }
 
+.event-containter {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  width: 80vw;
+  margin: 0 auto;
+}
+
+.event-containter>* {
+  margin-right: 40px;
+  cursor: pointer;
+  width: 300px;
+  box-sizing: border-box;
+  margin-bottom: 50px;
+
+}
+
 .user-post-event-title {
   width: 175px;
   height: 40px;
@@ -95,23 +112,6 @@
   font-size: 14px;
   line-height: 150%;
   text-align: left;
-}
-
-.event-containter {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 40px;
-  width: 80vw;
-  margin: 0 auto;
-}
-
-.event-containter>* {
-  margin-right: 40px;
-  cursor: pointer;
-  width: 20%;
-  box-sizing: border-box;
-  margin-bottom: 50px;
-
 }
 
 .event-card-orgnizer {
