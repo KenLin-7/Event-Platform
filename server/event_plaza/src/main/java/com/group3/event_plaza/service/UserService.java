@@ -20,6 +20,4 @@ public interface UserService {
     String updateUserPassword(String email, String password);
 
     StringBuilder sendMail(String email);
-
-
 }

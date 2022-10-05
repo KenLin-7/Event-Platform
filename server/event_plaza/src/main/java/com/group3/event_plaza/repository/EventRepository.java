@@ -10,8 +10,13 @@ import java.util.List;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event,Integer> {
-    List<Event> findAllByOwner(User user);
-    Event findEventById(String eventId);
-    void deleteById(String eventId);
+    Event findByEventId(int eventId);
 
+    List<Event> findByTitleContains(String keyword);
+
+    List<Event> findTop9ByOrderByEventIdDesc();
+
+    List<Event> findEventByOwner(int id);
+
+    List<Event> findAll();
 }

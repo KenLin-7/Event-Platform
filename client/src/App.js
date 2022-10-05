@@ -10,16 +10,27 @@ import Profile from './components/UserManagement/Profile';
 import Password from './components/UserManagement/Password';
 import ForgotPassword from './components/UserManagement/ForgotPassword';
 import ResetPassword from './components/UserManagement/ResetPassword';
+import EventPost from "./components/EventPost/EventPost";
+import EventDetail from "./components/EventDetail/EventDetail";
+import EventEdit from "./components/EventEdit";
+import FilterPage from "./components/FilterPage/FilterPage";
+import UserPage from './components/UserPage/UserPage';
 
 function App() {
   return (
     <UserProvider>
       <Routes>
-        <Route element={<NoHeaderRoute path={["/register"]}/>}>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/login' element={<Login/>}/>
-          <Route path='/register' element={<Register/>}/>
-          <Route path='/test' element={<TestUploadImage/>}/>
+        <Route element={<NoHeaderRoute path={["/register"]} />}>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/filter' element={<FilterPage />} />
+          <Route path='/filter/:keyword' element={<FilterPage />} />
+          <Route path='/test' element={<TestUploadImage />} />
+          <Route path='/eventpost' element={<EventPost />} />
+          <Route path='/eventdetail' element={<EventDetail />} />
+          <Route path='/eventedit' element={<EventEdit />} />
+          <Route path='/user-page' element={<UserPage />} />
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/password' element={<Password/>}/>
           <Route path='/forgotPassword' element={<ForgotPassword/>}/>

@@ -71,3 +71,8 @@ export const logout = async()=>{
 export const remove = async()=>{
     await axios.get(API+"/remove/role")
 }
+
+export const getUserInfo = async () => {
+    const result = await axios.get(API + "/loggedIn-userInfo")
+    return result;
+}

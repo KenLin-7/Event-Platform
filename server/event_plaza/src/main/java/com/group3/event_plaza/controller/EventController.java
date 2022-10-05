@@ -5,12 +5,10 @@ import com.group3.event_plaza.common.ResponseResult;
 import com.group3.event_plaza.model.Event;
 import com.group3.event_plaza.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Map;
 import java.util.List;
 
 @RestController
@@ -26,29 +24,35 @@ public class EventController {
         return ResponseResult.success();
     }
 
-    @PostMapping("/events")
-    public ResponseResult<List<Event>> events(Principal principal){
-        List<Event> events = eventService.userEvents(principal);
-        return ResponseResult.success(events);
-    }
-
-    @PostMapping("/event")
-    public ResponseResult<Event> event(Principal principal, String id){
-        Event event = eventService.eventDetail(principal,id);
+    @PostMapping("/eventDetail")
+    public ResponseResult<Event> getEventDetail(@RequestBody Map<String,String> map){
+        int newId = Integer.parseInt(map.get("eventId"));
+        Event event = eventService.getEvent(newId);
         return ResponseResult.success(event);
     }
 
-    @PostMapping("/eventDelete")
-    public ResponseResult<Event> eventDelete(Principal principal, String id){
-        eventService.deleteEvent(principal,id);
-        return ResponseResult.success();
+    @GetMapping("/search/{keyword}")
+    public ResponseResult<List<Event>> search(@PathVariable String keyword){
+        List<Event> list = eventService.searchEvent(keyword);
+        return ResponseResult.success(list);
     }
 
-    @PostMapping("/updateEvent")
-    public ResponseResult<Event> eventUpdate(Principal principal, String id, Event event){
-        Event oldevent = eventService.eventDetail(principal,id);
-        eventService.
-        return ResponseResult.success();
+    @GetMapping("/latestEvent")
+    public ResponseResult<List<Event>> getLatestEvent(){
+        List<Event> list = eventService.getLatestEvent();
+        return ResponseResult.success(list);
+    }
+
+    @GetMapping("/getAllEvent")
+    public ResponseResult<List<Event>> getAllEvent(){
+        List<Event> list = eventService.getAllEvent();
+        return ResponseResult.success(list);
+    }
+
+    @GetMapping("/currentUserEvents")
+    public ResponseResult<List<Event>> getCurrentUserEvents(int id){
+        List<Event> list = eventService.getCurrentUserEvents(id);
+        return ResponseResult.success(list);
     }
 
 }

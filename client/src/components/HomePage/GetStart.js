@@ -1,9 +1,15 @@
 import React from 'react'
 import styles from '../../asserts/stylesheet/Home/GetStart.module.css'
 import Box from '@mui/material/Box';
-
+import { useNavigate } from 'react-router-dom'
 
 const GetStart = () => {
+  const navigate = useNavigate();
+
+  const onStartClick = () => {
+    navigate('/filter/')
+  }
+
   return (
     <div className={`${styles['get-start-section']}`}>
 
@@ -22,7 +28,7 @@ const GetStart = () => {
           </div>
 
           <Box sx={{ display: 'flex', flexDirection: 'row'}} className="get-start-btn-group">
-            <button className={styles['get-start-btns']}>Get started</button>
+            <button className={styles['get-start-btns']} onClick={onStartClick}>Get started</button>
             <button className={styles['get-start-btns']}>Learn more</button>
           </Box>
         </div>

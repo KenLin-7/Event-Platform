@@ -33,7 +33,7 @@ public class SecurityConfig {
             "/api/user/forgotPassword",
             "/api/user/sendEmail",
             "/api/user/resetPassword",
-
+            "/api/event/search/{keyword}"
     };
 
     private static final String[] ORGANIZER_URLS = {

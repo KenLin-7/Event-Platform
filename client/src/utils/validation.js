@@ -3,7 +3,8 @@ export default function formValidate (data) {
 
     const email_regex = /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/
     const phone_regex = /(^1300\d{6}$)|(^1800|1900|1902\d{6}$)|(^0[2|3|7|8]{1}[0-9]{8}$)|(^13\d{4}$)|(^04\d{2,3}\d{6}$)/
-    const password_regex = /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/
+    const suburb_regex=/[A-Za-z]/
+    const postcode_regex = /^[0-9]{4}$/
     const allowImageSize = 500000
     const dob_regex = /^[0-9]{4}-(((0[13578]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|((0[469]|11)-(0[1-9]|[1-2][0-9]|30)))$/
 
@@ -31,7 +32,13 @@ export default function formValidate (data) {
                     data[key] = dob_regex.test(value)
                     data[key] = true
                     break 
-                default: 
+                case "suburb":
+                    data[key]= suburb_regex.test(value)
+                        break
+                case "postcode":
+                    data[key]=postcode_regex.test(value)
+                        break
+                default:
                     data[key] = true
             }
         }else{

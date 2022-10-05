@@ -27,8 +27,6 @@ public class Event {
 
     private Timestamp startDate;
 
-    private Timestamp endDate;
-
     @ManyToOne
     @JoinColumn(name = "owner")
     private User owner;
@@ -42,7 +40,7 @@ public class Event {
 
 
     public Event(String description, int maxParticipant, String status, String image,
-                 String title, String location, Timestamp startDate, Timestamp endDate) {
+                 String title, String location, Timestamp startDate) {
         this.description = description;
         this.maxParticipant = maxParticipant;
         this.status = status;
@@ -50,7 +48,6 @@ public class Event {
         this.title = title;
         this.location = location;
         this.startDate = startDate;
-        this.endDate = endDate;
     }
 
     public Event() {
@@ -118,14 +115,6 @@ public class Event {
 
     public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
-    }
-
-    public Timestamp getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Timestamp endDate) {
-        this.endDate = endDate;
     }
 
     public User getOwner() {

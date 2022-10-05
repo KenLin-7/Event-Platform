@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -46,50 +45,31 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> userEvents(Principal principal) {
-        User user = userRepository.findByEmail(principal.getName());
-        List<Event> allEvent = eventRepository.findAllByOwner(user);
-        if(allEvent!=null){
-            return allEvent;
-        }else{
-            return null;
-        }
-
+    public Event getEvent(int eventId) {
+        Event event = eventRepository.findByEventId(eventId);
+        return event;
     }
 
     @Override
-    public Event eventDetail(Principal principal, String eventId) {
-        User user = userRepository.findByEmail(principal.getName());
-        Event event = eventRepository.findEventById(eventId);
-        if(event!=null){
-            return event;
-        }else{
-            return null;
-        }
+    public List<Event> searchEvent(String keyword){
+        List<Event> list = eventRepository.findByTitleContains(keyword);
+        return list;
     }
 
     @Override
-    public void deleteEvent(Principal principal, String eventId) {
-        User user = userRepository.findByEmail(principal.getName());
-        Event event = eventRepository.findEventById(eventId);
-        if(event!=null){
-            eventRepository.deleteById(eventId);
-        }
+    public  List<Event> getLatestEvent(){
+        List<Event> list = eventRepository.findTop9ByOrderByEventIdDesc();
+        return list;
     }
 
     @Override
-    public void updateEvent(Principal principal, String eventId, Event event) {
-        Event currentEvent = eventRepository.findEventById(eventId);
-        if (currentEvent != null){
-            currentEvent.setDescription(event.getDescription());
-            currentEvent.setMaxParticipant(event.getMaxParticipant());
-            currentEvent.setStatus(event.getStatus());
-            currentEvent.setImage(event.getImage());
-            currentEvent.setTitle(event.getTitle());
-            currentEvent.setLocation(event.getLocation());
-            currentEvent.setStartDate(event.getStartDate());
-            currentEvent.setEndDate(event.getEndDate());
-            eventRepository.save(currentEvent);
-        }
+    public List<Event> getCurrentUserEvents(int id){
+        List<Event> list = eventRepository.findEventByOwner(id);
+        return list;
+    }
+    @Override
+    public List<Event> getAllEvent(){
+        List<Event> list = eventRepository.findAll();
+        return list;
     }
 }
