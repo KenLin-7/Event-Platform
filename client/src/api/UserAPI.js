@@ -33,6 +33,7 @@ export const updateUserEmail = async (email,code)=>{
 
 export const sendEmail = async (email)=>{
     const result = await axios.post(API+'/sendEmail', email)
+    console.log("email:"+email);
     return result 
 }
 
@@ -74,5 +75,6 @@ export const remove = async()=>{
 
 export const getUserInfo = async () => {
     const result = await axios.get(API + "/loggedIn-userInfo")
+    console.log(result);
     return result;
 }
