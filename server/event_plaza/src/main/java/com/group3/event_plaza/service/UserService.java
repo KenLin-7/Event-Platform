@@ -14,5 +14,11 @@ public interface UserService {
 
     void removeRole(String email);
 
+    String updateUserAvatar(String email, String avatar);
 
+    String updateUserEmail(String email, String newEmail);
+
+    String updateUserPassword(String email, String password);
+
+    StringBuilder sendMail(String email);
 }

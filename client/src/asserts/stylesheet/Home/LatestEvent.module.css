@@ -48,13 +48,13 @@
 }
 
 .event-card-title {
-  width: 206px;
-  height: 50px;
+  width: 326px;
+  height: 20px;
   text-align: left;
-  padding: 5px;
+  padding: 15px 5px 5px 5px;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   cursor: pointer;
 
@@ -67,7 +67,7 @@
   margin-left: 80%;
   line-height: 36px;
   margin-right: 26px;
-  margin-top: 20px;
+  margin-top: 52px;
   border-radius: 10px;
   background: rgba(42, 39, 201, 0.1);
   cursor: pointer;
