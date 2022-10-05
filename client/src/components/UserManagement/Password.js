@@ -76,7 +76,7 @@ export default function Password(){
 
   const sendCode = (e) => {
     e.preventDefault()
-    sendEmail().then((data)=>{
+    sendEmail(auth).then((data)=>{
       if(data.code === "200"){
         setCodeDisabled(true)
         setIsValidatedCode(false)

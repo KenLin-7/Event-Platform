@@ -58,6 +58,7 @@ export default function ForgotPassword(){
 
   const sendCode = (e) => {
     e.preventDefault()
+    
     sendEmail(email).then((data)=>{
       if(data.code === "200"){
         setCodeDisabled(true)

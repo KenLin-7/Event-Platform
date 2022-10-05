@@ -33,6 +33,7 @@ export const updateUserEmail = async (email,code)=>{
 
 export const sendEmail = async (email)=>{
     const result = await axios.post(API+'/sendEmail', email)
+    console.log("email:"+email);
     return result 
 }
 
