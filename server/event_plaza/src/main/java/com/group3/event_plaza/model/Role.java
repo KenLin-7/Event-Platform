@@ -19,7 +19,6 @@ public class Role {
     private Set<User> user = new HashSet<>();
 
 
-
     protected Role() {
     }
 

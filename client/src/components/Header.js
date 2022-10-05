@@ -24,28 +24,20 @@ const items = [
 const Header = () => {
 
   const {auth,signOut} = useUser();
-  const {subscribeEvent,sendEventMessage,sendUserMessage,disconnect} = useNotification();
+  const {disconnect} = useNotification();
 
-  const TESTsendNotificiton =()=>{
-    // sendEventMessage("1","Send Test")
-    sendUserMessage("ken@test.com","User test")
-  }
 
-  const TESTSubscribe = ()=>{
-    subscribeEvent(5)
-  }
 
   const logout = ()=>{
     signOut()
     disconnect()
   }
 
-  const TESTUSer = ()=>{
-    getInfo("ken@test.com")
-  }
+
 
   const TESTSendMESS = ()=>{
-    sendUserMessage("ken@test.com","Message Sent")
+    // sendUserMessage("ken@test.com","Message Sent")
+    sendEventMessage(1,"Event Message")
   }
 
   return (
@@ -84,10 +76,6 @@ const Header = () => {
           <Stack className={styles["right-stack"]} direction="row" spacing={2}>
             <BadgeNotification/>
             <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={logout} className="header-btn">Log out</Button>
-            <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={TESTUSer} className="header-btn">Test</Button>
-            <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={TESTSendMESS} className="header-btn">Send</Button>
-            <Button onClick={TESTUSer}>Test User</Button>
-
           </Stack>
 
           )
