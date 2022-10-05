@@ -24,7 +24,7 @@ export default function EventDetail(effect, deps) {
         "\n" +
         "Grab yourself a ringside seat around Cockle Bay, or a bite to eat in one of the many harbour side restaurants, and enjoy an amazing fireworks display every Saturday night in Darling Harbour!\n" +
         "\n" +
-        "Time: 8.30pm then at 9pm from 8 October 2022"
+        "Time: 8.30pm then at 9pm from 8 October 2022  "
 
 
     const [eventId, setEventId] = useState(7)
