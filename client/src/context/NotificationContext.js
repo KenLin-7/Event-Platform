@@ -43,7 +43,7 @@ export const NotificationProvider = ({children})=>{
             setConnected(true)
             // subscribe user socket to recieve user private notifications
             stompClient.subscribe(`/user/${auth}/notification`,handlePayload)
-            if(eventIds.length>0 && auth ==="ken@test.com"){
+            if(eventIds.length>0 ){
                 eventIds.forEach(eventId => {
                     stompClient.subscribe(`/event/${eventId}/notification`,handlePayload)
                 });
