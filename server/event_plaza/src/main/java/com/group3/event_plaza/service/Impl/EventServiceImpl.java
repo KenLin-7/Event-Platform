@@ -84,8 +84,8 @@ public class EventServiceImpl implements EventService {
             currentEvent.setDescription(event.getDescription());
             currentEvent.setMaxParticipant(event.getMaxParticipant());
             currentEvent.setStatus(event.getStatus());
-            currentEvent.setImage(event.getImage());,
-            currentEvent.setTitle(event.getTitle());,
+            currentEvent.setImage(event.getImage());
+            currentEvent.setTitle(event.getTitle());
             currentEvent.setLocation(event.getLocation());
             currentEvent.setStartDate(event.getStartDate());
             currentEvent.setEndDate(event.getEndDate());
