@@ -40,9 +40,9 @@ public class UserController {
     }
 
     @PostMapping("/profile")
-    public ResponseResult<User> profile(@RequestBody String email) throws DataNotFoundException {
-        System.out.println("profile: "+email);
-        User userProfile = userService.getUserInfo(email);
+    public ResponseResult<User> profile(@RequestBody Map<String,String>  email) throws DataNotFoundException {
+        System.out.println("profile: "+email.get("email"));
+        User userProfile = userService.getUserInfo(email.get("email"));
         return ResponseResult.success(userProfile);
     }
 

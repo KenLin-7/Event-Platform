@@ -23,7 +23,7 @@
 
 .event-card {
   border-radius: 20px !important;
-  height: 620px;
+  height: 580px;
   margin-right: 40px;
   padding: 5px;
   cursor: pointer;
@@ -94,12 +94,29 @@
 }
 
 .avatars-group {
+  position: relative;
   width: 200px;
   height: 42px;
 }
 
-.avatars-group-text {
-  width: 135px;
+.avatars-group-text-1 {
+  position: absolute;
+  width: 290px;
+  height: 42px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  text-align: left;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-left: 40px;
+}
+
+.avatars-group-text-2 {
+  position: absolute;
+  width: 155px;
   height: 42px;
   font-family: 'Inter';
   font-style: normal;
@@ -109,7 +126,7 @@
   text-align: left;
   font-size: 12px;
   margin-top: 2px;
-  margin-left: -10px;
+  margin-left: 170px;
 }
 
 .event-card-likes {

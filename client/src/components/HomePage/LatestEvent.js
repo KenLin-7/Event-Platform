@@ -6,12 +6,18 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import Divider from '@mui/material/Divider'
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ImageTest from '../../asserts/images/test-image.png';
+import DefaultAvatar from '../../asserts/images/default-avatar.jpg';
+import TestImage from '../../asserts/images/test-image.png';
 import CircularProgress from '@mui/material/CircularProgress';
 import humanDateConvert from '../../utils/humanDateConvert';
+import { useNavigate } from 'react-router-dom'
 
 const LatestEvent = ({ latestEvents, flag, ref }) => {
+  const navigate = useNavigate();
+  const handleToEventDetail = (id) => {
+    navigate(`/eventDetail/${id}`)
+  }
+
   return (
     <div className={styles['latest-event-secion']} ref={ref}>
       <div className={styles['latest-event-title']}>Latest event</div>
@@ -28,9 +34,19 @@ const LatestEvent = ({ latestEvents, flag, ref }) => {
               {
                 latestEvents.map(event => {
                   return (
-                    <Card variant="outlined" className={styles['event-card']} key={event.eventId}>
+                    <Card variant="outlined" className={styles['event-card']} key={event.eventId} onClick={() => handleToEventDetail(event.eventId)}>
                       <div className={styles['event-card-img']}>
-                        <img className={styles["event-image"]} src={ImageTest} alt="" />
+                        {
+                          event.image === "" || event.image === null
+                            ?
+                            (
+                              <img className={styles["event-image"]} src={TestImage} alt="" />
+                            )
+                            :
+                            (
+                              <img className={styles["event-image"]} src={event.image} alt="" />
+                            )
+                        }
                       </div>
 
 
@@ -54,22 +70,48 @@ const LatestEvent = ({ latestEvents, flag, ref }) => {
                       <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2.5 }}>
                         <div className={styles["event-card-participants"]}>
                           <div className={styles['avatars-group']}>
-                            <AvatarGroup max={4} sx={{ float: 'left' }} className={styles['avatars-group-control']}>
-                              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                              <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-                              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-                              <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-                              <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
+                            <AvatarGroup max={3} sx={{ float: 'left' }} className={styles['avatars-group-control']}>
+                              {
+                                event.registrationList.map((user, index) => {
+                                  return (
+                                    <div key={index}>
+                                      {
+                                        user.requester.avatar === null
+                                          ?
+                                          (
+                                            <Avatar alt="Remy Sharp" src={DefaultAvatar} />
+                                          )
+                                          :
+                                          (
+                                            <Avatar alt="Remy Sharp" src={user.requester.avatar} />
+                                          )
+                                      }
+
+                                    </div>
+                                  )
+                                })
+                              }
                             </AvatarGroup>
                           </div>
-                          <div className={styles['avatars-group-text']}>
-                            35 people are waiting for approval
-                          </div>
+
+                          {
+                            event.registrationList.length === 0
+                              ?
+                              (
+                                <div className={styles['avatars-group-text-1']}>
+                                  No one has applied for this event yet, come and join us !!!
+                                </div>
+                              )
+                              :
+                              (
+                                <div className={styles['avatars-group-text-2']}>
+                                  {event.registrationList.length} people are interested and have submitted an application
+                                </div>
+                              )
+                          }
+
                         </div>
 
-                        <div className={styles['event-card-likes']}>
-                          <FavoriteBorderIcon sx={{ marginRight: 0.3, marginTop: 0.2 }} /> 120
-                        </div>
                       </Box>
                     </Card>
                   )
@@ -80,7 +122,7 @@ const LatestEvent = ({ latestEvents, flag, ref }) => {
           )
       }
 
-    </div>
+    </div >
   )
 }
 

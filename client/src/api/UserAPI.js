@@ -14,7 +14,7 @@ export const signUp = async (user)=>{
     return result
 }
 export const profile = async (email)=>{
-    const result = await axios.post(API+'/profile', email)
+    const result = await axios.post(API+'/profile', {email:email})
     return result 
 }
 

@@ -87,8 +87,9 @@ const Header = ({handleClick}) => {
                   </Stack>
 
                   <div className={styles["dropdown-content"]}>
-                    <a href="/#">View event</a>
-                    <a href="/#">Account setting</a>
+                    <a href="/user-page">View event</a>
+                    <a href="/registration-list">Manage event</a>
+                    <a href="/profile">Account setting</a>
                   </div>
                 </div>
               </Stack>

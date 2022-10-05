@@ -8,8 +8,15 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ImageTest from '../../asserts/images/test-image.png';
 import CircularProgress from '@mui/material/CircularProgress';
 import humanDateConvert from '../../utils/humanDateConvert'
+import { useNavigate } from 'react-router-dom';
 
 const Popular = ({ others, flag }) => {
+  const navigate = useNavigate();
+
+  const handleToEventDetail = (id) => {
+    navigate(`/eventDetail/${id}`)
+  }
+
   return (
     <div className={styles['most-popular-section']}>
       <div className={styles['most-popular-title']}>
@@ -28,7 +35,7 @@ const Popular = ({ others, flag }) => {
               {
                 others.map(event => {
                   return (
-                    <Card variant="outlined" className='event-card' key={event.eventId}>
+                    <Card variant="outlined" className='event-card' key={event.eventId} onClick={() => handleToEventDetail(event.eventId)}>
                       <div className={styles['event-card-img']}>
                         <img className={styles['event-image']} src={ImageTest} alt="" />
                       </div>
@@ -51,17 +58,21 @@ const Popular = ({ others, flag }) => {
 
                       <Divider />
 
-                      <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2.5 }}>
-                        <div className={styles["event-card-participants"]}>
-                          <div className={styles['avatars-group-text']}>
-                            35 people are waiting for approval
-                          </div>
-                        </div>
-
-                        <div className={styles['event-card-likes']}>
-                          <FavoriteBorderIcon sx={{ marginRight: 0.3, marginTop: 0.2 }} /> 120
-                        </div>
-                      </Box>
+                      {
+                            event.registrationList.length === 0
+                              ?
+                              (
+                                <div className={styles['avatars-group-text-1']}>
+                                  No one has applied for this event yet, come and join us !!!
+                                </div>
+                              )
+                              :
+                              (
+                                <div className={styles['avatars-group-text-2']}>
+                                  {event.registrationList.length} people are interested and have submitted an application
+                                </div>
+                              )
+                          }
                     </Card>
                   )
                 })
