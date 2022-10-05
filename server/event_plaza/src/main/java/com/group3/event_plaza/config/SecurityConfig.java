@@ -30,6 +30,7 @@ public class SecurityConfig {
             "/",
             "/api/user/register",
             "/api/user/logout",
+            "/api/event/search/{keyword}"
     };
 
     private static final String[] ORGANIZER_URLS = {

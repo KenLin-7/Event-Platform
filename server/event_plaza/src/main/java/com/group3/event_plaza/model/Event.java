@@ -27,7 +27,10 @@ public class Event {
 
     private Timestamp startDate;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature/filter-page
     @ManyToOne
     @JoinColumn(name = "owner")
     private User owner;
@@ -49,7 +52,10 @@ public class Event {
         this.title = title;
         this.location = location;
         this.startDate = startDate;
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature/filter-page
     }
 
     public Event() {

@@ -18,7 +18,6 @@ instance.interceptors.response.use(response=>{
     if(token!=null){
         localStorage.setItem("token",response.headers['access_token'].split("Bearer  ")[1])
     }
-    console.log(response.data);
     return response.data
 },err=>{
     if(err.response){
