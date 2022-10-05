@@ -8,13 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-<<<<<<< HEAD
 import java.util.Map;
-=======
-import java.util.ArrayList;
 import java.util.List;
-
->>>>>>> feature/filter-page
 
 @RestController
 @RequestMapping("/api/event")
@@ -29,14 +24,13 @@ public class EventController {
         return ResponseResult.success();
     }
 
-<<<<<<< HEAD
     @PostMapping("/eventDetail")
     public ResponseResult<Event> getEventDetail(@RequestBody Map<String,String> map){
         int newId = Integer.parseInt(map.get("eventId"));
         Event event = eventService.getEvent(newId);
         return ResponseResult.success(event);
     }
-=======
+
     @GetMapping("/search/{keyword}")
     public ResponseResult<List<Event>> search(@PathVariable String keyword){
         List<Event> list = eventService.searchEvent(keyword);
@@ -61,5 +55,4 @@ public class EventController {
         return ResponseResult.success(list);
     }
 
->>>>>>> feature/filter-page
 }

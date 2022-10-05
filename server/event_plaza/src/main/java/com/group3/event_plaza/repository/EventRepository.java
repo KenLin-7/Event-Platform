@@ -9,10 +9,7 @@ import java.util.List;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event,Integer> {
-<<<<<<< HEAD
     Event findByEventId(int eventId);
-=======
-    Event findEventByEventId(int id);
 
     List<Event> findByTitleContains(String keyword);
 
@@ -21,5 +18,4 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
     List<Event> findEventByOwner(int id);
 
     List<Event> findAll();
->>>>>>> feature/filter-page
 }

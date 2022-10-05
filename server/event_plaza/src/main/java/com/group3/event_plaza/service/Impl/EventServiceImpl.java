@@ -46,13 +46,11 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-<<<<<<< HEAD
     public Event getEvent(int eventId) {
-
-        Event event= eventRepository.findByEventId(eventId);
-
+        Event event = eventRepository.findByEventId(eventId);
         return event;
-=======
+    }
+
     public List<Event> searchEvent(String keyword){
         List<Event> list = eventRepository.findByTitleContains(keyword);
         return list;
@@ -74,6 +72,5 @@ public class EventServiceImpl implements EventService {
     public List<Event> getAllEvent(){
         List<Event> list = eventRepository.findAll();
         return list;
->>>>>>> feature/filter-page
     }
 }

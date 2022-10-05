@@ -9,9 +9,9 @@ public interface EventService {
 
     void createEvent(Principal user ,Event event);
 
-<<<<<<< HEAD
+
     Event getEvent(int eventId);
-=======
+
     List<Event> searchEvent(String keyword);
 
     List<Event> getLatestEvent();
@@ -19,5 +19,5 @@ public interface EventService {
     List<Event> getCurrentUserEvents(int id);
 
     List<Event> getAllEvent();
->>>>>>> feature/filter-page
+
 }
