@@ -13,10 +13,7 @@ spring:
       properties:
         hibernate:
           dialect: org.hibernate.dialect.MySQLDialect
-<<<<<<< HEAD
 
-
-=======
 #  mail:
 #    host: smtp.163.com #SMTP服务器地址
 #    username: 13202381561 #登陆账号
@@ -30,7 +27,6 @@ spring:
 #      multipart:
 #        max-file-size: 10MB #限制单个文件大小
 #        max-request-size: 50MB #限制请求总量
->>>>>>> master
 logging:
   level:
     org.hibernate.sql: DEBUG

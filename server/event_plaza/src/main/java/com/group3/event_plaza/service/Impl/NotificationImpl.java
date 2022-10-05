@@ -53,7 +53,7 @@ public class NotificationImpl implements NotificationService, MessageService {
     @Override
     public void create(Notification notification,String email) {
         notification.setRead(false);
-        User receiver = userRepository.findUserByEmail(email);
+        User receiver = userRepository.findByEmail(email);
         notification.setReceiver(receiver);
 
         notificationRepository.save(notification);
@@ -62,7 +62,7 @@ public class NotificationImpl implements NotificationService, MessageService {
 
     @Override
     public List<Notification> getAll(String email) {
-        User receiver = userRepository.findUserByEmail(email);
+        User receiver = userRepository.findByEmail(email);
         return notificationRepository.findAllByReceiver_UserId(receiver.getUserId());
     }
 
@@ -75,7 +75,7 @@ public class NotificationImpl implements NotificationService, MessageService {
 
     @Override
     public Integer getCount(String email) {
-        User user = userRepository.findUserByEmail(email);
+        User user = userRepository.findByEmail(email);
         return notificationRepository.countByReceiver_UserId(user.getUserId());
     }
 
