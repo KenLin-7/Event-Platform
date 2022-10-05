@@ -5,7 +5,7 @@ import bg1 from '../../asserts/images/login-bg-1.png'
 import bg2 from '../../asserts/images/login-bg-2.png'
 import formValidate from '../../utils/validation'
 import {signIn} from '../../api/UserAPI'
-import { Link,Navigate, useNavigation } from 'react-router-dom'
+import { Link,Navigate } from 'react-router-dom'
 import { Alert } from '@mui/material'
 import {useUser} from '../../context/UserContext'
 import { useNotification } from '../../context/NotificationContext'
@@ -47,17 +47,15 @@ export default function Login() {
     }
     const result = formValidate(validate)
     setIsValidated(result)  
+
     // setting helper text
     if(account.email !== "")     setEmailError("Please enter correct email") 
     if(account.password !== "")  setPasswordError("Please enter correct password format") 
     return result
   }
 
-  const shakeAnimation = (shake)=>{
-    if(shake){
-      
-    }
-  }
+
+
 
   return (
     <>
@@ -80,10 +78,13 @@ export default function Login() {
                       <label>Email</label>
                       <input className={!isValidated.email? (FormStyles['formInput-error']):(FormStyles.formInput)} type={"email"} placeholder="name@email.com" id="email" onChange={onChange} name="email"/>
                       {
-                        !isValidated.email &&
+                        !isValidated.email ? (
                           <div className={FormStyles['helper-text']}>
                           <span>{emailError}</span>
                         </div>
+                        ):(
+                            <></>
+                        )
                       }
                     </div>
 
@@ -91,14 +92,17 @@ export default function Login() {
                       <label>Password</label>
                       <input className={!isValidated.password? (FormStyles['formInput-error']):(FormStyles.formInput)}  type={"password"} placeholder="password" id="password" onChange={onChange} name="password"/>
                       {
-                        !isValidated.password &&
-                        <div className={FormStyles['helper-text']}>
+                        !isValidated.password ? (
+                          <div className={FormStyles['helper-text']}>
                           <span>{passwordError}</span>
                         </div>
+                        ):(
+                            <></>
+                        )
                       }
                     </div>
                     <div>
-                      <span id={styles['forgot-password']}>Forgot your password?</span>
+                      <span id={styles['forgot-password']}><Link to="/forgotPassword">Forgot your password?</Link></span>
                     </div>
 
                     <div className={FormStyles['button-area']}>

@@ -6,6 +6,7 @@ import com.group3.event_plaza.model.Role;
 import com.group3.event_plaza.model.User;
 import com.group3.event_plaza.repository.RoleRepository;
 import com.group3.event_plaza.repository.UserRepository;
+import com.group3.event_plaza.service.EmailService;
 import com.group3.event_plaza.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 
 @Service
@@ -32,6 +34,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         @Autowired
         private PasswordEncoder passwordEncoder;
+
+        @Autowired
+        private EmailService emailService;
 
 
 
@@ -50,29 +55,84 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         @Override
         public User getUserInfo(String email) throws DataNotFoundException {
-                User user = userRepository.findUserByEmail(email);
-                if(user == null){
-                        throw new DataNotFoundException("Can not found user with "+email);
+                User user = userRepository.findByEmail(email);
+                if (user == null) {
+                        throw new DataNotFoundException("Can not found user with " + email);
                 }
-            return userRepository.findUserByEmail(email);
+                return userRepository.findByEmail(email);
         }
+
 
         @Override
         public void updateUserInfo(User user) {
-
+                User currentUser = userRepository.findByEmail(user.getEmail());
+                if (currentUser != null){
+                        currentUser.setGender(user.getGender());
+                        currentUser.setNickname(user.getNickname());
+                        currentUser.setDob(user.getDob());
+                        currentUser.setPhone(user.getPhone());
+                        userRepository.save(currentUser);
+                }
         }
 
         @Override
         public void removeRole(String email){
                 Role role = roleRepository.findByRoleId(RoleUser.ROLE_USER.getId());
-                User user = userRepository.findUserByEmail(email);
+                User user = userRepository.findByEmail(email);
                 user.getRole().remove(role);
                 userRepository.save(user);
         }
 
         @Override
+        public String updateUserAvatar(String email, String avatar) {
+                User currentUser = userRepository.findByEmail(email);
+                if (currentUser != null){
+                        currentUser.setAvatar(avatar);
+                        userRepository.save(currentUser);
+                        return "Avatar updated";
+                }else{
+                        return "User not found";
+                }
+        }
+
+        @Override
+        public String updateUserEmail(String email, String newEmail) {
+                User currentUser = userRepository.findByEmail(email);
+                if (currentUser != null){
+                        currentUser.setEmail(newEmail);
+                        userRepository.save(currentUser);
+                        return "Email updated";
+                }else{
+                        return "User not found";
+                }
+        }
+
+        @Override
+        public String updateUserPassword(String email, String password) {
+                User currentUser = userRepository.findByEmail(email);
+                if (currentUser != null){
+                        currentUser.setPassword(passwordEncoder.encode(password));
+                        userRepository.save(currentUser);
+                        return "Password updated";
+                }else{
+                        return "User not found";
+                }
+        }
+
+        @Override
+        public StringBuilder sendMail(String email) {
+                StringBuilder s = new StringBuilder(6);
+                Random random = new Random();
+                for(int i=0;i<6;i++){
+                        s.append(random.nextInt(10));
+                }
+                String result = emailService.sendSimpleMail(email,"The validation code for updating email address: "+s, "You are updating your email address!");
+                return s;
+        }
+
+        @Override
         public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-                User currentUser = userRepository.findUserByEmail(email);
+                User currentUser = userRepository.findByEmail(email);
                 if(currentUser != null){
                         return new org.springframework.security.core.userdetails.User(
                                 currentUser.getEmail(),currentUser.getPassword(),getAuthorities(currentUser));
