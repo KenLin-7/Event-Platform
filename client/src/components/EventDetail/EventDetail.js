@@ -113,7 +113,7 @@ export default function EventDetail(effect, deps) {
         //     }
         //
         // )
-        setParticipants(0)
+        setParticipants(3)
         if (participants>=event.maxParticipant){
             setPendFlag(false)}
             else{

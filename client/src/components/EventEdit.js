@@ -26,31 +26,32 @@ import {useUser} from "../context/UserContext";
 import {getEvent} from "../api/EventAPI";
 import img from "./EventDetail/xxxxxxxx.png";
 
-export default function EventEdit() {
+export default function EventEdit(effect, deps) {
 
     const [eventId, setEventId] = useState(7)
     const [location, setLocation] = useState({address1: "",address2:"", suburb: "", state: "", postcode: ""})
     const [event, setEvent] = useState(null)
     const [loading, setLoading] = useState(true);
+    const [processing,setProcessing] = useState(true)
     const [eventImg, setEventImg] = useState(false)
 
     useEffect(() => {
         getEvent(eventId).then(
             (res) => {
                 setEvent(res.data)
-
                 setLoading(false)
+
             })
 
 
     }, [eventId])
+
     useEffect(() => {
         if (!loading) {
             processTime(event.startDate)
             processLocation(event.location)
             processImage(event.image)
-
-
+            setProcessing(false)
         }
     }, [event])
 
@@ -335,7 +336,7 @@ export default function EventEdit() {
 
         <div>{
 
-            loading ?
+            loading||processing ?
                 (
                     <div></div>
                 ) :

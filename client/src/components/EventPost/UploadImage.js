@@ -46,7 +46,7 @@ export default function UploadImage(props) {
             <Typography sx={{marginLeft: 2}}> Remember to click submit, or the image will not be kept</Typography>
 
             {
-                props.img && uploadingFlag===4?
+                props.img ?
                     <Stack sx={{padding: 1}}>
                         <img src={props.img} alt="event"/>
                     </Stack>
