@@ -21,7 +21,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/test' element={<TestUploadImage />} />
-          <Route path='/user-post-history' element={<UserPage />} />
+          <Route path='/user-page' element={<UserPage />} />
         </Route>
       </Routes>
     </UserProvider>

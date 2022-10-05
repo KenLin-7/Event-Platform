@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import styles from '../../asserts/stylesheet/UserPage/UserPage.module.css';
 import {
   Avatar,
   Stack,
@@ -20,7 +19,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import usePagination from "../Pagination";
-import UserRegistration from './UserRegistration'
+import styles from '../../asserts/stylesheet/UserPage/UserRegistration.module.css'
 
 const cards = [
   { id: 1, image: "image", title: "Title", remainingTime: "remaining time", position: "5/7", liked: 120 },
@@ -31,43 +30,24 @@ const cards = [
   { id: 6, image: "image", title: "Title", remainingTime: "remaining time", position: "5/7", liked: 120 },
 ];
 
-const UserPage = () => {
+const UserRegistration = ({flag}) => {
   const [open, setOpen] = React.useState(false);
-  const [flag, setFlag] = useState(false)
-  const [currentUser, setCurrentUser] = useState({});
 
   let [page, setPage] = useState(1);
   const PER_PAGE = 4;
   const count = Math.ceil(cards.length / PER_PAGE);
   const _DATA = usePagination(cards, PER_PAGE);
 
-  useEffect(() => {
-    const fetch = () => {
-      setFlag(true)
-      getUserInfo().then((data) => {
-        setCurrentUser(data.data)
-        setFlag(false);
-      })
-    }
-    fetch();
-  }, [])
-
   const handleChange = (e, p) => {
     setPage(p);
     _DATA.jump(p);
   };
 
-
-  const handleClickOpenCancel = () => {
-    setOpen(true);
-  };
-
-  const handleCloseCancel = () => {
-    setOpen(false);
-  };
-
   return (
-    <div className={styles['user-page']}>
+    <div className={styles['user-registration-container']}>
+      <div className={styles['user-registration-title']}>
+        User Registration
+      </div>
 
       {
         flag
@@ -78,22 +58,8 @@ const UserPage = () => {
           :
           (
             <>
-              <Stack direction={"row"} spacing={1} className={styles['user-info-section']}>
-                <Avatar sx={{ width: 60, height: 60 }} src="" />
-                <Stack>
-                  <Typography align={"left"}
-                    fontSize={20}> {currentUser.nickname}</Typography>
-                  <Typography align={"left"} fontSize={15}
-                    fontWeight={500}> {currentUser.email}
-                  </Typography>
-                </Stack>
-              </Stack>
 
               <div className={styles['user-post-event']}>
-                <div className={styles['user-post-event-title']}>
-                  Post event
-                </div>
-
                 <Box className={styles["event-containter"]}>
                   {
                     _DATA.currentData().map(card => {
@@ -125,8 +91,7 @@ const UserPage = () => {
                           <Divider />
 
                           <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 1.5, marginBottom: 1.5 }}>
-                            <Button variant="contained" sx={{ marginLeft: 0.5 }}>Edit</Button>
-                            <Button variant="contained" color='error' sx={{ marginLeft: 1 }} onClick={handleClickOpenCancel}>Cancel</Button>
+                            @Orgnizer name
                           </Box>
                         </Card>
                       )
@@ -141,35 +106,12 @@ const UserPage = () => {
                     page={page}
                     className={styles["pagination"]}
                   />
-                <Dialog
-                  open={open}
-                  onClose={handleCloseCancel}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogTitle id="alert-dialog-title">
-                    {"Use Google's location service?"}
-                  </DialogTitle>
-                  <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                      Are you sure you want to cancel this post?
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleCloseCancel}>Disagree</Button>
-                    <Button onClick={handleCloseCancel} autoFocus>
-                      Agree
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-
               </div>
             </>
           )
       }
-      <UserRegistration />
     </div>
   )
 }
 
-export default UserPage
+export default UserRegistration

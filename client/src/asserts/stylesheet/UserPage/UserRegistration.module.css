@@ -1,20 +1,17 @@
-.user-page {
-  height: 100vh;
+.user-registration-container{
+  padding-top: 50px;
+  height: 500px;
   width: 100vw;
-  font-family: 'Sora';
-  font-style: normal;
+  margin: 0 auto;
 }
 
-.user-info-section {
-  width: 409px;
-  height: 116px;
-  padding-top: 40px;
-  padding-left: 185px;
-}
-
-.user-post-event {
-  width: 100vw;
-
+.user-registration-title{
+  width: 275px;
+  height: 40px;
+  font-weight: 600;
+  font-size: 22px;
+  padding-left: 270px;
+  margin-bottom: 50px;
 }
 
 .event-containter {
@@ -41,7 +38,7 @@
   height: 40px;
   font-weight: 600;
   font-size: 22px;
-  padding-left: 270px;
+  padding-left: 190px;
   margin-bottom: 50px;
 }
 
@@ -115,19 +112,6 @@
   font-size: 14px;
   line-height: 150%;
   text-align: left;
-}
-
-.event-card-btn-group{
-  width: 200px;
-  margin: 0 auto;
-}
-
-.event-card-btn-group:first-child{
-  margin-left: 20px;
-}
-
-.event-card-btn-group:nth-child(2){
-  margin-left: 50px;
 }
 
 .pagination {

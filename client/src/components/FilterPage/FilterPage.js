@@ -11,7 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Pagination from '@mui/material/Pagination';
 import ImageTest from '../../asserts/images/test-image.png';
-import usePagination from "./Pagination";
+import usePagination from "../Pagination";
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import { search } from '../../api/FilterAPI'
