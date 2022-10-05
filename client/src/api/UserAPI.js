@@ -74,5 +74,6 @@ export const remove = async()=>{
 
 export const getUserInfo = async () => {
     const result = await axios.get(API + "/loggedIn-userInfo")
+    console.log(result);
     return result;
 }

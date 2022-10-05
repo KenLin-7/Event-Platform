@@ -3,7 +3,7 @@ import { Alert } from "@mui/material";
 import { Navigate } from "react-router-dom";
 const instance = axios.create({
     baseURL:'http://localhost:8080',
-    headers:'content-type:application/json'
+    // headers:'content-type:application/json'
 })
 
 instance.interceptors.request.use(request=>{
@@ -19,13 +19,10 @@ instance.interceptors.response.use(response=>{
     const token = response.headers['access_token']
     if(token!=null){
         localStorage.setItem("token",response.headers['access_token'].split("Bearer  ")[1])
-<<<<<<< HEAD
     };
     console.log(response.data);
-=======
-    }
->>>>>>> master
     return response.data
+
 },err=>{
     if(err.response){
         switch (err.response.status){
