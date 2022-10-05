@@ -50,15 +50,15 @@ public class UserController {
         session = request.getSession();
         String s;
         if(email!=null){
-            s = userService.sendMail(email).toString();
-            session.setAttribute("code",s);
-            return ResponseResult.success();
-        }else if(principal!=null){
-            s = userService.sendMail(principal.getName()).toString();
+            if(principal!=null){
+                s = userService.sendMail(principal.getName()).toString();
+            }else{
+                s = userService.sendMail(email).toString();
+            }
             session.setAttribute("code",s);
             return ResponseResult.success();
         }else{
-            return ResponseResult.unAuthenticated("You haven't login");
+            return ResponseResult.unAuthenticated("Please enter email");
         }
     }
 
