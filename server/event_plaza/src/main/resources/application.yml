@@ -14,6 +14,7 @@ spring:
         hibernate:
           dialect: org.hibernate.dialect.MySQLDialect
           enable_lazy_load_no_trans: true
+          open_in_view: true
 
 #  mail:
 #    host: smtp.163.com #SMTP服务器地址

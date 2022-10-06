@@ -43,23 +43,20 @@ export const NotificationProvider = ({children})=>{
         if(auth !=null && stompClient !=null){
             setConnected(true)
             // subscribe user socket to recieve user private notifications
-            stompClient.debug = null
+            // stompClient.debug = null
             stompClient.subscribe(`/user/${auth}/notification`,handlePayload)
-            if(eventIds.length>0 ){
-                eventIds.forEach(eventId => {
-                    stompClient.subscribe(`/event/${eventId}/notification`,handlePayload)
-                });
-            }
+
         }
  
     }
 
     // handle notificaition payload 
     const handlePayload = (payload)=>{
-        setCurrentNotification(JSON.parse(payload.body))
-        // push currentNotificaiton to list
-        notifications.push(payload.body)
-        setNotifications([...notifications])
+        try{
+            setCurrentNotification(JSON.parse(payload.body).message)
+        }catch(err){
+            setCurrentNotification(payload.body)
+        }
     }
 
     // Handle socket error
@@ -95,6 +92,19 @@ export const NotificationProvider = ({children})=>{
         }
     }
 
+        // notify user if resgiration has been rejected/accepted
+        const sendUserMessage = (email,message)=>{
+            if(stompClient){
+                let notification = {
+                    message:message,
+                    email:email
+                }
+                stompClient.send(`/user/${email}/notification`,{},JSON.stringify(notification))
+                // createNotification(email,message,"status")
+                setSent(true)
+            }
+        }
+
 
     // Mark all notification as read
     const clearAll = ()=>{
@@ -107,18 +117,7 @@ export const NotificationProvider = ({children})=>{
     }
 
 
-    // notify user if resgiration has been rejected/accepted
-    const sendUserMessage = (email,message)=>{
-        if(stompClient){
-            let notification = {
-                message:message,
-                email:email
-            }
-            stompClient.send(`/user/${email}/notification`,{},JSON.stringify(notification))
-            createNotification(email,message,"status")
-            setSent(true)
-        }
-    }
+
 
 
 

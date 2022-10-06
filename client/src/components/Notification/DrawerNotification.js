@@ -61,7 +61,7 @@ export default function DrawerNotification(props) {
         ) : (
           <List>
             {notifications.map((message, index) => (
-              <div key={message.notificationId}>
+              <div key={index}>
                 <ListItem disablePadding>
                   <MessageNotification notification={message} />
                 </ListItem>

@@ -36,7 +36,7 @@ public class NotificationImpl implements NotificationService, MessageService {
     @Override
     public void notifyUser(String email,String message) {
         simpMessagingTemplate.convertAndSendToUser(email,
-                "/notification","Notification Sent to"+email);
+                "/notification",message);
 
     }
 
@@ -47,7 +47,7 @@ public class NotificationImpl implements NotificationService, MessageService {
      */
     @Override
     public void eventNotification(String eventId,String content){
-            simpMessagingTemplate.convertAndSend("/event/"+eventId+"/notification","Event Update");
+            simpMessagingTemplate.convertAndSend("/event/"+eventId+"/notification",content);
 
     }
 

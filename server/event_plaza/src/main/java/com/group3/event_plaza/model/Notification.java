@@ -19,7 +19,7 @@ public class Notification implements Serializable {
 
     private String status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver")
     @JsonIgnoreProperties(value = "receiver")
     private User receiver;
