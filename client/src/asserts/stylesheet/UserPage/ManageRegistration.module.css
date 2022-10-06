@@ -46,6 +46,7 @@
 
 .requester-msg-section {
   display: flex;
+
 }
 
 .requester-nickname {
@@ -55,6 +56,8 @@
 }
 
 .requester-msg {
+  width: 280px;
+
   margin-left: 10px;
   font-size: 15px;
   line-height: 113px;
@@ -65,7 +68,7 @@
   display: flex;
   float: right;
   margin-top: 30px;
-  margin-left: 570px;
+  margin-left: 180px;
 }
 
 .approve-btn {
@@ -95,4 +98,10 @@
   font-style: normal;
   font-size: 14px;
   margin-left: 10px;
+}
+
+.display-location{
+  width: 300px;
+  margin-top:30px;
+  font-size: 12px;
 }

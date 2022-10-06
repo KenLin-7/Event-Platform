@@ -85,7 +85,7 @@ const UserPost = () => {
                         {
                           _DATA.currentData().map(card => {
                             return (
-                              <Card variant="outlined" className='event-card' key={card.eventId} onClick={() => handleToEditPage(card.eventId)}>
+                              <Card variant="outlined" className='event-card' key={card.eventId}>
                                 <div className={styles['event-card-img']}>
                                   <img className={styles['event-image']} src={card.image} alt="" />
                                 </div>
@@ -108,10 +108,14 @@ const UserPost = () => {
 
                                 <Divider />
 
-                                <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 1.5, marginBottom: 1.5 }}>
-                                  <Button variant="contained" sx={{ marginLeft: 0.5 }} >Edit</Button>
-                                  <Button variant="contained" color='error' sx={{ marginLeft: 1 }} onClick={handleClickOpenCancel}>Cancel</Button>
-                                </Box>
+                                <div className={styles['group-btn']}>
+                                  <div className={styles['approve-btn']} onClick={handleClickOpenCancel}>
+                                    Edit
+                                  </div>
+                                  <div className={styles['reject-btn']} onClick={handleClickOpenCancel}>
+                                    Cancel
+                                  </div>
+                                </div>
                               </Card>
                             )
                           })

@@ -12,4 +12,6 @@ public interface RegistrationRepository extends JpaRepository<Registration,Integ
 
     @Query(value = "SELECT * from registration where user_id = ?1",nativeQuery = true)
     List<Registration> findByUserId(int id);
+
+
 }

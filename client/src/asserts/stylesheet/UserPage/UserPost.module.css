@@ -112,5 +112,42 @@
   height: 200px;
   margin: 0 auto;
   line-height: 100px;
-  color: darkgray;
+  color: darkgray ;
+}
+
+.group-btn{
+  display: flex;
+  margin-top: 10px;
+  margin-left: 45px;
+  margin-bottom: 20px;
+
+}
+
+.approve-btn {
+  text-align: center;
+  line-height: 45px;
+  width: 100px;
+  height: 47px;
+  background: #4745D0;
+  box-shadow: 0px 4px 20px #6e6dc7;
+  border-radius: 15px;
+  color: white;
+  font-family: 'Sora';
+  font-style: normal;
+  font-size: 14px;
+}
+
+.reject-btn {
+  text-align: center;
+  line-height: 45px;
+  width: 100px;
+  height: 47px;
+  background: #e42828;
+  box-shadow: 0px 4px 20px #db4f4f;
+  border-radius: 15px;
+  color: white;
+  font-family: 'Sora';
+  font-style: normal;
+  font-size: 14px;
+  margin-left: 10px;
 }
