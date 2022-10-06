@@ -3,6 +3,7 @@ package com.group3.event_plaza.controller;
 
 import com.group3.event_plaza.common.ResponseResult;
 import com.group3.event_plaza.model.Event;
+import com.group3.event_plaza.model.Registration;
 import com.group3.event_plaza.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -50,8 +51,16 @@ public class EventController {
     }
 
     @GetMapping("/currentUserEvents")
-    public ResponseResult<List<Event>> getCurrentUserEvents(int id){
-        List<Event> list = eventService.getCurrentUserEvents(id);
+    public ResponseResult<List<Event>> getCurrentUserEvents(Principal principal){
+        String email = principal.getName();
+        List<Event> list = eventService.getCurrentUserEvents(email);
+        return ResponseResult.success(list);
+    }
+
+    @GetMapping("/getUserRegistrationEvents")
+    public ResponseResult<List<Registration>> getUserRegistrationEvents(Principal principal){
+        String email = principal.getName();
+        List<Registration> list = eventService.getUserRegistrationEvents(email);
         return ResponseResult.success(list);
     }
 

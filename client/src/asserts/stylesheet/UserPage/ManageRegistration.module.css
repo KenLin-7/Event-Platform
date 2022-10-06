@@ -1,0 +1,98 @@
+.manage-registration-container {
+  height: 600px;
+  width: 100vw;
+}
+
+.manage-registration-title {
+  width: 275px;
+  height: 40px;
+  font-weight: 600;
+  font-size: 22px;
+  padding-left: 270px;
+  margin-bottom: 50px;
+}
+
+.manage-registration-content {
+  width: 80vw;
+  height: 380px;
+  padding-left: 270px;
+}
+
+.registraion-notification-card {
+  height: 120px;
+  width: 1300px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  border-radius: 20px;
+  margin-bottom: 50px;
+  padding: 10px;
+}
+
+.pagination {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.requester-container {
+  display: flex;
+}
+
+.requester-avatar {
+  height: 60px;
+  width: 60px;
+  margin-top: 28px;
+  margin-left: 20px;
+}
+
+.requester-msg-section {
+  display: flex;
+}
+
+.requester-nickname {
+  margin-left: 30px;
+  line-height: 113px;
+  font-size: 20px;
+}
+
+.requester-msg {
+  margin-left: 10px;
+  font-size: 15px;
+  line-height: 113px;
+  color: darkgray;
+}
+
+.group-btn{
+  display: flex;
+  float: right;
+  margin-top: 30px;
+  margin-left: 570px;
+}
+
+.approve-btn {
+  text-align: center;
+  line-height: 45px;
+  width: 156px;
+  height: 47px;
+  background: #4745D0;
+  box-shadow: 0px 4px 20px #5C5AC4;
+  border-radius: 15px;
+  color: white;
+  font-family: 'Sora';
+  font-style: normal;
+  font-size: 14px;
+}
+
+.reject-btn {
+  text-align: center;
+  line-height: 45px;
+  width: 156px;
+  height: 47px;
+  background: #e42828;
+  box-shadow: 0px 4px 20px #e42828;
+  border-radius: 15px;
+  color: white;
+  font-family: 'Sora';
+  font-style: normal;
+  font-size: 14px;
+  margin-left: 10px;
+}

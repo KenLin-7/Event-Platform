@@ -16,7 +16,7 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
 
     List<Event> findTop9ByOrderByEventIdDesc();
 
-    List<Event> findEventByOwner(int id);
+    List<Event> findByOwner(User user);
 
     List<Event> findAll();
 }

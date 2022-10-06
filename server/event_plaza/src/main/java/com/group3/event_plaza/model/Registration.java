@@ -19,6 +19,8 @@ public class Registration {
 
     @ManyToOne
     @JoinColumn(name ="event_id")
+    @JsonIgnoreProperties(value = "registrationList")
+
     private Event event;
 
     private String status;
@@ -53,5 +55,13 @@ public class Registration {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 }

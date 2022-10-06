@@ -1,5 +1,7 @@
 package com.group3.event_plaza.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -29,6 +31,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "owner")
+    @JsonIgnoreProperties(value = "registrations")
     private User owner;
 
     @ManyToOne
