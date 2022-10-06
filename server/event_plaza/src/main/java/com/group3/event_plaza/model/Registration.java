@@ -19,4 +19,9 @@ public class Registration {
     private Event event;
 
     private String status;
+
+    public User getRequester (){return requester;}
+
+    public String getStatus(){return status;}
+
 }

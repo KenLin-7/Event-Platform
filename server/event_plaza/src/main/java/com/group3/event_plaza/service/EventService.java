@@ -2,6 +2,7 @@ package com.group3.event_plaza.service;
 import com.group3.event_plaza.model.Event;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 public interface EventService {
 
@@ -12,6 +13,8 @@ public interface EventService {
 
 
     Event getEvent(int eventId);
+
+    Map<String,Object> getEventDetail(int eventId,int registerId);
 
     List<Event> searchEvent(String keyword);
 

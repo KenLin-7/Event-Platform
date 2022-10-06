@@ -27,7 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private static final String[] URL_WHITELISTS ={
-            "/",
+            "/test/*",
             "/api/user/register",
             "/api/user/logout",
             "/ws/socket/**",

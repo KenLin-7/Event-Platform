@@ -14,7 +14,8 @@ import img from "./xxxxxxxx.png"
 import Grid2 from "@mui/material/Unstable_Grid2";
 import ParticipantCPN from "./ParticipantCPN";
 import {getEvent} from "../../api/EventAPI";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import avatar from '../EventDetail/avatar.jpg';
+import RegistBtn from "./RegistBtn";
 
 
 
@@ -27,16 +28,16 @@ export default function EventDetail(effect, deps) {
         "Time: 8.30pm then at 9pm from 8 October 2022  "
 
 
-    const [eventId, setEventId] = useState(7)
+    const [eventId, setEventId] = useState(6)
     const [loading, setLoading] = useState(true);
     const [event, setEvent] = useState(null)
     const [eventDate, setEventDate] = useState("")
     const [eventImg, setEventImg] = useState(img)
     const [location, setLocation] = useState({street: "", suburb: "", state: "", postcode: ""})
-    const [eventPoster, setEventPoster] = useState({nickname: "", email: "", avatar: AccountCircleIcon})
-    const [participants,setParticipants] =useState(null)
+    const [eventPoster, setEventPoster] = useState({nickname: "", email: "", avatar: avatar})
+    const [participants,setParticipants] =useState("")
     const [pendFlag,setPendFlag] = useState(true)
-    const [pendingFlag,setPendingFlag] = useState(false)
+    const [registration,setRegistration] = useState(null)
 
     useEffect(() => {
         getEvent(eventId).then(
@@ -46,7 +47,6 @@ export default function EventDetail(effect, deps) {
                 setLoading(false)
             })
 
-
     }, [eventId])
 
     useEffect(() => {
@@ -55,10 +55,19 @@ export default function EventDetail(effect, deps) {
             processLocation(event.location)
             processImage(event.image)
             processOwner(event.owner)
-            processParticipants(event.eventId)
+            setRegistration(event.registrationList)
+
 
         }
     }, [event],[pendingFlag],[pendFlag])
+
+    useEffect(   () =>{
+
+        processParticipants()
+
+
+
+        },[registration],[eventPoster])
 
 
     const processTime = (timeString) => {
@@ -105,21 +114,21 @@ export default function EventDetail(effect, deps) {
         setEventPoster({nickname: owner.nickname, email: owner.email, avatar: owner.avatar})
     }
 
-    const processParticipants= (eventId) =>{
-        // getParticipants(eventId).then(
-        //     (res) =>{
-        //         setParticipants(res.data)
-        //         console.log(participants)
-        //     }
-        //
-        // )
-        setParticipants(3)
-        if (participants>=event.maxParticipant){
-            setPendFlag(false)}
-            else{
-                setPendFlag(true)
+    const processParticipants= () =>{
+
+        if(registration!=null){
+
+            setParticipants(registration.length)
+
+            if (participants>=event.maxParticipant){
+                setPendFlag("full")
             }
+            else{
+                setPendFlag("available")
+            }
+        }
     }
+
 
     const onPendClick = () =>{
         setPendingFlag(true)
@@ -186,31 +195,7 @@ export default function EventDetail(effect, deps) {
                                                                 > {location.suburb + ", " + location.state + " " + location.postcode} </Typography>
                                                                 <Typography align={'center'} sx={{marginTop: 2}}
                                                                             fontWeight={500}>Available: {participants} / {event.maxParticipant} </Typography>
-                                                                {
-                                                                    pendFlag?
-                                                                        (
-                                                                            pendingFlag?
-                                                                                <Button disabled fullWidth align={'center'} sx={{marginY: 3}}
-                                                                                        variant="contained" size="large">
-                                                                                    pending</Button>
-                                                                        :
-                                                                                <Button onClick={onPendClick} fullWidth align={'center'} sx={{marginY: 3}}
-                                                                                        variant="contained" size="large">
-
-                                                                                    Regist Now</Button>
-
-                                                                        )
-
-
-                                                                        :
-
-                                                                        <Button disabled fullWidth align={'center'} sx={{marginY: 3}}
-                                                                                variant="contained" size="large">
-
-                                                                            Full</Button>
-
-
-                                                                }
+                                                                <RegistBtn pendingFlag={pendingFlag} pendFlag={[pendFlag]} ></RegistBtn>
 
 
 

@@ -1,10 +1,7 @@
 package com.group3.event_plaza.service.Impl;
 
 import com.group3.event_plaza.common.lang.RoleUser;
-import com.group3.event_plaza.model.Category;
-import com.group3.event_plaza.model.Event;
-import com.group3.event_plaza.model.Role;
-import com.group3.event_plaza.model.User;
+import com.group3.event_plaza.model.*;
 import com.group3.event_plaza.repository.CategoryRepository;
 import com.group3.event_plaza.repository.EventRepository;
 import com.group3.event_plaza.repository.RoleRepository;
@@ -14,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -32,10 +31,9 @@ public class EventServiceImpl implements EventService {
     RoleRepository roleRepository;
 
 
-
     @Override
-    public void createEvent(Principal user,Event event) {
-        User owner =  userRepository.findByEmail(user.getName());
+    public void createEvent(Principal user, Event event) {
+        User owner = userRepository.findByEmail(user.getName());
         Role organizer = roleRepository.findByRoleId(RoleUser.ROLE_ORGANIZER.getId());
         owner.getRole().add(organizer);
         event.setOwner(owner);
@@ -51,24 +49,58 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> searchEvent(String keyword){
+    public Map<String, Object> getEventDetail(int eventId, int requesterId) {
+        Event event = eventRepository.findByEventId(eventId);
+        Registration registration = registrationFlag(event.getRegistrationList(), requesterId);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("registBtnFlag", "");
+        result.put("event",event);
+
+        if (requesterId == event.getOwner().getUserId()) {
+            result.replace("registBtnFlag", "owner");
+        } else {
+            if (registration != null) {
+                result.replace("registBtnFlag", registration.getStatus());
+
+            }else{
+                result.replace("registBtnFlag", "available");
+            }
+        }
+
+        return result;
+    }
+
+    public Registration registrationFlag(List<Registration> registrations, Integer requesterId) {
+
+        for (int i = 0; i < registrations.size(); i++) {
+            if (registrations.get(i).getRequester().getUserId() == requesterId) {
+                return registrations.get(i);
+            }
+        }
+        return null;
+    }
+
+
+    @Override
+    public List<Event> searchEvent(String keyword) {
         List<Event> list = eventRepository.findByTitleContains(keyword);
         return list;
     }
 
     @Override
-    public  List<Event> getLatestEvent(){
+    public List<Event> getLatestEvent() {
         List<Event> list = eventRepository.findTop9ByOrderByEventIdDesc();
         return list;
     }
 
     @Override
-    public List<Event> getCurrentUserEvents(int id){
+    public List<Event> getCurrentUserEvents(int id) {
         List<Event> list = eventRepository.findEventByOwner(id);
         return list;
     }
+
     @Override
-    public List<Event> getAllEvent(){
+    public List<Event> getAllEvent() {
         List<Event> list = eventRepository.findAll();
         return list;
     }
