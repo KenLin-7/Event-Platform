@@ -8,6 +8,11 @@ export const postEvent = async (event)=>{
     return result
 }
 
+export const getEventDetail = async (eventId)=>{
+    const result = await axios.post(API+"/getEventDetail",{eventId:eventId})
+    return result
+}
+
 
 export const getEvent = async (eventId)=>{
 
