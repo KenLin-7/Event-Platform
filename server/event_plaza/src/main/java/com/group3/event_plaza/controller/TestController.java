@@ -8,6 +8,7 @@ import com.group3.event_plaza.service.EventService;
 import com.group3.event_plaza.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +28,6 @@ public class TestController {
         System.out.println(email);
         return ResponseResult.success(userService.getUserInfo("ken22@test.com"));
     }
-
-
-
 
 
     @GetMapping("/event/24")

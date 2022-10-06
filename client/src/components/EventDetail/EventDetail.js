@@ -13,10 +13,9 @@ import {
 import img from "./xxxxxxxx.png"
 import Grid2 from "@mui/material/Unstable_Grid2";
 import ParticipantCPN from "./ParticipantCPN";
-import {getEvent, getEventDetail} from "../../api/EventAPI";
+import {getEventDetail} from "../../api/EventAPI";
 import avatar from '../EventDetail/avatar.jpg';
 import RegistBtn from "./RegistBtn";
-
 
 
 export default function EventDetail(effect, deps) {
@@ -33,8 +32,8 @@ export default function EventDetail(effect, deps) {
     const [event, setEvent] = useState(null)
     const [eventDate, setEventDate] = useState("")
     const [eventImg, setEventImg] = useState(img)
-    const [registFlag,setRegistFlag] = useState("")
-    const [registrationList,setRegistrationList] = useState(null)
+    const [registFlag, setRegistFlag] = useState("")
+    const [registrationList, setRegistrationList] = useState(null)
 
     useEffect(() => {
         getEventDetail(eventId).then(
@@ -42,6 +41,7 @@ export default function EventDetail(effect, deps) {
                 setEvent(res.data)
                 setRegistrationList(res.data["registrationList"])
                 setRegistFlag(res.data["registBtnFlag"])
+                // setRegistFlag("rejected")
                 setLoading(false)
             })
 
@@ -49,14 +49,18 @@ export default function EventDetail(effect, deps) {
 
     useEffect(() => {
         if (!loading) {
-             processTime(event.time)
-             processImage(event.image)
-            if(registrationList.length>=event.maxParticipant){
+            processTime(event.time)
+            processImage(event.image)
+            if (registrationList.length >= event.maxParticipant) {
                 setRegistFlag("full")
             }
         }
     }, [event])
 
+    useEffect(() => {
+
+
+    }, [registFlag])
 
 
     const processTime = (timeString) => {
@@ -78,7 +82,6 @@ export default function EventDetail(effect, deps) {
             setEventImg(imageURL)
         }
     }
-
 
 
     return (
@@ -141,7 +144,11 @@ export default function EventDetail(effect, deps) {
                                                                 > {event["location"].suburb + ", " + event["location"].state + " " + event["location"].postcode} </Typography>
                                                                 <Typography align={'center'} sx={{marginTop: 2}}
                                                                             fontWeight={500}>Available: {registrationList.length} / {event.maxParticipant} </Typography>
-                                                                <RegistBtn registFlag={registFlag} ></RegistBtn>
+                                                                <RegistBtn
+                                                                    updateRegistFlag={(newRegistFlag) => setRegistFlag(newRegistFlag)}
+                                                                    registFlag={registFlag}
+                                                                    eventId={eventId}
+                                                                ></RegistBtn>
 
                                                             </Container>
                                                         </Card>
@@ -169,7 +176,8 @@ export default function EventDetail(effect, deps) {
                                 <Typography align={"left"} fontSize={18} fontWeight={500}>Participants: </Typography>
                                 <Grid2 container direction={"row"} sx={{marginTop: 2, marginX: 2}} spacing={2}>
                                     {registrationList.map((reg) => (
-                                        <ParticipantCPN key={reg.requester.email} requester={reg["requester"]}></ParticipantCPN>
+                                        <ParticipantCPN key={reg.requester.email}
+                                                        requester={reg["requester"]}></ParticipantCPN>
                                     ))}
                                 </Grid2>
                             </Stack>
