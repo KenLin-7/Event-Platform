@@ -1,11 +1,10 @@
 import React,{useContext,useEffect,useState} from 'react'
 import * as SockJS from 'sockjs-client';
 import { useUser } from './UserContext';
-import Button from '@mui/material/Button';
 import { SnackbarProvider} from 'notistack';
 import Notification from '../components/Notification';
-import { createNotification } from '../api/NotificationAPI';
-
+import { createNotification, updateAll } from '../api/NotificationAPI';
+import { getNotifications } from '../api/NotificationAPI';
 const Stomp = require('stompjs')
 // import Stomp from 'stomp-websocket'
 const NotificationContext = React.createContext()
@@ -22,6 +21,8 @@ export const NotificationProvider = ({children})=>{
     const [notifications,setNotifications] = useState([]);
     const [currentNotification,setCurrentNotification] = useState("")
     const [connected,setConnected] = useState(false)
+    const [sent,setSent] = useState(false)
+    const [count,setCount] = useState(0)
 
 
     // connect to web socket to recieve notification
@@ -42,6 +43,7 @@ export const NotificationProvider = ({children})=>{
         if(auth !=null && stompClient !=null){
             setConnected(true)
             // subscribe user socket to recieve user private notifications
+            stompClient.debug = null
             stompClient.subscribe(`/user/${auth}/notification`,handlePayload)
             if(eventIds.length>0 ){
                 eventIds.forEach(eventId => {
@@ -82,13 +84,25 @@ export const NotificationProvider = ({children})=>{
 
 
     // notify participant if event information has been upadated
-    const sendEventMessage = (eventId,message)=>{
+    const sendEventMessage = (eventId,message,recieverEmail)=>{
         if(stompClient){
             let notification = {
                 message:message,
                 eventId:eventId
             }
             stompClient.send(`/event/${eventId}/notification`,{},JSON.stringify(notification))
+            setSent(true)
+        }
+    }
+
+
+    // Mark all notification as read
+    const clearAll = ()=>{
+        if(notifications.length > 0){
+            updateAll(notifications).then((res)=>{
+                setNotifications([])
+                setCount(0)
+            })
         }
     }
 
@@ -102,16 +116,31 @@ export const NotificationProvider = ({children})=>{
             }
             stompClient.send(`/user/${email}/notification`,{},JSON.stringify(notification))
             createNotification(email,message,"status")
+            setSent(true)
         }
     }
 
 
 
     useEffect(()=>{
+
         if(!connected && auth != null){
             socketConn()
         } 
-    },[auth])
+        async function fetch(){
+            await getNotifications().then((res)=>{
+                setNotifications(res)
+                setCount(res.length)
+                })
+        }
+
+        if(auth!=null||sent){
+            fetch()
+            setSent(false)
+        }
+
+
+    },[auth,sent])
 
     const value = {
         notifications,
@@ -121,7 +150,10 @@ export const NotificationProvider = ({children})=>{
         setCurrentNotification,
         sendUserMessage,
         disconnect,
-        socketConn
+        socketConn,
+        count,
+        clearAll
+        
     }
 
     return (

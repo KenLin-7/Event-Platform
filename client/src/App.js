@@ -16,6 +16,7 @@ import EventDetail from "./components/EventDetail/EventDetail";
 import EventEdit from "./components/EventEdit";
 import FilterPage from "./components/FilterPage/FilterPage";
 import UserPage from './components/UserPage/UserPage';
+import PageNotFound from './components/PageNotFound';
 
 function App() {
   return (
@@ -30,13 +31,14 @@ function App() {
           <Route path='/filter/:keyword' element={<FilterPage />} />
           <Route path='/test' element={<TestUploadImage />} />
           <Route path='/eventpost' element={<EventPost />} />
-          <Route path='/eventdetail' element={<EventDetail />} />
-          <Route path='/eventedit' element={<EventEdit />} />
+          <Route path='/eventdetail/:id' element={<EventDetail />} />
+          <Route path='/eventedit/:id' element={<EventEdit />} />
           <Route path='/user-page' element={<UserPage />} />
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/password' element={<Password/>}/>
           <Route path='/forgotPassword' element={<ForgotPassword/>}/>
           <Route path='/resetPassword' element={<ResetPassword/>}/>
+          <Route path='/*' element={<PageNotFound/>}/>
         </Route>
       </Routes>
       </NotificationProvider>

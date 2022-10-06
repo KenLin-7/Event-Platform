@@ -19,9 +19,9 @@ public class Notification implements Serializable {
 
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "receiver")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties(value = "receiver")
     private User receiver;
 
     @CreationTimestamp
@@ -32,11 +32,12 @@ public class Notification implements Serializable {
     public Notification() {
     }
 
-    public Notification(String message, String status) {
+
+
+    public Notification(String message,String status){
         this.message = message;
         this.status = status;
     }
-
 
     public int getNotificationId() {
         return notificationId;

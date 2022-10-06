@@ -41,7 +41,7 @@ import java.util.Set;
 
     private String avatar;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnoreProperties("user")
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name="user_id")},
@@ -49,10 +49,10 @@ import java.util.Set;
     )
     private List<Role> role = new ArrayList<>();
 
-    @OneToMany(mappedBy = "requester",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "requester")
     private List<Registration> registrations;
 
-    @OneToMany(mappedBy = "receiver",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "receiver")
     @JsonIgnoreProperties("notifications")
     private List<Notification> notifications;
 

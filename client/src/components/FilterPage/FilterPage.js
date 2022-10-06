@@ -59,6 +59,10 @@ const FilterPage = () => {
     getFilteredEvent();
   }, [params.keyword]);
 
+  const handleToEventDetail = (id) => {
+    navigate(`/eventDetail/${id}`)
+  }
+
   const handleChange = (e, p) => {
     setPage(p);
     _DATA.jump(p);
@@ -131,7 +135,7 @@ const FilterPage = () => {
                 {
                   _DATA.currentData().map(card => {
                     return (
-                      <Card variant="outlined" className={styles['event-card']} key={card.eventId}>
+                      <Card variant="outlined" className={styles['event-card']} key={card.eventId} onClick={() => handleToEventDetail(card.eventId)}>
 
                         <div className={styles['event-card-left']}>
                           <div className={styles["event-card-title"]}>

@@ -1,10 +1,15 @@
 package com.group3.event_plaza.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
+@Transactional
 public class Event {
 
 
@@ -29,6 +34,8 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "owner")
+    @JsonIgnoreProperties(value = "registrations")
+
     private User owner;
 
     @ManyToOne
@@ -140,4 +147,22 @@ public class Event {
     public void setRegistrationList(List<Registration> registrationList) {
         this.registrationList = registrationList;
     }
+
+
+//    @Override
+//    public String toString() {
+//        return "Event{" +
+//                "eventId=" + eventId +
+//                ", description='" + description + '\'' +
+//                ", maxParticipant=" + maxParticipant +
+//                ", status='" + status + '\'' +
+//                ", image='" + image + '\'' +
+//                ", title='" + title + '\'' +
+//                ", location='" + location + '\'' +
+//                ", startDate=" + startDate +
+//                ", owner=" + owner +
+//                ", category=" + category +
+//                ", registrationList=" + registrationList +
+//                '}';
+//    }
 }

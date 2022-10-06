@@ -40,22 +40,24 @@ public class UserController {
     }
 
     @PostMapping("/profile")
-    public ResponseResult<User> profile(@RequestBody String email) throws DataNotFoundException {
-        System.out.println("profile: "+email);
-        User userProfile = userService.getUserInfo(email);
+    public ResponseResult<User> profile(@RequestBody Map<String,String>  email) throws DataNotFoundException {
+        System.out.println("profile: "+email.get("email"));
+        User userProfile = userService.getUserInfo(email.get("email"));
         return ResponseResult.success(userProfile);
     }
 
     @PostMapping("/sendEmail")
-    public ResponseResult<String> sendEmail(HttpServletRequest request, Principal principal, String email){
+    public ResponseResult<String> sendEmail(HttpServletRequest request, Principal principal, @RequestBody String email){
         session = request.getSession();
         String s;
+        System.out.println(email);
         if(email!=null){
-            if(principal!=null){
-                s = userService.sendMail(principal.getName()).toString();
-            }else{
-                s = userService.sendMail(email).toString();
-            }
+//            if(principal!=null){
+//                s = userService.sendMail(principal.getName()).toString();
+//            }else{
+//                s = userService.sendMail(email).toString();
+//            }
+            s = userService.sendMail(email).toString();
             session.setAttribute("code",s);
             return ResponseResult.success();
         }else{

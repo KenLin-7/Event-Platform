@@ -1,3 +1,4 @@
+import { async } from "@firebase/util"
 import axios from "./axios"
 const API = '/api/event'
 
@@ -14,12 +15,19 @@ export const getEvent = async (eventId)=>{
     return result
 }
 
-export const getCurrentUserEvents = async (keyword) => {
+export const getCurrentUserEvents = async () => {
   const result = await axios.get(API + "/currentUserEvents")
+  console.log(result)
   return result
 }
 
 export const getAllEvent = async () => {
   const result = await axios.get(API + "/getAllEvent");
+  return result
+}
+
+export const getUserRegistrationEvents = async () => {
+  const result = await axios.get(API + "/getUserRegistrationEvents");
+  console.log(result)
   return result
 }

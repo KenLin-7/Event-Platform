@@ -21,8 +21,8 @@ public class NotificationController {
     private NotificationService notificationService;
 
     @GetMapping("/all")
-    public ResponseResult<List<Notification>> getNotifications(@RequestBody String email){
-        return ResponseResult.success(notificationService.getAll(email));
+    public ResponseResult<List<Notification>> getNotifications(Principal principal){
+        return ResponseResult.success(notificationService.getAll(principal.getName()));
     }
 
     @PostMapping("/create")
@@ -40,6 +40,12 @@ public class NotificationController {
 
     @PostMapping("/update")
     public  ResponseResult<String> updateNotification(@RequestBody int Id){
+        return ResponseResult.success();
+    }
+
+    @PostMapping("/update/all")
+    public ResponseResult<String> updateAll(@RequestBody Map<String,List<Notification>> data){
+        notificationService.updateAll(data.get("notifications"));
         return ResponseResult.success();
     }
 }

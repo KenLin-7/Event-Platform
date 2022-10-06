@@ -2,15 +2,16 @@ package com.group3.event_plaza.controller;
 
 import com.group3.event_plaza.common.ResponseResult;
 import com.group3.event_plaza.common.exception.business.DataNotFoundException;
+import com.group3.event_plaza.model.Event;
 import com.group3.event_plaza.model.User;
 import com.group3.event_plaza.service.EventService;
 import com.group3.event_plaza.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/test")
+@RequestMapping("/api/test")
 @RestController
 public class TestController {
 
@@ -37,5 +38,10 @@ public class TestController {
 
 
 
+
+    @GetMapping("/event/24")
+    public ResponseResult<List<Event>> getEventLess24(){
+        return  ResponseResult.success(eventService.getEventLess24());
+    }
 
 }
