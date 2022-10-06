@@ -5,8 +5,9 @@ import formValidate from '../../utils/validation'
 import bg from '../../asserts/images/register-bg.png'
 import { signUp } from '../../api/UserAPI'
 import { Link } from 'react-router-dom'
-import { Navigate } from 'react-router-dom'
 import { Alert } from '@mui/material'
+import { useNavigate } from "react-router-dom";
+
 export default function Register() {
 
     const [account,setAccount] = useState({
@@ -22,6 +23,7 @@ export default function Register() {
         password:true,
         email:true,
     })
+    const navigate = useNavigate();
     const [emailError,setEmailError] = useState("Please enter your email")
     const [passwordError,setPasswordError] = useState("Please enter your password")
     const [phoneError,setPhoneError] = useState("Please enter your phone")
@@ -47,18 +49,22 @@ export default function Register() {
     }
 
     const onClick = ()=>{
-
         const result = validation()
         if(result.email & result.password &result.nickname & result.phone){
             signUp(account).then((res)=>{
                 if(res.code == 200){
                     setMessage({show:true,message:"Register succcessfully",severity:"success"})
+                    setTimeout(()=>{
+                        navigate("/login")
+                    },2000)
                 }else{
                     setMessage({show:true,message:"Email was taken",severity:"error"})
                 }
             })
         }
     }
+
+    
 
     // Handle form change
     const onChange = (e)=>{
@@ -144,14 +150,11 @@ export default function Register() {
                             }
                         </div>
                     </div>
-                    {message.show && <Alert severity={"error"} sx={{marginBottom:"15px"}}>{message.content}</Alert>} 
+                    {message.show && <Alert severity={message.severity} sx={{marginBottom:"15px"}}>{message.message}</Alert>} 
                     <div className={FormStyles['button-area']}>
                         <button className={FormStyles.formButton} onClick={onClick}>Create an account</button>
                         <span><span>Privacy Policy </span>and <span>Terms of service</span> apply</span>
                     </div>
-                    {/* {
-                      auth && <Navigate to="/login" replace={true}/>
-                    } */}
                 </div>
 
             </div>

@@ -16,6 +16,7 @@ import EventDetail from "./components/EventDetail/EventDetail";
 import EventEdit from "./components/EventEdit";
 import FilterPage from "./components/FilterPage/FilterPage";
 import UserPage from './components/UserPage/UserPage';
+import PageNotFound from './components/PageNotFound';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path='/password' element={<Password/>}/>
           <Route path='/forgotPassword' element={<ForgotPassword/>}/>
           <Route path='/resetPassword' element={<ResetPassword/>}/>
+          <Route path='/*' element={<PageNotFound/>}/>
         </Route>
       </Routes>
       </NotificationProvider>

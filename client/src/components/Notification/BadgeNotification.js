@@ -2,21 +2,24 @@ import { IconButton,Badge } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import DrawerNotification from './DrawerNotification';
-import { getCount } from '../../api/NotificationAPI';
+import { useNotification } from '../../context/NotificationContext';
 
 
 export default function BadgeNotification() {
   const[open,setOpen] = useState(false)
-  const [total,setTotal] = useState(0)
+  const[total,setTotal] = useState(0)
+  const {count} = useNotification()
 
   useEffect(()=>{
-     function count(){
-       getCount().then(data=>{
-          setTotal(data)
-       })
+    console.log(count);
+     function getCount(){
+        setTotal(count)
      }
-     count()
-  },[])
+     if(count >= 0){
+      getCount()
+     }
+
+  },[count])
   
   const toggleDrawer = ()=>{
     if(!open){

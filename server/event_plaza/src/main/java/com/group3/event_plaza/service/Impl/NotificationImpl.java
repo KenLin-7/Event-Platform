@@ -7,11 +7,13 @@ import com.group3.event_plaza.repository.NotificationRepository;
 import com.group3.event_plaza.repository.UserRepository;
 import com.group3.event_plaza.service.MessageService;
 import com.group3.event_plaza.service.NotificationService;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -55,15 +57,15 @@ public class NotificationImpl implements NotificationService, MessageService {
         notification.setRead(false);
         User receiver = userRepository.findByEmail(email);
         notification.setReceiver(receiver);
-
         notificationRepository.save(notification);
-
     }
 
     @Override
     public List<Notification> getAll(String email) {
         User receiver = userRepository.findByEmail(email);
-        return notificationRepository.findAllByReceiver_UserId(receiver.getUserId());
+        List<Notification> notifications = notificationRepository.findAllUnRead(receiver.getUserId());
+
+        return notifications;
     }
 
 
@@ -72,6 +74,16 @@ public class NotificationImpl implements NotificationService, MessageService {
     public void update(int notificationId) {
 
     }
+
+    @Override
+    public void updateAll(List<Notification> notifications){
+        for (Notification notification: notifications) {
+            notification.setRead(true);
+        }
+        notificationRepository.saveAll(notifications);
+    }
+
+
 
     @Override
     public Integer getCount(String email) {

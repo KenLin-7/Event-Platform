@@ -18,11 +18,9 @@ public class ScheduleJob {
     private EventRepository eventRepository;
 
 
-//    @Scheduled(fixedRate = 1000, initialDelay = 1000)
+//    @Scheduled()
     public void sendEmail(){
-        log.info("Email sent");
-        messageService.notifyUser("ken@test.com","User Test");
-        messageService.eventNotification("1","test");
+
 
     }
 }

@@ -17,5 +17,7 @@ public interface NotificationService{
 
         void createNotifications(int eventId);
 
+        void updateAll(List<Notification> notifications);
+
 
 }

@@ -1,73 +1,76 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
+import React, { useEffect } from "react";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
 
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import CloseIcon from '@mui/icons-material/Close';
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import CloseIcon from "@mui/icons-material/Close";
 
-import MessageNotification from './MessageNotification';
-import { IconButton, Typography } from '@mui/material';
-import { Stack } from '@mui/system';
-import ClearAllIcon from '@mui/icons-material/ClearAll';
- const Notification = [
-  {
-    message: "Your registration has been rejected",
-    eventTitle: "Event Title",
-    description:"dasdasdasdasd",
-    craetedTime: "2020-10-01 10:00:00"
-  },
-  {
-    message: "Your registration has been rejected",
-    eventTitle: "Event Title",
-    description:"dasdasdasdasd",
-    craetedTime: "2020-10-01 10:00:00"
-  }
-  ,  {
-    message: "Your registration has been rejected",
-    eventTitle: "Event Title",
-    description:"dasdasdasdasd",
-    craetedTime: "2020-10-01 10:00:00"
-  }
- ]
+import MessageNotification from "./MessageNotification";
+import { IconButton, Typography } from "@mui/material";
+import { Stack } from "@mui/system";
+import ClearAllIcon from "@mui/icons-material/ClearAll";
+import { useNotification } from "../../context/NotificationContext";
+import icon from '../../asserts/images/icon/icon_not_data_1.png'
 
 export default function DrawerNotification(props) {
+  const { notifications, clearAll } = useNotification();
 
+  useEffect(() => {}, [notifications]);
 
   return (
-    <Drawer 
+    <Drawer
       open={props.open}
-      anchor={'right'}
+      anchor={"right"}
       onClose={props.toggleDrawer}
       ModalProps={{
         keepMounted: true,
       }}
-      >
-        <Box
-          role="presentation"
+    >
+      <Box role="presentation" sx={{ width: "350px" }}>
+        <Stack
+          alignItems={"flex-end"}
+          sx={{ marginLeft: "20px" }}
+          direction={"row"}
+          justifyContent={"space-between"}
         >
-          <Stack alignItems={"flex-end"} sx={{marginLeft:'20px'}} direction={"row"} justifyContent={"space-between"}>
-            <Typography variant='h4' >Notification</Typography>
-            <IconButton onClick={props.toggleDrawer}><CloseIcon/></IconButton>
+          <Typography variant="h5">Notification</Typography>
+          <IconButton onClick={props.toggleDrawer}>
+            <CloseIcon />
+          </IconButton>
+        </Stack>
+        <Stack
+          flexDirection="row"
+          justifyContent={"flex-end"}
+          sx={{
+            marginRight: "10px",
+            cursor: "pointer",
+            ":hover": { textDecoration: "underline" },
+          }}
+        >
+          <ClearAllIcon />
+          <Typography onClick={clearAll}>clear all</Typography>
+        </Stack>
+        <Divider />
+        {notifications.length === 0 ? (
+          <Stack justifyContent={'center'} alignItems={'center'} sx={{height:'100%'}}>
+            <img src={icon} width="40px" height={"40px"}/>
+            <Typography color={'#CCCCCC'} variant="h6">No notification</Typography>
           </Stack>
-          <Stack flexDirection="row" sx={{marginLeft:'20px',cursor:'pointer',":hover":{textDecoration:'underline'}}}>
-            <ClearAllIcon/>
-            <Typography>clear all</Typography>
-          </Stack>
-          <Divider/>
+        ) : (
           <List>
-            {Notification.map((message, index) => (
-              <div key={index} >
-              <ListItem disablePadding>
-                  <MessageNotification notification={message}/>
-              </ListItem>
-              <Divider/>
+            {notifications.map((message, index) => (
+              <div key={message.notificationId}>
+                <ListItem disablePadding>
+                  <MessageNotification notification={message} />
+                </ListItem>
+                <Divider />
               </div>
-
             ))}
           </List>
+        )}
       </Box>
     </Drawer>
-  )
+  );
 }
