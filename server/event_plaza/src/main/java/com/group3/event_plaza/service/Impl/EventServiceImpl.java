@@ -57,14 +57,13 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Map<String, Object> getEventDetail(int eventId, int requesterId) {
+    public Map<String, Object> getEventDetail(int eventId, String requesterEmail) {
         Event event = eventRepository.findByEventId(eventId);
-        Registration registration = registrationFlag(event.getRegistrationList(), requesterId);
+        Registration registration = registrationFlag(event.getRegistrationList(), requesterEmail);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("registBtnFlag", "");
-        result.put("event",event);
 
-        if (requesterId == event.getOwner().getUserId()) {
+        if (requesterEmail.equals(event.getOwner().getEmail()) ) {
             result.replace("registBtnFlag", "owner");
         } else {
             if (registration != null) {
@@ -75,18 +74,55 @@ public class EventServiceImpl implements EventService {
             }
         }
 
+        List<Registration> registrationList=event.getRegistrationList();
+        for(int i=0;i<registrationList.size();i++){
+            if(!registrationList.get(i).getStatus().equals("confirmed")){
+                registrationList.remove(i);
+            }
+        }
+
+        result.put("registrationList",registrationList);
+        result.put("location",processLocation(event.getLocation()));
+        result.put("time",event.getStartDate());
+        result.put("maxParticipant",event.getMaxParticipant());
+        result.put("image",event.getImage());
+        result.put("owner",event.getOwner());
+        result.put("description",event.getDescription());
+        result.put("title",event.getTitle());
+
+
         return result;
     }
 
-    public Registration registrationFlag(List<Registration> registrations, Integer requesterId) {
+    public Registration registrationFlag(List<Registration> registrations, String requesterEmail) {
 
         for (int i = 0; i < registrations.size(); i++) {
-            if (registrations.get(i).getRequester().getUserId() == requesterId) {
+            if (registrations.get(i).getRequester().getEmail().equals(requesterEmail) ) {
                 return registrations.get(i);
             }
         }
         return null;
     }
+
+    public Map<String,String> processLocation(String location){
+        String[] splitString = location.split("\\+");
+        Map<String,String>  result= new HashMap<>();
+        if (splitString.length == 5) {
+            if (splitString[1].equals("NoAddress2") ) {
+                result.put( "street",splitString[0]);
+            } else {
+                String street = splitString[0] + " " + splitString[1];
+                result.put( "street",street);
+
+            }
+            result.put( "suburb",splitString[2]);
+            result.put( "state",splitString[3]);
+            result.put( "postcode",splitString[4]);
+        }
+        return result;
+    }
+
+
 
 
     @Override

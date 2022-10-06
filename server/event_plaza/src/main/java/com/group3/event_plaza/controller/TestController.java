@@ -28,13 +28,6 @@ public class TestController {
         return ResponseResult.success(userService.getUserInfo("ken22@test.com"));
     }
 
-    @GetMapping("/getEventDetail")
-    public ResponseResult<Map<String,Object>> getUserInfo() throws DataNotFoundException {
-
-        Map<String,Object> result= eventService.getEventDetail(6,31);
-
-        return ResponseResult.success(result);
-    }
 
 
 

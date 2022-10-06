@@ -189,9 +189,9 @@ export default function EventPost() {
         if(result.suburb&&result.postcode&&result.eventTitle&&result.address1){
             let address = ""
             if(event.address2!=null&&event.address2!="") {
-                address = event.address1 + "/" + event.address2 + "/" + event.suburb + "/" + event.state + "/" + event.postcode
+                address = event.address1 + "+" + event.address2 + "+" + event.suburb + "+" + event.state + "+" + event.postcode
             }else {
-                address = event.address1 + "/" + "NoAddress2" + "/" + event.suburb + "/" + event.state + "/" + event.postcode
+                address = event.address1 + "+" + "NoAddress2" + "+" + event.suburb + "+" + event.state + "+" + event.postcode
             }
             const databaseEvent = {
 

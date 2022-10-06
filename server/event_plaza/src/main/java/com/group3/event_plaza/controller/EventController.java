@@ -2,6 +2,7 @@ package com.group3.event_plaza.controller;
 
 
 import com.group3.event_plaza.common.ResponseResult;
+import com.group3.event_plaza.common.exception.business.DataNotFoundException;
 import com.group3.event_plaza.model.Event;
 import com.group3.event_plaza.model.Registration;
 import com.group3.event_plaza.service.EventService;
@@ -24,13 +25,13 @@ public class EventController {
         eventService.createEvent(principal,event);
         return ResponseResult.success();
     }
-
-    @PostMapping("/eventDetail")
-    public ResponseResult<Event> getEventDetail(@RequestBody Map<String,String> map){
-        int newId = Integer.parseInt(map.get("eventId"));
-        Event event = eventService.getEvent(newId);
-        return ResponseResult.success(event);
-    }
+//
+//    @PostMapping("/eventDetail")
+//    public ResponseResult<Event> getEventDetail(@RequestBody Map<String,String> map){
+//        int newId = Integer.parseInt(map.get("eventId"));
+//        Event event = eventService.getEvent(newId);
+//        return ResponseResult.success(event);
+//    }
 
     @GetMapping("/search/{keyword}")
     public ResponseResult<List<Event>> search(@PathVariable String keyword){
@@ -56,6 +57,15 @@ public class EventController {
         List<Event> list = eventService.getCurrentUserEvents(email);
         return ResponseResult.success(list);
     }
+
+    @PostMapping("/getEventDetail")
+    public ResponseResult<Map<String,Object>> getEventDetail(Principal principal,@RequestBody Map<String,Integer>map) throws DataNotFoundException {
+        int eventId = map.get("eventId");
+        Map<String,Object> result= eventService.getEventDetail(eventId,principal.getName());
+
+        return ResponseResult.success(result);
+    }
+
 
     @GetMapping("/getUserRegistrationEvents")
     public ResponseResult<List<Registration>> getUserRegistrationEvents(Principal principal){

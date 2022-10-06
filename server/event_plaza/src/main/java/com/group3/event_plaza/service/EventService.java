@@ -16,7 +16,7 @@ public interface EventService {
 
     Event getEvent(int eventId);
 
-    Map<String,Object> getEventDetail(int eventId,int registerId);
+    Map<String,Object> getEventDetail(int eventId,String registerEmail);
 
     List<Event> searchEvent(String keyword);
 
