@@ -33,25 +33,28 @@ public class ScheduleJob {
 
 
 
-    @Scheduled(cron = "0 15 17 * * *")
+    @Scheduled(cron = "0 37 17 * * *")
     public void sendEmail(){
         log.info(new Timestamp(getTodayTime())+" Start searching event");
-        List<Event> events = eventService.getEventLess24();
-        if(events.size() >0){
-            log.info("Events get");
-//            System.out.println(events);
-            for (Event event :events) {
-                for (Registration registration:event.getRegistrationList()) {
-
-                    emailService.sendSimpleMail(registration.getRequester().getEmail(),
-                            "Your registered event will start tomorrow",
-                            event.getTitle()+" This event will start tomorrow at" + event.getStartDate());
-                    log.info("Email sent to" + registration.getRequester().getEmail());
-                }
-            }
-        }else{
-            log.info("No email need to send");
-        }
+        emailService.sendSimpleMail("kenlbd61@gmail.com",
+                "Your registered event will start tomorrow",
+                " This event will start tomorrow at" );
+//        List<Event> events = eventService.getEventLess24();
+//        if(events.size() >0){
+//            log.info("Events get");
+////            System.out.println(events);
+//            for (Event event :events) {
+//                for (Registration registration:event.getRegistrationList()) {
+//
+//                    emailService.sendSimpleMail(registration.getRequester().getEmail(),
+//                            "Your registered event will start tomorrow",
+//                            event.getTitle()+" This event will start tomorrow at" + event.getStartDate());
+//                    log.info("Email sent to" + registration.getRequester().getEmail());
+//                }
+//            }
+//        }else{
+//            log.info("No email need to send");
+//        }
     }
 
 

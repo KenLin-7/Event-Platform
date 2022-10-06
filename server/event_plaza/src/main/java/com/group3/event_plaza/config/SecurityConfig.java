@@ -35,7 +35,8 @@ public class SecurityConfig {
             "/api/user/sendEmail",
             "/api/user/resetPassword",
             "/api/event/search/{keyword}",
-            "/api/test/*"
+            "/api/test/*",
+            "/api/event/search/{keyword}"
     };
 
     private static final String[] ORGANIZER_URLS = {
@@ -43,7 +44,7 @@ public class SecurityConfig {
 
     private static final String[] USER_URLS = {
             "/api/user/current",
-            "/api/notification/all"
+            "/api/notification/all",
     };
 
 

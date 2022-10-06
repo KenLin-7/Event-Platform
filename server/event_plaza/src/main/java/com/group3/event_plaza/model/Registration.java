@@ -4,8 +4,10 @@ package com.group3.event_plaza.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 
 @Entity
+@Transactional
 public class Registration {
 
     @Id
@@ -14,12 +16,14 @@ public class Registration {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties("registrations")
+
+
+    @JsonIgnoreProperties(value = {"registrations","role"})
     private User requester;
 
     @ManyToOne
     @JoinColumn(name ="event_id")
-    @JsonIgnoreProperties("registrationList")
+    @JsonIgnoreProperties(value = "registrationList")
     private Event event;
 
 
@@ -28,6 +32,10 @@ public class Registration {
 
     private String status;
 
+    public Registration(User requester, String status) {
+        this.requester = requester;
+        this.status = status;
+    }
     public int getRegistrationId() {
         return registrationId;
     }
@@ -44,6 +52,7 @@ public class Registration {
         this.requester = requester;
     }
 
+
     public Event getEvent() {
         return event;
     }
@@ -52,6 +61,7 @@ public class Registration {
         this.event = event;
     }
 
+
     public String getStatus() {
         return status;
     }
@@ -59,4 +69,5 @@ public class Registration {
     public void setStatus(String status) {
         this.status = status;
     }
+
 }

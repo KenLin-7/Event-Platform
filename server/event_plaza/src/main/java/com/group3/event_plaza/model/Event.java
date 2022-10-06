@@ -1,12 +1,15 @@
 package com.group3.event_plaza.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
+@Transactional
 public class Event {
 
 
@@ -31,7 +34,8 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "owner")
-    @JsonIgnoreProperties({"registrations","role"})
+    @JsonIgnoreProperties(value = "registrations")
+
     private User owner;
 
     @ManyToOne

@@ -44,9 +44,12 @@ export default function Profile(){
   useEffect( () => { 
     clearTimeout(timer.current);
     const loadUser = async () => {
-      await profile(auth).then((res) => {
-        setuser({ nickname: res.data.nickname, email: res.data.email, phone: res.data.phone, dob: res.data.dob, gender: res.data.gender})
-      })
+      if(auth){
+        await profile(auth).then((res) => {
+          setuser({ nickname: res.data.nickname, email: res.data.email, phone: res.data.phone, dob: res.data.dob, gender: res.data.gender})
+        })
+      }
+
     }
     loadUser() 
   },[auth]);

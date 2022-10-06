@@ -41,7 +41,7 @@ import java.util.Set;
 
     private String avatar;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnoreProperties("user")
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name="user_id")},

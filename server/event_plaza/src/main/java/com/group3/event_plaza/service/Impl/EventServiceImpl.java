@@ -1,14 +1,8 @@
 package com.group3.event_plaza.service.Impl;
 
 import com.group3.event_plaza.common.lang.RoleUser;
-import com.group3.event_plaza.model.Category;
-import com.group3.event_plaza.model.Event;
-import com.group3.event_plaza.model.Role;
-import com.group3.event_plaza.model.User;
-import com.group3.event_plaza.repository.CategoryRepository;
-import com.group3.event_plaza.repository.EventRepository;
-import com.group3.event_plaza.repository.RoleRepository;
-import com.group3.event_plaza.repository.UserRepository;
+import com.group3.event_plaza.model.*;
+import com.group3.event_plaza.repository.*;
 import com.group3.event_plaza.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +27,10 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    RegistrationRepository registrationRepository;
+
 
     @Override
     public void createEvent(Principal user,Event event) {
@@ -64,8 +62,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> getCurrentUserEvents(int id){
-        List<Event> list = eventRepository.findEventByOwner(id);
+    public List<Event> getCurrentUserEvents(String email){
+        User currentUser = userRepository.findByEmail(email);
+        List<Event> list = eventRepository.findByOwner(currentUser);
         return list;
     }
     @Override
@@ -85,4 +84,9 @@ public class EventServiceImpl implements EventService {
     }
 
 
+    public List<Registration> getUserRegistrationEvents(String email) {
+        User currentUser = userRepository.findByEmail(email);
+        List<Registration> registrationList = registrationRepository.findByUserId(currentUser.getUserId());
+        return registrationList;
+    }
 }

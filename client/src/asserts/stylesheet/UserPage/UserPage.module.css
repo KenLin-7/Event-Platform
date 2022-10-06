@@ -9,30 +9,11 @@
   width: 409px;
   height: 116px;
   padding-top: 40px;
-  padding-left: 185px;
+  padding-left: 270px;
 }
 
 .user-post-event {
   width: 100vw;
-
-}
-
-.event-containter {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 40px;
-  width: 80vw;
-  margin: 0 auto;
-  padding-left: 170px;
-
-}
-
-.event-containter>* {
-  margin-right: 40px;
-  cursor: pointer;
-  width: 300px;
-  box-sizing: border-box;
-  margin-bottom: 50px;
 
 }
 
@@ -43,94 +24,4 @@
   font-size: 22px;
   padding-left: 270px;
   margin-bottom: 50px;
-}
-
-.event-card-img {
-  height: 280px;
-  width: 268gpx;
-  /* background-color: aqua; */
-  border-radius: 20px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-}
-
-.event-image {
-  width: 100%;
-  height: 100%;
-}
-
-.event-card-title {
-  font-size: 13px;
-  width: 100vw;
-  height: 42px;
-  text-align: left;
-  padding: 5px;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  cursor: pointer;
-}
-
-.event-card-people-num {
-  position: absolute;
-  width: 50px;
-  height: 30px;
-  margin-left: 75%;
-  line-height: 32px;
-  margin-right: 26px;
-  margin-top: 70px;
-  border-radius: 10px;
-  background: rgba(42, 39, 201, 0.1);
-  cursor: pointer;
-  text-align: center;
-}
-
-.event-card-date {
-  display: flex;
-  margin: 24px 0 24px 0;
-  color: red;
-  font-weight: 800;
-  font-family: 'Inter';
-  font-style: normal;
-  cursor: pointer;
-}
-
-.event-card-date> :first-child {
-  margin-right: 8px;
-}
-
-.event-card-participants {
-  margin-left: 12px;
-  width: 279px;
-  height: 50px;
-  display: flex;
-}
-
-.avatars-group-text {
-  width: 155px;
-  height: 42px;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 150%;
-  text-align: left;
-}
-
-.event-card-btn-group{
-  width: 200px;
-  margin: 0 auto;
-}
-
-.event-card-btn-group:first-child{
-  margin-left: 20px;
-}
-
-.event-card-btn-group:nth-child(2){
-  margin-left: 50px;
-}
-
-.pagination {
-  width: 220px;
-  margin: 0 auto;
 }

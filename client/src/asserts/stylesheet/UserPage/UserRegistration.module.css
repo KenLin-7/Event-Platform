@@ -58,13 +58,12 @@
 .event-card-title {
   font-size: 13px;
   width: 100vw;
-  height: 42px;
+  height: 22px;
   text-align: left;
-  padding: 5px;
+  padding: 25px 5px 0px 5px;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
+  text-overflow:ellipsis;
   cursor: pointer;
 }
 
@@ -114,7 +113,23 @@
   text-align: left;
 }
 
+.event-card-location{
+  font-size: 12px;
+  color: darkgray;
+  margin-left: 5px;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
 .pagination {
   width: 220px;
   margin: 0 auto;
+}
+
+.no-data-notification{
+  width: 300px;
+  height: 200px;
+  margin: 0 auto;
+  line-height: 100px;
+  color: darkgray ;
 }

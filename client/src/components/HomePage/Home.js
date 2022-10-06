@@ -19,6 +19,7 @@ const Home = ({ref}) => {
         const list = data.data
         const latestEventList = list.slice(0,4)
         const othersList = list.slice(4, list.length)
+        console.log(latestEventList)
         setLastestEvents(latestEventList);
         setOthers(othersList)
         setFlag(false)
