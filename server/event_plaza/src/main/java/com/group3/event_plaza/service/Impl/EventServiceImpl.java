@@ -12,6 +12,7 @@ import com.group3.event_plaza.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional
 public class EventServiceImpl implements EventService {
 
     @Autowired
@@ -151,6 +153,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public List<Event> getEventLess24() {
         Calendar calendar =Calendar.getInstance();
         calendar.setTime(new Date());

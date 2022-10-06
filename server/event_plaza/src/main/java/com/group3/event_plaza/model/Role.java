@@ -14,7 +14,7 @@ public class Role {
     @Column(name = "role_name")
     private String roleName;
 
-    @ManyToMany(cascade = CascadeType.PERSIST,mappedBy = "role")
+    @ManyToMany(mappedBy = "role")
     @JsonIgnoreProperties(value = "role")
     private Set<User> user = new HashSet<>();
 

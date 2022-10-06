@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-@Transactional
 public class Event {
 
 
@@ -42,7 +41,8 @@ public class Event {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event",fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("role")
     private List<Registration> registrationList;
 
 

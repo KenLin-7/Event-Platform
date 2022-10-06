@@ -17,6 +17,7 @@ instance.interceptors.request.use(request=>{
 
 instance.interceptors.response.use(response=>{
     const token = response.headers['access_token']
+    response.headers['content-type'] = "application/json"
     if(token!=null){
         localStorage.setItem("token",response.headers['access_token'].split("Bearer  ")[1])
     };

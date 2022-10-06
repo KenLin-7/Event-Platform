@@ -27,7 +27,7 @@ const Header = () => {
 
   const TESTsendNotificiton =()=>{
     // sendEventMessage("1","Send Test")
-    sendUserMessage("ken@test.com","User test")
+    sendUserMessage("kenlbd61@gmail.com","User test")
   }
 
   const TESTSubscribe = ()=>{
@@ -99,6 +99,8 @@ const Header = () => {
                 </div>
               </Stack>
               <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={signOut} className="header-btn">Log out</Button>
+              <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={TESTsendNotificiton} className="header-btn">Send</Button>
+
             </Stack>
 
           )

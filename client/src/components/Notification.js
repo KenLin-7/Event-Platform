@@ -8,7 +8,7 @@ export default function Notification() {
 
     useEffect(()=>{
         if(currentNotification!="") {
-            enqueueSnackbar(currentNotification.message,{variant:'success'})
+            enqueueSnackbar(currentNotification,{variant:'success'})
             setCurrentNotification("")
         }
     },[currentNotification])
