@@ -1,5 +1,7 @@
 package com.group3.event_plaza.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -29,6 +31,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "owner")
+    @JsonIgnoreProperties({"registrations","role"})
     private User owner;
 
     @ManyToOne
@@ -140,4 +143,22 @@ public class Event {
     public void setRegistrationList(List<Registration> registrationList) {
         this.registrationList = registrationList;
     }
+
+
+//    @Override
+//    public String toString() {
+//        return "Event{" +
+//                "eventId=" + eventId +
+//                ", description='" + description + '\'' +
+//                ", maxParticipant=" + maxParticipant +
+//                ", status='" + status + '\'' +
+//                ", image='" + image + '\'' +
+//                ", title='" + title + '\'' +
+//                ", location='" + location + '\'' +
+//                ", startDate=" + startDate +
+//                ", owner=" + owner +
+//                ", category=" + category +
+//                ", registrationList=" + registrationList +
+//                '}';
+//    }
 }

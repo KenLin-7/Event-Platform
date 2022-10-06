@@ -35,10 +35,10 @@ public class SecurityConfig {
             "/api/user/sendEmail",
             "/api/user/resetPassword",
             "/api/event/search/{keyword}",
+            "/api/test/*"
     };
 
     private static final String[] ORGANIZER_URLS = {
-            "/test/*",
     };
 
     private static final String[] USER_URLS = {

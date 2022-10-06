@@ -21,4 +21,6 @@ public interface EventService {
 
     List<Event> getAllEvent();
 
+    List<Event> getEventLess24();
+
 }

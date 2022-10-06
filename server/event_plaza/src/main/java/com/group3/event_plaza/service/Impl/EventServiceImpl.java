@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,8 +33,6 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     RoleRepository roleRepository;
-
-
 
     @Override
     public void createEvent(Principal user,Event event) {
@@ -72,4 +73,16 @@ public class EventServiceImpl implements EventService {
         List<Event> list = eventRepository.findAll();
         return list;
     }
+
+    @Override
+    public List<Event> getEventLess24() {
+        Calendar calendar =Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        return eventRepository.getEventBy24Hour(new Timestamp(calendar.getTime().getTime()));
+    }
+
+
 }

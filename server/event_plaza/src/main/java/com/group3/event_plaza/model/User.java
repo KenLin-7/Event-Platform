@@ -49,10 +49,10 @@ import java.util.Set;
     )
     private List<Role> role = new ArrayList<>();
 
-    @OneToMany(mappedBy = "requester",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "requester")
     private List<Registration> registrations;
 
-    @OneToMany(mappedBy = "receiver",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "receiver")
     @JsonIgnoreProperties("notifications")
     private List<Notification> notifications;
 
