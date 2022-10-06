@@ -105,3 +105,10 @@
   margin-top:30px;
   font-size: 12px;
 }
+
+.no-data-notification{
+  width: 120px;
+  line-height: 200px;
+  margin: 0 auto;
+  color: darkgray;
+}

@@ -16,7 +16,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import usePagination from "../Pagination";
-import { getCurrentUserEvents } from '../../api/EventAPI'
+import { getNoCancelledEvents, cancelEvent } from '../../api/EventAPI'
 import humanDateConvert from '../../utils/humanDateConvert'
 import confirmedParticipants from '../../utils/confirmedParticipants';
 import { useNavigate } from 'react-router-dom';
@@ -26,6 +26,7 @@ const UserPost = () => {
   const [open, setOpen] = useState(false);
   const [flag, setFlag] = useState(false);
   const [events, setEvents] = useState([]);
+  const [fresh, setFresh] = useState(false);
   let [page, setPage] = useState(1);
   const PER_PAGE = 4;
   const count = Math.ceil(events.length / PER_PAGE);
@@ -34,13 +35,14 @@ const UserPost = () => {
   useEffect(() => {
     const fetch = () => {
       setFlag(true)
-      getCurrentUserEvents().then((data) => {
+      getNoCancelledEvents().then((data) => {
+        console.log(data.data)
         setEvents(data.data)
         setFlag(false)
       })
     }
     fetch();
-  }, [])
+  }, [fresh])
 
   const handleChange = (e, p) => {
     setPage(p);
@@ -54,6 +56,14 @@ const UserPost = () => {
   const handleCloseCancel = () => {
     setOpen(false);
   };
+
+  const handleConfirmCancel = (id) => {
+    cancelEvent(id).then(() => {
+      setFresh(!fresh)
+    })
+
+    setOpen(false);
+  }
 
   const handleToEditPage = (id) => {
     navigate(`/eventedit/${id}`)
@@ -109,13 +119,34 @@ const UserPost = () => {
                                 <Divider />
 
                                 <div className={styles['group-btn']}>
-                                  <div className={styles['approve-btn']} onClick={handleClickOpenCancel}>
+                                  <div className={styles['approve-btn']} onClick={handleToEditPage}>
                                     Edit
                                   </div>
                                   <div className={styles['reject-btn']} onClick={handleClickOpenCancel}>
                                     Cancel
                                   </div>
                                 </div>
+                                <Dialog
+                                  open={open}
+                                  onClose={handleCloseCancel}
+                                  aria-labelledby="alert-dialog-title"
+                                  aria-describedby="alert-dialog-description"
+                                >
+                                  <DialogTitle id="alert-dialog-title">
+                                    {"Use Google's location service?"}
+                                  </DialogTitle>
+                                  <DialogContent>
+                                    <DialogContentText id="alert-dialog-description">
+                                      Are you sure you want to cancel this post?
+                                    </DialogContentText>
+                                  </DialogContent>
+                                  <DialogActions>
+                                    <Button onClick={handleCloseCancel}>Disagree</Button>
+                                    <Button onClick={() => handleConfirmCancel(card.eventId)} autoFocus>
+                                      Agree
+                                    </Button>
+                                  </DialogActions>
+                                </Dialog>
                               </Card>
                             )
                           })
@@ -129,27 +160,6 @@ const UserPost = () => {
                         page={page}
                         className={styles["pagination"]}
                       />
-                      <Dialog
-                        open={open}
-                        onClose={handleCloseCancel}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                      >
-                        <DialogTitle id="alert-dialog-title">
-                          {"Use Google's location service?"}
-                        </DialogTitle>
-                        <DialogContent>
-                          <DialogContentText id="alert-dialog-description">
-                            Are you sure you want to cancel this post?
-                          </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                          <Button onClick={handleCloseCancel}>Disagree</Button>
-                          <Button onClick={handleCloseCancel} autoFocus>
-                            Agree
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
                     </>
                   )
               }

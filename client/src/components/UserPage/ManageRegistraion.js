@@ -67,53 +67,66 @@ const ManageRegistraion = () => {
           :
           (
             <>
-              <div className={styles['manage-registration-content']}>
-                {
-                  _DATA.currentData().map((data, index) => {
-                    return (
-                      <div className={styles['registraion-notification-card']} key={index}>
+              {
+                events.length === 0
+                  ?
+                  (
+                    <div className={styles['no-data-notification']}>No requests</div>
+                  )
+                  :
+                  (
+                    <>
+                      <div className={styles['manage-registration-content']}>
+                        {
+                          _DATA.currentData().map((data, index) => {
+                            return (
+                              <div className={styles['registraion-notification-card']} key={index}>
 
-                        <div className={styles['requester-container']}>
-                          <div className={styles['requester-avatar']}>
-                            <Avatar alt="Remy Sharp" src={data.requester.avatar} sx={{ height: 60, width: 60 }} />
-                          </div>
+                                <div className={styles['requester-container']}>
+                                  <div className={styles['requester-avatar']}>
+                                    <Avatar alt="Remy Sharp" src={data.requester.avatar} sx={{ height: 60, width: 60 }} />
+                                  </div>
 
-                          <div className={styles['requester-msg-section']}>
-                            <div className={styles['requester-nickname']}>
-                              {data.requester.nickname}
-                            </div>
-                            <div className={styles['requester-msg']}>
-                              is requesting to join your event: 
-                            </div>
-                            <div className={styles['display-location']}>
-                              {data.event.title} 
-                              <p>at：{data.event.location}</p>
-                            </div>
-                          </div>
+                                  <div className={styles['requester-msg-section']}>
+                                    <div className={styles['requester-nickname']}>
+                                      {data.requester.nickname}
+                                    </div>
+                                    <div className={styles['requester-msg']}>
+                                      is requesting to join your event:
+                                    </div>
+                                    <div className={styles['display-location']}>
+                                      {data.event.title}
+                                      <p>at：{data.event.location}</p>
+                                    </div>
+                                  </div>
 
-                          <div className={styles['group-btn']}>
-                            <div className={styles['approve-btn']}>
-                              Approve
-                            </div>
-                            <div className={styles['reject-btn']}>
-                              Reject
-                            </div>
-                          </div>
+                                  <div className={styles['group-btn']}>
+                                    <div className={styles['approve-btn']}>
+                                      Approve
+                                    </div>
+                                    <div className={styles['reject-btn']}>
+                                      Reject
+                                    </div>
+                                  </div>
 
-                        </div>
+                                </div>
 
+                              </div>
+                            )
+                          })
+                        }
                       </div>
-                    )
-                  })
-                }
-              </div>
-              <Pagination
-                count={count}
-                color="primary"
-                onChange={handleChange}
-                page={page}
-                className={styles["pagination"]}
-              />
+                      <Pagination
+                        count={count}
+                        color="primary"
+                        onChange={handleChange}
+                        page={page}
+                        className={styles["pagination"]}
+                      />
+                    </>
+                  )
+              }
+
             </>
           )
       }

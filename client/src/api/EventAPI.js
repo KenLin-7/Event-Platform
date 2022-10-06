@@ -29,3 +29,13 @@ export const getUserRegistrationEvents = async () => {
   const result = await axios.get(API + "/getUserRegistrationEvents");
   return result
 }
+
+export const getNoCancelledEvents = async () => {
+  const result = await axios.get(API + "/getNoCancelledEvents");
+  return result
+}
+
+export const cancelEvent = async (eventId) => {
+  const result = await axios.post(API + "/cancelEvent", {eventId:eventId})
+  return result
+}
