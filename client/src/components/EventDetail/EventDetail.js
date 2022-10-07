@@ -27,7 +27,7 @@ export default function EventDetail(effect, deps) {
         "Time: 8.30pm then at 9pm from 8 October 2022  "
 
 
-    const [eventId, setEventId] = useState(8)
+    const [eventId, setEventId] = useState(6)
     const [loading, setLoading] = useState(true);
     const [event, setEvent] = useState(null)
     const [eventDate, setEventDate] = useState("")

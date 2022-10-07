@@ -32,7 +32,7 @@ function App() {
           <Route path='/test' element={<TestUploadImage />} />
           <Route path='/eventpost' element={<EventPost />} />
           <Route path='/eventdetail' element={<EventDetail />} />
-          <Route path='/eventedit/:id' element={<EventEdit />} />
+          <Route path='/eventedit' element={<EventEdit />} />
           <Route path='/user-page' element={<UserPage />} />
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/password' element={<Password/>}/>

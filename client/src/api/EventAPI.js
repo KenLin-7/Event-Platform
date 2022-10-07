@@ -14,11 +14,7 @@ export const getEventDetail = async (eventId)=>{
 }
 
 
-export const getEvent = async (eventId)=>{
 
-    const result = await axios.post(API+"/eventDetail", {eventId:eventId})
-    return result
-}
 
 export const getCurrentUserEvents = async () => {
   const result = await axios.get(API + "/currentUserEvents")

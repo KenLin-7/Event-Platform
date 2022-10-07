@@ -21,24 +21,25 @@ import CalendarCPN from "../components/EventPost/CalendarCPN";
 import formValidate from "../utils/validation";
 import React from "react";
 import dayjs from "dayjs";
-import {postEvent} from "../api/EventAPI";
+import {getEventDetail, postEvent} from "../api/EventAPI";
 import {useUser} from "../context/UserContext";
 import {getEvent} from "../api/EventAPI";
 import img from "./EventDetail/xxxxxxxx.png";
 
 export default function EventEdit(effect, deps) {
 
-    const [eventId, setEventId] = useState(7)
-    const [location, setLocation] = useState({address1: "",address2:"", suburb: "", state: "", postcode: ""})
+    const [eventId, setEventId] = useState(6)
+    const [location, setLocation] = useState({street:"", suburb: "", state: "", postcode: ""})
     const [event, setEvent] = useState(null)
     const [loading, setLoading] = useState(true);
     const [processing,setProcessing] = useState(true)
     const [eventImg, setEventImg] = useState(false)
 
     useEffect(() => {
-        getEvent(eventId).then(
+        getEventDetail(eventId).then(
             (res) => {
                 setEvent(res.data)
+                setLocation(res.data["location"])
                 setLoading(false)
 
             })
@@ -49,7 +50,6 @@ export default function EventEdit(effect, deps) {
     useEffect(() => {
         if (!loading) {
             processTime(event.startDate)
-            processLocation(event.location)
             processImage(event.image)
             setProcessing(false)
         }
@@ -63,27 +63,6 @@ export default function EventEdit(effect, deps) {
         setEvent({...event, ["startDate"]: timeDate})
     }
 
-
-    const processLocation = (locationString) => {
-
-        const splitString = locationString.split("+")
-        if (splitString.length === 5) {
-            if (splitString[1] === "NoAddress2") {
-                setLocation({
-                    address1: splitString[0],
-                    address2: "",
-                    suburb: splitString[2],
-                    state: splitString[3],
-                    postcode: splitString[4]
-                })
-            } else {
-
-                setLocation({address1:splitString[0],address2:splitString[1], suburb: splitString[2], state: splitString[3], postcode: splitString[4]})
-            }
-        }
-
-
-    }
 
     const processImage = (imageURL) => {
         if (imageURL && imageURL != "") {
@@ -237,9 +216,9 @@ export default function EventEdit(effect, deps) {
         if (result.suburb && result.postcode && result.eventTitle && result.address1) {
             let address = ""
             if (event.address2 != null && event.address2 != "") {
-                address = event.address1 + "/" + event.address2 + "/" + event.suburb + "/" + event.state + "/" + event.postcode
+                address = event.address1 + "+" + event.address2 + "+" + event.suburb + "+" + event.state + "+" + event.postcode
             } else {
-                address = event.address1 + "/" + "NoAddress2" + "/" + event.suburb + "/" + event.state + "/" + event.postcode
+                address = event.address1 + "+" + "NoAddress2" + "+" + event.suburb + "+" + event.state + "+" + event.postcode
             }
             const databaseEvent = {
 
@@ -467,7 +446,7 @@ export default function EventEdit(effect, deps) {
                                         required
                                         fullWidth
                                         label="Address line 1"
-                                        defaultValue={location.address1}
+                                        defaultValue={location.street}
                                         error={address1Error.show}
                                         helperText={address1Error.content}
                                         onChange={onChange}
@@ -477,7 +456,7 @@ export default function EventEdit(effect, deps) {
                                     <TextField sx={{marginLeft: 6}}
                                                name={"address2"}
                                                fullWidth
-                                               defaultValue={location.address2}
+
                                                onChange={onChange}
                                                label="Address line 2"
                                     />
