@@ -12,6 +12,7 @@ export function useUser(){
 
 export function UserProvider({children}){
     const [auth,setAuth] = useState(null)
+    const [loading,setLoading] = useState(false)
 
     useEffect(()=>{
         if(localStorage.getItem("token") !=null) getAuth()
@@ -22,6 +23,7 @@ export function UserProvider({children}){
         //await getUser().then(res=>{
         getUser().then(res=>{
             setAuth(res.data)
+            setLoading(false)
         })
     }
 
@@ -33,8 +35,8 @@ export function UserProvider({children}){
     }
     useEffect(()=>{
        if(localStorage.getItem("token") !=null){
-        getAuth() 
-       } 
+            getAuth() 
+       }
     },[auth])
 
 
@@ -42,7 +44,8 @@ export function UserProvider({children}){
     const value = {
         auth,
         getAuth,
-        signOut
+        signOut,
+        loading
     }
 
     return(

@@ -17,7 +17,7 @@ import EventEdit from "./components/EventEdit";
 import FilterPage from "./components/FilterPage/FilterPage";
 import UserPage from './components/UserPage/UserPage';
 import PageNotFound from './components/PageNotFound';
-
+import {PrivateRoute} from './route/PrivateRoute';
 function App() {
   return (
     <UserProvider>
@@ -30,7 +30,9 @@ function App() {
           <Route path='/filter' element={<FilterPage />} />
           <Route path='/filter/:keyword' element={<FilterPage />} />
           <Route path='/test' element={<TestUploadImage />} />
-          <Route path='/eventpost' element={<EventPost />} />
+          <Route element={<PrivateRoute/>}>
+            <Route path='/eventpost' element={<EventPost />} />
+          </Route>
           <Route path='/eventdetail/:id' element={<EventDetail />} />
           <Route path='/eventedit/:id' element={<EventEdit />} />
           <Route path='/user-page' element={<UserPage />} />
