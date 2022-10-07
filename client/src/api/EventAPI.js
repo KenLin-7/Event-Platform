@@ -12,8 +12,14 @@ export const getEventDetail = async (eventId)=>{
     return result
 }
 
-export const updateEvent = async (eventId)=>{
-    const result = await axios.post(API+"/updateEvent",{eventId:eventId})
+
+export const getEventDetailForEdit = async (eventId)=>{
+    const result = await axios.post(API+"/getEventDetailForEdit",{eventId:eventId})
+    return result
+}
+
+export const updateEvent = async (event)=>{
+    const result = await axios.post(API+"/updateEvent",event)
     return result
 }
 

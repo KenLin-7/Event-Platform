@@ -8,40 +8,28 @@ import {Button, Card, CircularProgress, Input, Stack, Typography} from "@mui/mat
 
 export default function UploadImage(props) {
 
-    const {imageURL, uploadImage, progress, buffer,isUploaded} = useUpload()
+    const {imageURL, uploadImage, progress, buffer, isUploaded} = useUpload()
     const [image, setImage] = useState("")
-
-       useEffect(()=>{
-
-            console.log(isUploaded);
-
-        },[isUploaded])
-
+    const [uploading, setUploading] = useState(false)
 
     const onClick = () => {
-
+        setUploading(true)
         uploadImage(image, "event")
         // remove()
     }
-
-
-
-
 
     const onChange = (e) => {
 
         setImage(e.target.files[0])
 
- 
     }
 
 
-       useEffect(()=>{
-           props.onImage(imageURL)
-        },[imageURL],[image])
-
-
-
+    useEffect(() => {
+        if (imageURL) {
+            props.onImage(imageURL)
+        }
+    }, [imageURL])
 
 
     return (
@@ -50,29 +38,43 @@ export default function UploadImage(props) {
                    accept="image/*"/>
             <Button sx={{padding: 1, marginLeft: 4, marginY: 2}} variant={"contained"} onClick={onClick}>submit</Button>
             <Typography sx={{marginLeft: 2}}> Remember to click submit, or the image will not be kept</Typography>
-             {
-                 !isUploaded ? (
+            {
+                !isUploaded ? (
+                        !uploading ?
+                            (<div>
+                                {
+                                    !image ? (
+                                            <Stack sx={{padding: 1}}>
+                                                <img src={props.img}/>
+                                            </Stack>
+                                        )
+                                        :
+                                        (
+                                            <Stack sx={{padding: 1}}>
+                                                <Stack>
+                                                    <img src={URL.createObjectURL(image)} alt="event"/>
+                                                </Stack>
+                                            </Stack>
+                                        )
+                                }
+                            </div>)
 
-                 <div>
-                     {
-                     !image ? (
-                        <Stack sx={{padding:1}}>
-                            <img src={props.img}/>
+                            : (
+                                <Stack sx={{marginLeft: 10, marginY: 5, padding: 3}}>
+
+                                    <CircularProgress/>
+
+                                </Stack>
+                            ))
+                    :
+                    (
+                        <Stack sx={{marginLeft: 10, marginY: 5, padding: 3}}>
+
+                            uploaded!
+
                         </Stack>
-                     ):(
-                         <Stack sx={{padding:1}}>
-                           <Stack>
-                             <img src={URL.createObjectURL(image)} alt="event"/>
-                           </Stack>
-                         </Stack>
-                     )
-                     }
-                   </div>
-             ):(
-                 <div>Upload</div>
-             )
-
-             }
+                    )
+            }
         </div>
     )
 }

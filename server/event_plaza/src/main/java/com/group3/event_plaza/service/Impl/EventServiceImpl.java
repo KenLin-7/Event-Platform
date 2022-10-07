@@ -6,7 +6,6 @@ import com.group3.event_plaza.repository.CategoryRepository;
 import com.group3.event_plaza.repository.EventRepository;
 import com.group3.event_plaza.repository.RoleRepository;
 import com.group3.event_plaza.repository.UserRepository;
-import com.group3.event_plaza.model.*;
 import com.group3.event_plaza.repository.*;
 import com.group3.event_plaza.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +52,16 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void updateEvent(int eventId) {
+    public void updateEvent(Event event) {
+        Event oldEvent = eventRepository.findByEventId(event.getEventId());
+        oldEvent.setDescription(event.getDescription());
+        oldEvent.setImage(event.getImage());
+        oldEvent.setLocation(event.getLocation());
+        oldEvent.setMaxParticipant(event.getMaxParticipant());
+        oldEvent.setStartDate(event.getStartDate());
+        oldEvent.setTitle(event.getTitle());
 
-
-
+        eventRepository.save(oldEvent);
 
     }
 
@@ -103,6 +108,36 @@ public class EventServiceImpl implements EventService {
 
         return result;
     }
+
+    @Override
+    public Map<String, Object> getEventDetailForEdit(int eventId, String registerEmail) {
+        Event event = eventRepository.findByEventId(eventId);
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        String[] splitString = event.getLocation().split("\\+");
+        if (splitString.length == 5) {
+            if (splitString[1].equals("NoAddress2") ) {
+                result.put( "address1",splitString[0]);
+                result.put("address2","");
+            } else {
+                result.put( "address1",splitString[0]);
+                result.put("address2",splitString[1]);
+
+            }
+            result.put( "suburb",splitString[2]);
+            result.put( "state",splitString[3]);
+            result.put( "postcode",splitString[4]);
+        }
+
+        result.put("time",event.getStartDate());
+        result.put("maxParticipant",event.getMaxParticipant());
+        result.put("image",event.getImage());
+        result.put("description",event.getDescription());
+        result.put("title",event.getTitle());
+        result.put("Category",event.getCategory());
+        return result;
+    }
+
 
     public Registration registrationFlag(List<Registration> registrations, String requesterEmail) {
 

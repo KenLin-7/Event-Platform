@@ -20,41 +20,23 @@ import UploadImage from "../components/EventPost/UploadImage";
 import CalendarCPN from "../components/EventPost/CalendarCPN";
 import formValidate from "../utils/validation";
 import React from "react";
-import dayjs from "dayjs";
-import {getEventDetail, postEvent} from "../api/EventAPI";
-import {useUser} from "../context/UserContext";
-import {getEvent} from "../api/EventAPI";
-import img from "./EventDetail/xxxxxxxx.png";
+import {getEventDetail, getEventDetailForEdit, postEvent, updateEvent} from "../api/EventAPI";
+
 
 export default function EventEdit(effect, deps) {
 
-    const [eventId, setEventId] = useState(6)
-    const [location, setLocation] = useState({street:"", suburb: "", state: "", postcode: ""})
+    const [eventId, setEventId] = useState(22)
     const [event, setEvent] = useState(null)
     const [loading, setLoading] = useState(true);
-    const [processing,setProcessing] = useState(true)
 
 
     useEffect(() => {
-        getEventDetail(eventId).then(
+        getEventDetailForEdit(eventId).then(
             (res) => {
                 setEvent(res.data)
-                setLocation(res.data["location"])
                 setLoading(false)
-
             })
     }, [eventId])
-
-    useEffect(() => {
-        if (!loading) {
-
-            setProcessing(false)
-
-         console.log(event)
-        }
-    }, [event])
-
-
 
 
     const [category, setCategory] = useState('Sports');
@@ -144,8 +126,9 @@ export default function EventEdit(effect, deps) {
 
 
     const validation = () => {
+
         const validate = {
-            eventTitle: event.eventTitle,
+            eventTitle: event.title,
             address1: event.address1,
             suburb: event.suburb,
             postcode: event.postcode
@@ -166,7 +149,6 @@ export default function EventEdit(effect, deps) {
                     content: "please enter the right event title"
                 }
             )
-
 
         }
         if (!result.address1) {
@@ -207,16 +189,16 @@ export default function EventEdit(effect, deps) {
                 address = event.address1 + "+" + "NoAddress2" + "+" + event.suburb + "+" + event.state + "+" + event.postcode
             }
             const databaseEvent = {
-
-                title: event.eventTitle,
+                eventId: eventId,
+                title: event.title,
                 image: event.image,
-                status: "1",
-                startDate: event.dateAndTime,
-                maxParticipant: event.participant,
+                startDate: event.time,
+                maxParticipant: event.maxParticipant,
                 description: event.description,
                 location: address
             }
-            postEvent(databaseEvent)
+            console.log(databaseEvent)
+            updateEvent(databaseEvent)
         }
     }
 
@@ -230,6 +212,7 @@ export default function EventEdit(effect, deps) {
         console.log(event)
     }
 
+
     const handleParticipantChange = (e) => {
         let value = true
         if (e.target.value != null && e.target.value != '') {
@@ -240,7 +223,7 @@ export default function EventEdit(effect, deps) {
                         content: "How many participant"
                     }
                 )
-                setEvent({...event, ["participant"]: e.target.value})
+                setEvent({...event, ["maxParticipant"]: e.target.value})
             } else {
                 e.target.value = 1
             }
@@ -301,7 +284,7 @@ export default function EventEdit(effect, deps) {
 
         <div>{
 
-            loading||processing ?
+            loading ?
                 (
                     <div></div>
                 ) :
@@ -330,7 +313,7 @@ export default function EventEdit(effect, deps) {
                                 {/*          Line 1:   EventTitle TextField         */}
                                 <Stack sx={{padding: 1, marginLeft: 6, marginRight: 72}}>
                                     <TextField
-                                        name={"eventTitle"}
+                                        name={"title"}
                                         required
                                         defaultValue={event.title}
                                         error={eventTitleError.show}
@@ -350,7 +333,7 @@ export default function EventEdit(effect, deps) {
                                     <Stack width={135}>
                                         <TextField
                                             required
-                                            name={"participant"}
+                                            name={"maxParticipant"}
                                             label="Participant"
                                             defaultValue={event.maxParticipant}
                                             onChange={handleParticipantChange}
@@ -398,10 +381,10 @@ export default function EventEdit(effect, deps) {
                                 <Stack spacing={1} sx={{padding: 1, marginLeft: 6, marginRight: 40, marginTop: 1}}>
                                     <Typography fontSize={20} fontWeight={300}> Upload an image:</Typography>
                                     <Card>
-                                                <UploadImage onImage={(image) => setEvent({...event, ["image"]: image})}
+                                        <UploadImage onImage={(image) => setEvent({...event, ["image"]: image})}
 
-                                                                img={event.image}
-                                                             name={"image"}></UploadImage>
+                                                     img={event.image}
+                                                     name={"image"}></UploadImage>
 
                                     </Card>
                                 </Stack>
@@ -424,7 +407,7 @@ export default function EventEdit(effect, deps) {
                                         required
                                         fullWidth
                                         label="Address line 1"
-                                        defaultValue={location.street}
+                                        defaultValue={event.address1}
                                         error={address1Error.show}
                                         helperText={address1Error.content}
                                         onChange={onChange}
@@ -434,7 +417,7 @@ export default function EventEdit(effect, deps) {
                                     <TextField sx={{marginLeft: 6}}
                                                name={"address2"}
                                                fullWidth
-
+                                               defaultValue={event.address2}
                                                onChange={onChange}
                                                label="Address line 2"
                                     />
@@ -450,7 +433,7 @@ export default function EventEdit(effect, deps) {
                                         fullWidth
                                         label="Suburb"
                                         onChange={onChange}
-                                        defaultValue={location.suburb}
+                                        defaultValue={event.suburb}
                                         onClick={onClickSuburbError}
                                         error={suburbError.show}
                                         helperText={suburbError.content}
@@ -463,7 +446,7 @@ export default function EventEdit(effect, deps) {
                                                select
                                                required
                                                fullWidth
-                                               defaultValue={location.state}
+                                               defaultValue={event.state}
                                                label="State"
                                                value={state}
                                                onChange={handleSateChange}
@@ -483,7 +466,7 @@ export default function EventEdit(effect, deps) {
                                                fullWidth
                                                label="Postcode"
                                                onChange={onChange}
-                                               defaultValue={location.postcode}
+                                               defaultValue={event.postcode}
                                                onClick={onClickPostcodeError}
                                                error={postcodeError.show}
                                                helperText={postcodeError.content}
@@ -510,7 +493,6 @@ export default function EventEdit(effect, deps) {
                                         ></CalendarCPN>
                                     </Stack>
                                 </Stack>
-
 
                                 {/*      *****       Last two buttons    *****      */}
                                 <Stack direction={"row"}
@@ -543,27 +525,14 @@ export default function EventEdit(effect, deps) {
                                     </Dialog>
 
                                     {/*        confirm button      */}
+                                    <Button onClick={onClick} variant={"contained"} align={"right"}
+                                            sx={{marginLeft: 2}}
+                                    > Confirm </Button>
 
-
-                                    {uploadingImageFlag === 1 ?
-
-                                        <Button disabled variant={"contained"} align={"right"}
-                                                sx={{marginLeft: 2}}
-                                        > Confirm </Button>
-
-                                        : <Button onClick={onClick} variant={"contained"} align={"right"}
-                                                  sx={{marginLeft: 2}}
-                                        > Confirm </Button>
-
-                                    }
                                 </Stack>
-
                             </Paper>
-
                         </Stack>
                     </Container>
-
-
                 )}
         </div>
 

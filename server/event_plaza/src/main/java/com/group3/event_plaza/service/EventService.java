@@ -13,11 +13,14 @@ public interface EventService {
     // TODO Find method need to be throw DataNotFoundException
 
 
-   void updateEvent(int eventId);
+   void updateEvent(Event event);
 
-    Event getEvent(int eventId);
+
+   Event getEvent(int eventId);
 
     Map<String,Object> getEventDetail(int eventId,String registerEmail);
+
+    Map<String,Object> getEventDetailForEdit(int eventId,String registerEmail);
 
     List<Event> searchEvent(String keyword);
 

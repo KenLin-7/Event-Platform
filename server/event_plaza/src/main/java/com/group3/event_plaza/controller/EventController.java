@@ -27,8 +27,8 @@ public class EventController {
     }
 
     @PostMapping("/updateEvent")
-    public ResponseResult<String> updateEvent(@RequestBody Map<String,Integer> map){
-        eventService.updateEvent(map.get("eventId"));
+    public ResponseResult<String> updateEvent(@RequestBody Event event){
+        eventService.updateEvent(event);
         return ResponseResult.success();
     }
 
@@ -63,6 +63,14 @@ public class EventController {
     public ResponseResult<Map<String,Object>> getEventDetail(Principal principal,@RequestBody Map<String,Integer>map) throws DataNotFoundException {
         int eventId = map.get("eventId");
         Map<String,Object> result= eventService.getEventDetail(eventId,principal.getName());
+
+        return ResponseResult.success(result);
+    }
+
+    @PostMapping("/getEventDetailForEdit")
+    public ResponseResult<Map<String,Object>> getEventDetailForEdit(Principal principal,@RequestBody Map<String,Integer>map) throws DataNotFoundException {
+        int eventId = map.get("eventId");
+        Map<String,Object> result= eventService.getEventDetailForEdit(eventId,principal.getName());
 
         return ResponseResult.success(result);
     }
