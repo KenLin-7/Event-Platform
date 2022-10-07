@@ -9,7 +9,7 @@ export default function TestUploadImage() {
 
     const {imageURL,uploadImage,progress,buffer,isUploaded} = useUpload()
     const [image,setImage] = useState("")
-
+    const [event,setEvent] = useState({image:"https://firebasestorage.googleapis.com/v0/b/eventplazaweb.appspot.com/o/event%2F005U1peply1fff1uddgouj30xc0m8a9y.jpg1664782635262?alt=media&token=9e8175f2-a61e-471e-a02d-b75beb4e1ec6",title:"dsasdasda"})
 
     useEffect(()=>{
         console.log(isUploaded);
@@ -34,6 +34,16 @@ export default function TestUploadImage() {
         <button onClick={onClick}>submit</button>
         {
             image && <img src={URL.createObjectURL(image)} alt="avatar"/>
+        }
+
+{
+           event.image ? (
+            <div>display image</div>
+           ):(
+            <div>
+                image && <img src={URL.createObjectURL(image)} alt="avatar"/>
+            </div>
+           )
         }
 
         <button onClick={getNotifications}>Get Notifications</button>
