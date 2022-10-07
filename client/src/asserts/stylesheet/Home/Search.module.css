@@ -1,7 +1,7 @@
 .search-section {
   position: relative;
   height: 800px;
-  width: 100vw;
+  width: 100%;
   background-image: url("../../images/home.png");
   background-size: cover;
   background-repeat: no-repeat;

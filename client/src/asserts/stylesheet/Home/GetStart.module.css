@@ -10,7 +10,7 @@
 .get-start-inner-layout {
   display: flex;
   position:relative;
-  width: 100vw;
+  width: 100%;
   flex-direction: row;
 }
 
@@ -55,10 +55,11 @@
 
 .get-start-img {
   flex: 1;
-  margin-left: -350px;
+  margin-left: -550px;
   background-image: url("../../images/get-start.png");
   height: 616px;
   background-repeat: no-repeat;
+  margin-left: 100px;
 }
 
 
