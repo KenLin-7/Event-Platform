@@ -32,20 +32,26 @@ export default function TestUploadImage() {
     <div>
         <input type={'file'} onChange={onChange} accept="image/*"/>
         <button onClick={onClick}>submit</button>
-        {
+        {/* {
             image && <img src={URL.createObjectURL(image)} alt="avatar"/>
-        }
+        } */}
 
 {
-           event.image ? (
-            <div>display image</div>
-           ):(
-            <div>
-                image && <img src={URL.createObjectURL(image)} alt="avatar"/>
-            </div>
-           )
+    !isUploaded ? (            
+    <div>
+        {
+        !image ? (
+            <img src={event.image}/>
+        ):(
+            <img src={URL.createObjectURL(image)} alt="avatar"/>
+        )
         }
+      </div>
+):(
+    <div>Upload</div>
+)
 
+}
         <button onClick={getNotifications}>Get Notifications</button>
     </div>
   )
