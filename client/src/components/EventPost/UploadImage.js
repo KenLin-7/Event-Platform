@@ -8,75 +8,71 @@ import {Button, Card, CircularProgress, Input, Stack, Typography} from "@mui/mat
 
 export default function UploadImage(props) {
 
-    const {imageURL, uploadImage, progress, buffer} = useUpload()
+    const {imageURL, uploadImage, progress, buffer,isUploaded} = useUpload()
     const [image, setImage] = useState("")
-    const [uploadingFlag, setUploadingFlag] = useState(4)
+
+       useEffect(()=>{
+
+            console.log(isUploaded);
+
+        },[isUploaded])
 
 
     const onClick = () => {
-        setUploadingFlag(2)
+
         uploadImage(image, "event")
-        props.onFlag(uploadingFlag)
         // remove()
     }
 
-    const onInputClick = (e) => {
-        props.onFlag(uploadingFlag)
-    }
+
+
+
 
     const onChange = (e) => {
-        setUploadingFlag(1)
+
         setImage(e.target.files[0])
 
+ 
     }
 
-    useEffect(() => {
 
-        if (uploadingFlag === 2) setUploadingFlag(3)
-        props.onImage(imageURL)
-        props.onFlag(uploadingFlag)
-    }, [imageURL],[uploadingFlag])
+       useEffect(()=>{
+           props.onImage(imageURL)
+        },[imageURL],[image])
+
+
+
 
 
     return (
         <div>
-            <Input sx={{marginLeft: 2, marginY: 2}} type={'file'} onChange={onChange} onClick={onInputClick}
+            <Input sx={{marginLeft: 2, marginY: 2}} type={'file'} onChange={onChange}
                    accept="image/*"/>
             <Button sx={{padding: 1, marginLeft: 4, marginY: 2}} variant={"contained"} onClick={onClick}>submit</Button>
             <Typography sx={{marginLeft: 2}}> Remember to click submit, or the image will not be kept</Typography>
+             {
+                 !isUploaded ? (
 
-            {
-                props.img ?
-                    <Stack sx={{padding: 1}}>
-                        <img src={props.img} alt="event"/>
-                    </Stack>
-                    :
-
-                (uploadingFlag === 1 ?
-
-
-                        <Stack sx={{padding: 1}}>
-                            <img src={URL.createObjectURL(image)} alt="event"/>
-
+                 <div>
+                     {
+                     !image ? (
+                        <Stack sx={{padding:1}}>
+                            <img src={props.img}/>
                         </Stack>
-                        :
+                     ):(
+                         <Stack sx={{padding:1}}>
+                           <Stack>
+                             <img src={URL.createObjectURL(image)} alt="event"/>
+                           </Stack>
+                         </Stack>
+                     )
+                     }
+                   </div>
+             ):(
+                 <div>Upload</div>
+             )
 
-                        uploadingFlag === 2 ?
-                            <Stack sx={{padding: 1, marginLeft: 20, marginTop: 5, marginBottom: 8}}>
-                                <CircularProgress/>
-                            </Stack>
-
-                            :
-
-                            uploadingFlag === 3 ?
-
-                                <Stack sx={{padding: 1, marginLeft: 20, marginTop: 5, marginBottom: 8}}>
-                                    <Typography> upload successful </Typography>
-                                </Stack>
-                                :
-                                <Stack></Stack>
-                )
-            }
+             }
         </div>
     )
 }

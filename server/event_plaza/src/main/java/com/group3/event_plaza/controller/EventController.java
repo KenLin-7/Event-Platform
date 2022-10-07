@@ -25,13 +25,14 @@ public class EventController {
         eventService.createEvent(principal,event);
         return ResponseResult.success();
     }
-//
-//    @PostMapping("/eventDetail")
-//    public ResponseResult<Event> getEventDetail(@RequestBody Map<String,String> map){
-//        int newId = Integer.parseInt(map.get("eventId"));
-//        Event event = eventService.getEvent(newId);
-//        return ResponseResult.success(event);
-//    }
+
+    @PostMapping("/updateEvent")
+    public ResponseResult<String> updateEvent(@RequestBody Map<String,Integer> map){
+        eventService.updateEvent(map.get("eventId"));
+        return ResponseResult.success();
+    }
+
+    @PostMapping
 
     @GetMapping("/search/{keyword}")
     public ResponseResult<List<Event>> search(@PathVariable String keyword){

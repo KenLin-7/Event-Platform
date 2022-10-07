@@ -13,6 +13,7 @@ public interface EventService {
     // TODO Find method need to be throw DataNotFoundException
 
 
+   void updateEvent(int eventId);
 
     Event getEvent(int eventId);
 

@@ -33,7 +33,7 @@ export default function EventEdit(effect, deps) {
     const [event, setEvent] = useState(null)
     const [loading, setLoading] = useState(true);
     const [processing,setProcessing] = useState(true)
-    const [eventImg, setEventImg] = useState(false)
+
 
     useEffect(() => {
         getEventDetail(eventId).then(
@@ -43,32 +43,18 @@ export default function EventEdit(effect, deps) {
                 setLoading(false)
 
             })
-
-
     }, [eventId])
 
     useEffect(() => {
         if (!loading) {
-            processTime(event.startDate)
-            processImage(event.image)
+
             setProcessing(false)
+
+         console.log(event)
         }
     }, [event])
 
 
-    const processTime = (timeString) => {
-        const timeDate = new Date(timeString)
-
-
-        setEvent({...event, ["startDate"]: timeDate})
-    }
-
-
-    const processImage = (imageURL) => {
-        if (imageURL && imageURL != "") {
-            setEventImg(true)
-        }
-    }
 
 
     const [category, setCategory] = useState('Sports');
@@ -412,18 +398,10 @@ export default function EventEdit(effect, deps) {
                                 <Stack spacing={1} sx={{padding: 1, marginLeft: 6, marginRight: 40, marginTop: 1}}>
                                     <Typography fontSize={20} fontWeight={300}> Upload an image:</Typography>
                                     <Card>
-                                        {
-                                            eventImg?
-
                                                 <UploadImage onImage={(image) => setEvent({...event, ["image"]: image})}
-                                                             onFlag={(uploadingFlag) => setUploadingImageFlag(uploadingFlag)}
+
                                                                 img={event.image}
                                                              name={"image"}></UploadImage>
-                                                :
-                                                <UploadImage onImage={(image) => setEvent({...event, ["image"]: image})}
-                                                             onFlag={(uploadingFlag) => setUploadingImageFlag(uploadingFlag)}
-                                                             name={"image"}></UploadImage>
-                                        }
 
                                     </Card>
                                 </Stack>
@@ -527,7 +505,8 @@ export default function EventEdit(effect, deps) {
                                     </Stack>
                                     <Stack sx={{marginRight: 40}}>
                                         <CalendarCPN
-                                            onTime={(time) => setEvent({...event, ["dateAndTime"]: time})}
+                                            onTime={(time) => setEvent({...event, ["time"]: time})}
+                                            oldTime={event.time}
                                         ></CalendarCPN>
                                     </Stack>
                                 </Stack>

@@ -16,6 +16,7 @@ import ParticipantCPN from "./ParticipantCPN";
 import {getEventDetail} from "../../api/EventAPI";
 import avatar from '../EventDetail/avatar.jpg';
 import RegistBtn from "./RegistBtn";
+import dayjs from "dayjs";
 
 
 export default function EventDetail(effect, deps) {
@@ -64,16 +65,10 @@ export default function EventDetail(effect, deps) {
 
 
     const processTime = (timeString) => {
-        const timeDate = new Date(timeString)
-        const date = timeDate.getUTCFullYear() + "/" + timeDate.getUTCMonth() + "/" + timeDate.getUTCDay()
-        let hours = ""
-        if (timeDate.getMinutes() === 0) {
+        const timeDate = dayjs(timeString)
+        const dateString = timeDate.format("ddd,MMM D,YYYY h:mm A")
 
-            hours = timeDate.getUTCHours() + ":" + "00"
-        } else {
-            hours = timeDate.getUTCHours() + ":" + timeDate.getMinutes()
-        }
-        setEventDate(date + " " + hours)
+        setEventDate(dateString)
     }
 
 
