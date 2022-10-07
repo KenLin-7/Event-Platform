@@ -12,6 +12,12 @@
   padding-left: 270px;
 }
 
+.progress-control{
+  height: 116px;
+  margin-top: 50px;
+  margin-left: 270px;
+}
+
 .user-post-event {
   width: 100vw;
 
@@ -25,3 +31,4 @@
   padding-left: 270px;
   margin-bottom: 50px;
 }
+

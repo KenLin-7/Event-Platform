@@ -18,6 +18,12 @@
   padding-left: 270px;
 }
 
+.progress-control{
+  height: 380px;
+  margin-top: 50px;
+  margin-left: 270px;
+}
+
 .registraion-notification-card {
   height: 120px;
   width: 1300px;

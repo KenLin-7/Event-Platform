@@ -11,8 +11,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import UserRegistration from './UserRegistration'
 import UserPost from './UserPost'
 import ManageRegistraion from './ManageRegistraion';
-import { useUser } from '../../context/UserContext';
-import { useNavigate } from 'react-router-dom';
 
 
 const UserPage = () => {
@@ -38,7 +36,7 @@ const UserPage = () => {
         flag
           ?
           (
-            <CircularProgress />
+            <CircularProgress className={styles['progress-control']}/>
           )
           :
           (

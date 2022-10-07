@@ -62,7 +62,7 @@ const ManageRegistraion = () => {
         flag
           ?
           (
-            <CircularProgress />
+            <CircularProgress className={styles['progress-control']}/>
           )
           :
           (
