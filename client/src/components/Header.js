@@ -11,6 +11,7 @@ import { useNotification } from '../context/NotificationContext';
 import BadgeNotification from './Notification/BadgeNotification';
 import { getInfo } from '../api/UserAPI';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useNavigate } from "react-router-dom";
 
 const items = [
   { id: 1, text: 'Latest event' },
@@ -23,30 +24,19 @@ const items = [
 const Header = () => {
 
   const {auth,signOut} = useUser();
-  const {subscribeEvent,sendEventMessage,sendUserMessage,disconnect} = useNotification();
+  const {disconnect} = useNotification();
+  const navigate = useNavigate();
 
-  const TESTsendNotificiton =()=>{
-    // sendEventMessage("1","Send Test")
-    sendUserMessage("kenlbd61@gmail.com","User test")
-  }
-
-  const TESTSubscribe = ()=>{
-    subscribeEvent(5)
-  }
 
   const logout = ()=>{
     signOut()
     disconnect()
+    navigate("/")
+
   }
 
-  const TESTUSer = ()=>{
-    getInfo("ken@test.com")
-  }
 
-  const TESTSendMESS = ()=>{
-    // sendUserMessage("ken@test.com","Message Sent")
-    sendEventMessage(1,"Event Message")
-  }
+
 
   return (
     <div className={styles["header-container"]}>
@@ -98,8 +88,7 @@ const Header = () => {
                   </div>
                 </div>
               </Stack>
-              <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={signOut} className="header-btn">Log out</Button>
-              <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={TESTsendNotificiton} className="header-btn">Send</Button>
+              <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={logout} className="header-btn">Log out</Button>
 
             </Stack>
 

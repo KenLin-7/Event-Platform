@@ -12,16 +12,16 @@ export function useUser(){
 
 export function UserProvider({children}){
     const [auth,setAuth] = useState(null)
+    const [loading,setLoading] = useState(true)
 
-    useEffect(()=>{
-        if(localStorage.getItem("token") !=null) getAuth()
-     },[])
+
 
     // get logged in user email
     const getAuth = async()=>{
         //await getUser().then(res=>{
         getUser().then(res=>{
             setAuth(res.data)
+            setLoading(false)
         })
     }
 
@@ -33,8 +33,10 @@ export function UserProvider({children}){
     }
     useEffect(()=>{
        if(localStorage.getItem("token") !=null){
-        getAuth() 
-       } 
+            getAuth() 
+       }else{
+            setLoading(false)
+       }
     },[auth])
 
 
@@ -42,7 +44,8 @@ export function UserProvider({children}){
     const value = {
         auth,
         getAuth,
-        signOut
+        signOut,
+        loading
     }
 
     return(

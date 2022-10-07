@@ -76,7 +76,6 @@ export const NotificationProvider = ({children})=>{
         if(stompClient){ 
             stompClient.subscribe(`/event/${eventId}/notification`)
         }       
-
     }
 
 

@@ -7,11 +7,12 @@ function useUpload(){
     const [imageURL,setImageURL] = useState("")
     const [progress,setProgress] = useState(0)
     const [buffer,setBuffer] = useState(10)
+    const [isUploaded,setIsUploaded] = useState(false)
 
 
     const uploadImage = (image,foldername)=>{
 
-        // select different folder(avatar/event) to store image
+        // select different folder(avatar/event) Ito store image
         const imageRef = ref(storage,`${foldername}/${image.name+new Date().getTime()}`)
 
         const uploadTask = uploadBytesResumable(imageRef,image)
@@ -30,12 +31,13 @@ function useUpload(){
         },()=>{
             // Upload completed successfully, return download url 
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
+                setIsUploaded(true)
                 setImageURL(downloadURL)
             })
         })
     }
 
 
-    return {imageURL ,uploadImage,progress,buffer}
+    return {imageURL,uploadImage,progress,buffer,isUploaded}
 }
 export default useUpload
