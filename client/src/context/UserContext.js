@@ -12,11 +12,9 @@ export function useUser(){
 
 export function UserProvider({children}){
     const [auth,setAuth] = useState(null)
-    const [loading,setLoading] = useState(false)
+    const [loading,setLoading] = useState(true)
 
-    useEffect(()=>{
-        if(localStorage.getItem("token") !=null) getAuth()
-     },[])
+
 
     // get logged in user email
     const getAuth = async()=>{
@@ -36,6 +34,8 @@ export function UserProvider({children}){
     useEffect(()=>{
        if(localStorage.getItem("token") !=null){
             getAuth() 
+       }else{
+            setLoading(false)
        }
     },[auth])
 

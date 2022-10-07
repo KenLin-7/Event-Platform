@@ -32,10 +32,11 @@ function App() {
           <Route path='/test' element={<TestUploadImage />} />
           <Route element={<PrivateRoute/>}>
             <Route path='/eventpost' element={<EventPost />} />
+            <Route path='/eventedit/:id' element={<EventEdit />} />
+            <Route path='/user-page' element={<UserPage />} />
           </Route>
           <Route path='/eventdetail/:id' element={<EventDetail />} />
-          <Route path='/eventedit/:id' element={<EventEdit />} />
-          <Route path='/user-page' element={<UserPage />} />
+
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/password' element={<Password/>}/>
           <Route path='/forgotPassword' element={<ForgotPassword/>}/>

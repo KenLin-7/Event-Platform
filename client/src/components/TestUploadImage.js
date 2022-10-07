@@ -7,10 +7,13 @@ import {remove} from '../api/UserAPI'
 import { getNotifications } from '../api/NotificationAPI';
 export default function TestUploadImage() {
 
-    const {imageURL,uploadImage,progress,buffer} = useUpload()
+    const {imageURL,uploadImage,progress,buffer,isUploaded} = useUpload()
     const [image,setImage] = useState("")
 
 
+    useEffect(()=>{
+        console.log(isUploaded);
+    },[isUploaded])
     const onClick = ()=>{
         uploadImage(image,"avatar")
         // remove()
