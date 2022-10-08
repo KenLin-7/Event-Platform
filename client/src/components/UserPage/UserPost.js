@@ -20,13 +20,14 @@ import { getNoCancelledEvents, cancelEvent } from '../../api/EventAPI'
 import humanDateConvert from '../../utils/humanDateConvert'
 import confirmedParticipants from '../../utils/confirmedParticipants';
 import { useNavigate } from 'react-router-dom';
-
+import { useNotification } from '../../context/NotificationContext';
 const UserPost = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [flag, setFlag] = useState(false);
   const [events, setEvents] = useState([]);
   const [fresh, setFresh] = useState(false);
+  const {sendEventMessage} = useNotification()
   let [page, setPage] = useState(1);
   const PER_PAGE = 4;
   const count = Math.ceil(events.length / PER_PAGE);
@@ -59,15 +60,17 @@ const UserPost = () => {
 
   // TODO Add Notification 
   const handleConfirmCancel = (id) => {
-    cancelEvent(id).then(() => {
-      setFresh(!fresh)
-    })
+    sendEventMessage(id,"Your registered event has been canceled")
+
+    // cancelEvent(id).then(() => {
+    //   setFresh(!fresh)
+    // })
 
     setOpen(false);
   }
 
   const handleToEditPage = (id) => {
-    navigate(`/eventedit/${id}`)
+    navigate(`/event/edit/${id}`)
   }
 
   return (
@@ -120,7 +123,7 @@ const UserPost = () => {
                                 <Divider />
 
                                 <div className={styles['group-btn']}>
-                                  <div className={styles['approve-btn']} onClick={handleToEditPage}>
+                                  <div className={styles['approve-btn']} onClick={()=>handleToEditPage(card.eventId)}>
                                     Edit
                                   </div>
                                   <div className={styles['reject-btn']} onClick={handleClickOpenCancel}>

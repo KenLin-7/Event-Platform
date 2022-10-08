@@ -7,7 +7,7 @@ import {useState} from "react";
 import {MobileDateTimePicker} from "@mui/x-date-pickers";
 
 export default function CalendarCPN(props) {
-    const [value, setValue] = useState(dayjs('2022-11-01T00:00'));
+    const [value, setValue] = useState(dayjs(props.oldTime));
 
 
     return (

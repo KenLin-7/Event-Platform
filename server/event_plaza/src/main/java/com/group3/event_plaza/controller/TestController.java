@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api/test")
 @RestController
@@ -27,6 +28,7 @@ public class TestController {
         System.out.println(email);
         return ResponseResult.success(userService.getUserInfo("ken22@test.com"));
     }
+
 
     @GetMapping("/event/24")
     public ResponseResult<List<Event>> getEventLess24(){

@@ -82,6 +82,7 @@ const Header = () => {
                   </Stack>
 
                   <div className={styles["dropdown-content"]}>
+                    <a href='/eventpost'>Post event</a>
                     <a href="/user-page">View event</a>
                     <a href="/profile">Account setting</a>
                   </div>

@@ -8,74 +8,72 @@ import {Button, Card, CircularProgress, Input, Stack, Typography} from "@mui/mat
 
 export default function UploadImage(props) {
 
-    const {imageURL, uploadImage, progress, buffer} = useUpload()
+    const {imageURL, uploadImage, progress, buffer, isUploaded} = useUpload()
     const [image, setImage] = useState("")
-    const [uploadingFlag, setUploadingFlag] = useState(4)
-
+    const [uploading, setUploading] = useState(false)
 
     const onClick = () => {
-        setUploadingFlag(2)
+        setUploading(true)
         uploadImage(image, "event")
-        props.onFlag(uploadingFlag)
         // remove()
     }
 
-    const onInputClick = (e) => {
-        props.onFlag(uploadingFlag)
-    }
-
     const onChange = (e) => {
-        setUploadingFlag(1)
+
         setImage(e.target.files[0])
 
     }
 
-    useEffect(() => {
 
-        if (uploadingFlag === 2) setUploadingFlag(3)
-        props.onImage(imageURL)
-        props.onFlag(uploadingFlag)
-    }, [imageURL],[uploadingFlag])
+    useEffect(() => {
+        if (imageURL) {
+            props.onImage(imageURL)
+        }
+    }, [imageURL])
 
 
     return (
         <div>
-            <Input sx={{marginLeft: 2, marginY: 2}} type={'file'} onChange={onChange} onClick={onInputClick}
+            <Input sx={{marginLeft: 2, marginY: 2}} type={'file'} onChange={onChange}
                    accept="image/*"/>
             <Button sx={{padding: 1, marginLeft: 4, marginY: 2}} variant={"contained"} onClick={onClick}>submit</Button>
             <Typography sx={{marginLeft: 2}}> Remember to click submit, or the image will not be kept</Typography>
-
             {
-                props.img ?
-                    <Stack sx={{padding: 1}}>
-                        <img src={props.img} alt="event"/>
-                    </Stack>
+                !isUploaded ? (
+                        !uploading ?
+                            (<div>
+                                {
+                                    !image ? (
+                                            <Stack sx={{padding: 1}}>
+                                                <img src={props.img}/>
+                                            </Stack>
+                                        )
+                                        :
+                                        (
+                                            <Stack sx={{padding: 1}}>
+                                                <Stack>
+                                                    <img src={URL.createObjectURL(image)} alt="event"/>
+                                                </Stack>
+                                            </Stack>
+                                        )
+                                }
+                            </div>)
+
+                            : (
+                                <Stack sx={{marginLeft: 10, marginY: 5, padding: 3}}>
+
+                                    <CircularProgress/>
+
+                                </Stack>
+                            ))
                     :
+                    (
+                        <Stack sx={{marginLeft: 10, marginY: 5, padding: 3}}>
 
-                (uploadingFlag === 1 ?
-
-
-                        <Stack sx={{padding: 1}}>
-                            <img src={URL.createObjectURL(image)} alt="event"/>
+                            uploaded!
 
                         </Stack>
-                        :
-
-                        uploadingFlag === 2 ?
-                            <Stack sx={{padding: 1, marginLeft: 20, marginTop: 5, marginBottom: 8}}>
-                                <CircularProgress/>
-                            </Stack>
-
-                            :
-
-                            uploadingFlag === 3 ?
-
-                                <Stack sx={{padding: 1, marginLeft: 20, marginTop: 5, marginBottom: 8}}>
-                                    <Typography> upload successful </Typography>
-                                </Stack>
-                                :
-                                <Stack></Stack>
-                )
+                    )
             }
         </div>
     )

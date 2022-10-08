@@ -23,26 +23,28 @@ import React from "react";
 import dayjs from "dayjs";
 import {postEvent} from "../../api/EventAPI";
 import {useUser} from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export default function EventPost() {
 
     const [category, setCategory] = useState('Sports');
-    const categories = [
-        {
-            value: 'Sports',
-            label: 'Sports'
-        },
-        {
-            value: 'Music',
-            label: 'Music'
-        },
-        {
-            value: 'Arts',
-            label: 'Arts'
-        },
+    const navigate = useNavigate()
+    // const categories = [
+    //     {
+    //         value: 'Sports',
+    //         label: 'Sports'
+    //     },
+    //     {
+    //         value: 'Music',
+    //         label: 'Music'
+    //     },
+    //     {
+    //         value: 'Arts',
+    //         label: 'Arts'
+    //     },
 
-    ];
-
+    // ];
+    const categories = ['Sports','Music','Arts'];
     const handleCategoryChange = (e) => {
         setCategory(e.target.value)
         setEvent({...event, ["category"]: e.target.value})
@@ -142,10 +144,7 @@ export default function EventPost() {
         return result
     }
     const onClick = () => {
-        console.log(event)
         const result = validation()
-        console.log(result)
-
         if (!result.eventTitle) {
             setEventTitleError(
                 {
@@ -189,9 +188,9 @@ export default function EventPost() {
         if(result.suburb&&result.postcode&&result.eventTitle&&result.address1){
             let address = ""
             if(event.address2!=null&&event.address2!="") {
-                address = event.address1 + "/" + event.address2 + "/" + event.suburb + "/" + event.state + "/" + event.postcode
+                address = event.address1 + "+" + event.address2 + "+" + event.suburb + "+" + event.state + "+" + event.postcode
             }else {
-                address = event.address1 + "/" + "NoAddress2" + "/" + event.suburb + "/" + event.state + "/" + event.postcode
+                address = event.address1 + "+" + "NoAddress2" + "+" + event.suburb + "+" + event.state + "+" + event.postcode
             }
             const databaseEvent = {
 
@@ -203,7 +202,13 @@ export default function EventPost() {
                 description:event.description,
                 location:address
             }
-            postEvent(databaseEvent)
+            postEvent(databaseEvent).then((res)=>{
+                console.log(res);
+
+                if(res.code === "200"){
+                    navigate(`/event/detail/${res.data}`)
+                }
+            })
         }
     }
 
@@ -350,9 +355,9 @@ export default function EventPost() {
                                 onChange={handleCategoryChange}
                                 helperText="Please select a category"
                             >
-                                {categories.map((option) => (
-                                    <MenuItem key={option.value} value={option.value}>
-                                        {option.label}
+                                {categories.map((option,index) => (
+                                    <MenuItem key={index} value={option}>
+                                        {option}
                                     </MenuItem>
                                 ))}
                             </TextField>

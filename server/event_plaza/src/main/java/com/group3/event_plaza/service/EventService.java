@@ -4,16 +4,23 @@ import com.group3.event_plaza.model.Registration;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 public interface EventService {
 
-    void createEvent(Principal user ,Event event);
+    int createEvent(Principal user ,Event event);
 
     // TODO Find method need to be throw DataNotFoundException
 
 
+   void updateEvent(Event event);
 
-    Event getEvent(int eventId);
+
+   Event getEvent(int eventId);
+
+    Map<String,Object> getEventDetail(int eventId,String registerEmail);
+
+    Map<String,Object> getEventDetailForEdit(int eventId,String registerEmail);
 
     List<Event> searchEvent(String keyword);
 

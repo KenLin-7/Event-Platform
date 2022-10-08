@@ -81,15 +81,16 @@ export const NotificationProvider = ({children})=>{
     }
 
 
+    // TODO Unhandled received MESSAGE: MESSAGE
     // notify participant if event information has been upadated
-    const sendEventMessage = (eventId,message,recieverEmail)=>{
+    const sendEventMessage = (eventId,message)=>{
         if(stompClient){
             let notification = {
                 message:message,
                 eventId:eventId
             }
             stompClient.send(`/event/${eventId}/notification`,{},JSON.stringify(notification))
-            createNotification(recieverEmail,message,"status")
+            // createNotification(recieverEmail,message,"status")
             setSent(true)
         }
     }
@@ -102,7 +103,7 @@ export const NotificationProvider = ({children})=>{
                     email:email
                 }
                 stompClient.send(`/user/${email}/notification`,{},JSON.stringify(notification))
-                createNotification(email,message,"status")
+                // createNotification(email,message,"status")
                 setSent(true)
             }
         }

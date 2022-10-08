@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { getCurrentUserEvents } from '../../api/EventAPI'
 import { getAllRegistrationRequests } from '../../api/RegistrationAPI'
-
+import { useNotification } from '../../context/NotificationContext';
 
 const ManageRegistraion = () => {
   const [events, setEvents] = useState([]);
@@ -17,6 +17,7 @@ const ManageRegistraion = () => {
   const PER_PAGE = 2;
   const count = Math.ceil(events.length / PER_PAGE);
   const _DATA = usePagination(events, PER_PAGE);
+  const {sendUserMessage} = useNotification()
 
 
   useEffect(() => {
@@ -51,6 +52,15 @@ const ManageRegistraion = () => {
     setPage(p);
     _DATA.jump(p);
   };
+
+  // Add use email
+  const onApprovedClick = (email)=>{
+      sendUserMessage(email,"Your registration has been confirmed")
+  }
+
+  const onRejectClick = (email)=>{
+    sendUserMessage(email,"Your registration has been rejected")
+  }
 
   return (
     <div className={styles['manage-registration-container']}>
@@ -100,10 +110,10 @@ const ManageRegistraion = () => {
                                   </div>
 
                                   <div className={styles['group-btn']}>
-                                    <div className={styles['approve-btn']}>
+                                    <div className={styles['approve-btn']} onClick={()=>onApprovedClick(data.requester.email)}>
                                       Approve
                                     </div>
-                                    <div className={styles['reject-btn']}>
+                                    <div className={styles['reject-btn']} onClick={()=>onRejectClick(data.requester.email)}>
                                       Reject
                                     </div>
                                   </div>

@@ -111,7 +111,7 @@ export default function Login() {
                     <div className={FormStyles['button-area']}>
                       {errorMsg && <Alert severity={"error"} sx={{marginBottom:"15px",width:"90%"}}>{errorMsg}</Alert>}
                       <button className={FormStyles.formButton} onClick={onClick} disabled={loading}>
-                      {loading? (<CircularProgress color='inherit'/>):("Sign In")}
+                      {loading? (<CircularProgress color='inherit'size={25}/>):("Sign In")}
                       </button>
                       <span className={styles['register-link']}>Don't have an account?
                         <Link to="/register"><span className={FormStyles.link}>Register</span></Link>

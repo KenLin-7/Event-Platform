@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom'
 const LatestEvent = ({ latestEvents, flag, ref }) => {
   const navigate = useNavigate();
   const handleToEventDetail = (id) => {
-    navigate(`/eventDetail/${id}`)
+    navigate(`/event/detail/${id}`)
   }
 
   return (

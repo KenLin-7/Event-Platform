@@ -20,76 +20,25 @@ import UploadImage from "../components/EventPost/UploadImage";
 import CalendarCPN from "../components/EventPost/CalendarCPN";
 import formValidate from "../utils/validation";
 import React from "react";
-import dayjs from "dayjs";
-import {postEvent} from "../api/EventAPI";
-import {useUser} from "../context/UserContext";
-import {getEvent} from "../api/EventAPI";
-import img from "./EventDetail/xxxxxxxx.png";
+import {getEventDetail, getEventDetailForEdit, postEvent, updateEvent} from "../api/EventAPI";
+import { useNotification } from "../context/NotificationContext";
+import { useParams,useNavigate } from "react-router-dom";
 
 export default function EventEdit(effect, deps) {
 
-    const [eventId, setEventId] = useState(7)
-    const [location, setLocation] = useState({address1: "",address2:"", suburb: "", state: "", postcode: ""})
+    let {id} = useParams()
+    const [eventId, setEventId] = useState(id)
     const [event, setEvent] = useState(null)
     const [loading, setLoading] = useState(true);
-    const [processing,setProcessing] = useState(true)
-    const [eventImg, setEventImg] = useState(false)
-
+    const {sendEventMessage} = useNotification()
+    const navigate = useNavigate()
     useEffect(() => {
-        getEvent(eventId).then(
+        getEventDetailForEdit(eventId).then(
             (res) => {
                 setEvent(res.data)
                 setLoading(false)
-
             })
-
-
     }, [eventId])
-
-    useEffect(() => {
-        if (!loading) {
-            processTime(event.startDate)
-            processLocation(event.location)
-            processImage(event.image)
-            setProcessing(false)
-        }
-    }, [event])
-
-
-    const processTime = (timeString) => {
-        const timeDate = new Date(timeString)
-
-
-        setEvent({...event, ["startDate"]: timeDate})
-    }
-
-
-    const processLocation = (locationString) => {
-
-        const splitString = locationString.split("+")
-        if (splitString.length === 5) {
-            if (splitString[1] === "NoAddress2") {
-                setLocation({
-                    address1: splitString[0],
-                    address2: "",
-                    suburb: splitString[2],
-                    state: splitString[3],
-                    postcode: splitString[4]
-                })
-            } else {
-
-                setLocation({address1:splitString[0],address2:splitString[1], suburb: splitString[2], state: splitString[3], postcode: splitString[4]})
-            }
-        }
-
-
-    }
-
-    const processImage = (imageURL) => {
-        if (imageURL && imageURL != "") {
-            setEventImg(true)
-        }
-    }
 
 
     const [category, setCategory] = useState('Sports');
@@ -179,8 +128,9 @@ export default function EventEdit(effect, deps) {
 
 
     const validation = () => {
+
         const validate = {
-            eventTitle: event.eventTitle,
+            eventTitle: event.title,
             address1: event.address1,
             suburb: event.suburb,
             postcode: event.postcode
@@ -201,7 +151,6 @@ export default function EventEdit(effect, deps) {
                     content: "please enter the right event title"
                 }
             )
-
 
         }
         if (!result.address1) {
@@ -237,21 +186,25 @@ export default function EventEdit(effect, deps) {
         if (result.suburb && result.postcode && result.eventTitle && result.address1) {
             let address = ""
             if (event.address2 != null && event.address2 != "") {
-                address = event.address1 + "/" + event.address2 + "/" + event.suburb + "/" + event.state + "/" + event.postcode
+                address = event.address1 + "+" + event.address2 + "+" + event.suburb + "+" + event.state + "+" + event.postcode
             } else {
-                address = event.address1 + "/" + "NoAddress2" + "/" + event.suburb + "/" + event.state + "/" + event.postcode
+                address = event.address1 + "+" + "NoAddress2" + "+" + event.suburb + "+" + event.state + "+" + event.postcode
             }
             const databaseEvent = {
-
-                title: event.eventTitle,
+                eventId: eventId,
+                title: event.title,
                 image: event.image,
-                status: "1",
-                startDate: event.dateAndTime,
-                maxParticipant: event.participant,
+                startDate: event.time,
+                maxParticipant: event.maxParticipant,
                 description: event.description,
                 location: address
             }
-            postEvent(databaseEvent)
+            updateEvent(databaseEvent).then(res=>{
+                if(res.code === "200"){
+                    navigate(-1)
+                    sendEventMessage(eventId,"Your registed event has been updated")
+                }
+            })
         }
     }
 
@@ -265,6 +218,7 @@ export default function EventEdit(effect, deps) {
         console.log(event)
     }
 
+
     const handleParticipantChange = (e) => {
         let value = true
         if (e.target.value != null && e.target.value != '') {
@@ -275,7 +229,7 @@ export default function EventEdit(effect, deps) {
                         content: "How many participant"
                     }
                 )
-                setEvent({...event, ["participant"]: e.target.value})
+                setEvent({...event, ["maxParticipant"]: e.target.value})
             } else {
                 e.target.value = 1
             }
@@ -336,7 +290,7 @@ export default function EventEdit(effect, deps) {
 
         <div>{
 
-            loading||processing ?
+            loading ?
                 (
                     <div></div>
                 ) :
@@ -365,7 +319,7 @@ export default function EventEdit(effect, deps) {
                                 {/*          Line 1:   EventTitle TextField         */}
                                 <Stack sx={{padding: 1, marginLeft: 6, marginRight: 72}}>
                                     <TextField
-                                        name={"eventTitle"}
+                                        name={"title"}
                                         required
                                         defaultValue={event.title}
                                         error={eventTitleError.show}
@@ -385,7 +339,7 @@ export default function EventEdit(effect, deps) {
                                     <Stack width={135}>
                                         <TextField
                                             required
-                                            name={"participant"}
+                                            name={"maxParticipant"}
                                             label="Participant"
                                             defaultValue={event.maxParticipant}
                                             onChange={handleParticipantChange}
@@ -433,18 +387,10 @@ export default function EventEdit(effect, deps) {
                                 <Stack spacing={1} sx={{padding: 1, marginLeft: 6, marginRight: 40, marginTop: 1}}>
                                     <Typography fontSize={20} fontWeight={300}> Upload an image:</Typography>
                                     <Card>
-                                        {
-                                            eventImg?
+                                        <UploadImage onImage={(image) => setEvent({...event, ["image"]: image})}
 
-                                                <UploadImage onImage={(image) => setEvent({...event, ["image"]: image})}
-                                                             onFlag={(uploadingFlag) => setUploadingImageFlag(uploadingFlag)}
-                                                                img={event.image}
-                                                             name={"image"}></UploadImage>
-                                                :
-                                                <UploadImage onImage={(image) => setEvent({...event, ["image"]: image})}
-                                                             onFlag={(uploadingFlag) => setUploadingImageFlag(uploadingFlag)}
-                                                             name={"image"}></UploadImage>
-                                        }
+                                                     img={event.image}
+                                                     name={"image"}></UploadImage>
 
                                     </Card>
                                 </Stack>
@@ -467,7 +413,7 @@ export default function EventEdit(effect, deps) {
                                         required
                                         fullWidth
                                         label="Address line 1"
-                                        defaultValue={location.address1}
+                                        defaultValue={event.address1}
                                         error={address1Error.show}
                                         helperText={address1Error.content}
                                         onChange={onChange}
@@ -477,7 +423,7 @@ export default function EventEdit(effect, deps) {
                                     <TextField sx={{marginLeft: 6}}
                                                name={"address2"}
                                                fullWidth
-                                               defaultValue={location.address2}
+                                               defaultValue={event.address2}
                                                onChange={onChange}
                                                label="Address line 2"
                                     />
@@ -493,7 +439,7 @@ export default function EventEdit(effect, deps) {
                                         fullWidth
                                         label="Suburb"
                                         onChange={onChange}
-                                        defaultValue={location.suburb}
+                                        defaultValue={event.suburb}
                                         onClick={onClickSuburbError}
                                         error={suburbError.show}
                                         helperText={suburbError.content}
@@ -506,7 +452,7 @@ export default function EventEdit(effect, deps) {
                                                select
                                                required
                                                fullWidth
-                                               defaultValue={location.state}
+                                               defaultValue={event.state}
                                                label="State"
                                                value={state}
                                                onChange={handleSateChange}
@@ -526,7 +472,7 @@ export default function EventEdit(effect, deps) {
                                                fullWidth
                                                label="Postcode"
                                                onChange={onChange}
-                                               defaultValue={location.postcode}
+                                               defaultValue={event.postcode}
                                                onClick={onClickPostcodeError}
                                                error={postcodeError.show}
                                                helperText={postcodeError.content}
@@ -548,11 +494,11 @@ export default function EventEdit(effect, deps) {
                                     </Stack>
                                     <Stack sx={{marginRight: 40}}>
                                         <CalendarCPN
-                                            onTime={(time) => setEvent({...event, ["dateAndTime"]: time})}
+                                            onTime={(time) => setEvent({...event, ["time"]: time})}
+                                            oldTime={event.time}
                                         ></CalendarCPN>
                                     </Stack>
                                 </Stack>
-
 
                                 {/*      *****       Last two buttons    *****      */}
                                 <Stack direction={"row"}
@@ -585,27 +531,14 @@ export default function EventEdit(effect, deps) {
                                     </Dialog>
 
                                     {/*        confirm button      */}
+                                    <Button onClick={onClick} variant={"contained"} align={"right"}
+                                            sx={{marginLeft: 2}}
+                                    > Confirm </Button>
 
-
-                                    {uploadingImageFlag === 1 ?
-
-                                        <Button disabled variant={"contained"} align={"right"}
-                                                sx={{marginLeft: 2}}
-                                        > Confirm </Button>
-
-                                        : <Button onClick={onClick} variant={"contained"} align={"right"}
-                                                  sx={{marginLeft: 2}}
-                                        > Confirm </Button>
-
-                                    }
                                 </Stack>
-
                             </Paper>
-
                         </Stack>
                     </Container>
-
-
                 )}
         </div>
 

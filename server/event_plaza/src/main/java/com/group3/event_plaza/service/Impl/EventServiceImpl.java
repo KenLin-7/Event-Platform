@@ -2,6 +2,10 @@ package com.group3.event_plaza.service.Impl;
 
 import com.group3.event_plaza.common.lang.RoleUser;
 import com.group3.event_plaza.model.*;
+import com.group3.event_plaza.repository.CategoryRepository;
+import com.group3.event_plaza.repository.EventRepository;
+import com.group3.event_plaza.repository.RoleRepository;
+import com.group3.event_plaza.repository.UserRepository;
 import com.group3.event_plaza.repository.*;
 import com.group3.event_plaza.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +16,9 @@ import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -35,14 +41,28 @@ public class EventServiceImpl implements EventService {
 
 
     @Override
-    public void createEvent(Principal user,Event event) {
-        User owner =  userRepository.findByEmail(user.getName());
+    public int createEvent(Principal user, Event event) {
+        User owner = userRepository.findByEmail(user.getName());
         Role organizer = roleRepository.findByRoleId(RoleUser.ROLE_ORGANIZER.getId());
         owner.getRole().add(organizer);
         event.setOwner(owner);
         Category category = categoryRepository.findByCategoryId(1);
         event.setCategory(category);
-        eventRepository.save(event);
+        return eventRepository.save(event).getEventId();
+    }
+
+    @Override
+    public void updateEvent(Event event) {
+        Event oldEvent = eventRepository.findByEventId(event.getEventId());
+        oldEvent.setDescription(event.getDescription());
+        oldEvent.setImage(event.getImage());
+        oldEvent.setLocation(event.getLocation());
+        oldEvent.setMaxParticipant(event.getMaxParticipant());
+        oldEvent.setStartDate(event.getStartDate());
+        oldEvent.setTitle(event.getTitle());
+
+        eventRepository.save(oldEvent);
+
     }
 
     @Override
@@ -52,13 +72,115 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> searchEvent(String keyword){
+    public Map<String, Object> getEventDetail(int eventId, String requesterEmail) {
+        Event event = eventRepository.findByEventId(eventId);
+
+        // TODO Allow No login
+
+        Registration registration = registrationFlag(event.getRegistrationList(), requesterEmail);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("registBtnFlag", "");
+
+        if (requesterEmail.equals(event.getOwner().getEmail()) ) {
+            result.replace("registBtnFlag", "owner");
+        } else {
+            if (registration != null) {
+                result.replace("registBtnFlag", registration.getStatus());
+
+            }else{
+                result.replace("registBtnFlag", "available");
+            }
+        }
+
+        List<Registration> registrationList=event.getRegistrationList();
+        for(int i=0;i<registrationList.size();i++){
+            if(!registrationList.get(i).getStatus().equals("confirmed")){
+                registrationList.remove(i);
+            }
+        }
+
+        result.put("registrationList",registrationList);
+        result.put("location",processLocation(event.getLocation()));
+        result.put("time",event.getStartDate());
+        result.put("maxParticipant",event.getMaxParticipant());
+        result.put("image",event.getImage());
+        result.put("owner",event.getOwner());
+        result.put("description",event.getDescription());
+        result.put("title",event.getTitle());
+
+
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> getEventDetailForEdit(int eventId, String registerEmail) {
+        Event event = eventRepository.findByEventId(eventId);
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        String[] splitString = event.getLocation().split("\\+");
+        if (splitString.length == 5) {
+            if (splitString[1].equals("NoAddress2") ) {
+                result.put( "address1",splitString[0]);
+                result.put("address2","");
+            } else {
+                result.put( "address1",splitString[0]);
+                result.put("address2",splitString[1]);
+
+            }
+            result.put( "suburb",splitString[2]);
+            result.put( "state",splitString[3]);
+            result.put( "postcode",splitString[4]);
+        }
+
+        result.put("time",event.getStartDate());
+        result.put("maxParticipant",event.getMaxParticipant());
+        result.put("image",event.getImage());
+        result.put("description",event.getDescription());
+        result.put("title",event.getTitle());
+        result.put("Category",event.getCategory());
+        return result;
+    }
+
+
+    public Registration registrationFlag(List<Registration> registrations, String requesterEmail) {
+
+        for (int i = 0; i < registrations.size(); i++) {
+            if (registrations.get(i).getRequester().getEmail().equals(requesterEmail) ) {
+                return registrations.get(i);
+            }
+        }
+        return null;
+    }
+
+    public Map<String,String> processLocation(String location){
+        String[] splitString = location.split("\\+");
+        Map<String,String>  result= new HashMap<>();
+        if (splitString.length == 5) {
+            if (splitString[1].equals("NoAddress2") ) {
+                result.put( "street",splitString[0]);
+            } else {
+                String street = splitString[0] + " " + splitString[1];
+                result.put( "street",street);
+
+            }
+            result.put( "suburb",splitString[2]);
+            result.put( "state",splitString[3]);
+            result.put( "postcode",splitString[4]);
+        }
+        return result;
+    }
+
+
+
+
+    @Override
+    public List<Event> searchEvent(String keyword) {
         List<Event> list = eventRepository.findByTitleContains(keyword);
         return list;
     }
 
     @Override
-    public  List<Event> getLatestEvent(){
+    public List<Event> getLatestEvent() {
         List<Event> list = eventRepository.findTop9ByOrderByEventIdDesc();
         return list;
     }
@@ -69,6 +191,7 @@ public class EventServiceImpl implements EventService {
         List<Event> list = eventRepository.findByOwner(currentUser);
         return list;
     }
+
     @Override
     public List<Event> getAllEvent(){
         List<Event> list = eventRepository.findAll();

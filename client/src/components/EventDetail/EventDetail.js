@@ -5,7 +5,7 @@ import {
     Button,
     Card,
     CardMedia,
-    Container, Divider,
+    Container, Divider, MenuItem,
     Paper,
     Stack,
     Typography
@@ -13,9 +13,11 @@ import {
 import img from "./xxxxxxxx.png"
 import Grid2 from "@mui/material/Unstable_Grid2";
 import ParticipantCPN from "./ParticipantCPN";
-import {getEvent} from "../../api/EventAPI";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import {getEventDetail} from "../../api/EventAPI";
+import avatar from '../EventDetail/avatar.jpg';
+import RegistBtn from "./RegistBtn";
+import dayjs from "dayjs";
+import { useParams } from "react-router-dom";
 
 
 export default function EventDetail(effect, deps) {
@@ -24,105 +26,59 @@ export default function EventDetail(effect, deps) {
         "\n" +
         "Grab yourself a ringside seat around Cockle Bay, or a bite to eat in one of the many harbour side restaurants, and enjoy an amazing fireworks display every Saturday night in Darling Harbour!\n" +
         "\n" +
-        "Time: 8.30pm then at 9pm from 8 October 2022"
+        "Time: 8.30pm then at 9pm from 8 October 2022  "
 
-
-    const [eventId, setEventId] = useState(7)
+    let {id} = useParams()
+    const [eventId, setEventId] = useState(id)
     const [loading, setLoading] = useState(true);
     const [event, setEvent] = useState(null)
     const [eventDate, setEventDate] = useState("")
     const [eventImg, setEventImg] = useState(img)
-    const [location, setLocation] = useState({street: "", suburb: "", state: "", postcode: ""})
-    const [eventPoster, setEventPoster] = useState({nickname: "", email: "", avatar: AccountCircleIcon})
-    const [participants,setParticipants] =useState(null)
-    const [pendFlag,setPendFlag] = useState(true)
-    const [pendingFlag,setPendingFlag] = useState(false)
+    const [registFlag, setRegistFlag] = useState("")
+    const [registrationList, setRegistrationList] = useState(null)
 
     useEffect(() => {
-        getEvent(eventId).then(
+        
+        getEventDetail(eventId).then(
             (res) => {
                 setEvent(res.data)
-
+                setRegistrationList(res.data["registrationList"])
+                setRegistFlag(res.data["registBtnFlag"])
+                // setRegistFlag("rejected")
                 setLoading(false)
-            })
 
+            })
 
     }, [eventId])
 
     useEffect(() => {
         if (!loading) {
-            processTime(event.startDate)
-            processLocation(event.location)
+            processTime(event.time)
             processImage(event.image)
-            processOwner(event.owner)
-            processParticipants(event.eventId)
-
+            if (registrationList.length >= event.maxParticipant) {
+                setRegistFlag("full")
+            }
         }
-    }, [event],[pendingFlag],[pendFlag])
+    }, [event])
+
+    useEffect(() => {
+
+
+    }, [registFlag])
 
 
     const processTime = (timeString) => {
-        const timeDate = new Date(timeString)
-        const date = timeDate.getUTCFullYear() + "/" + timeDate.getUTCMonth() + "/" + timeDate.getUTCDay()
-        let hours = ""
-        if (timeDate.getMinutes() === 0) {
+        const timeDate = dayjs(timeString)
+        const dateString = timeDate.format("ddd,MMM D,YYYY h:mm A")
 
-            hours = timeDate.getUTCHours() + ":" + "00"
-        } else {
-            hours = timeDate.getUTCHours() + ":" + timeDate.getMinutes()
-        }
-
-
-
-        setEventDate(date + " " + hours)
+        setEventDate(dateString)
     }
 
-    const processLocation = (locationString) => {
-
-        const splitString = locationString.split("+")
-        if (splitString.length === 5) {
-            if (splitString[1] === "NoAddress2") {
-                setLocation({
-                    street: splitString[0],
-                    suburb: splitString[2],
-                    state: splitString[3],
-                    postcode: splitString[4]
-                })
-            } else {
-                const street = splitString[0] + " " + splitString[1]
-                setLocation({street: street, suburb: splitString[2], state: splitString[3], postcode: splitString[4]})
-            }
-        }
-    }
 
     const processImage = (imageURL) => {
         if (imageURL && imageURL != "") {
             setEventImg(imageURL)
         }
-    }
-
-    const processOwner = (owner) => {
-        setEventPoster({nickname: owner.nickname, email: owner.email, avatar: owner.avatar})
-    }
-
-    const processParticipants= (eventId) =>{
-        // getParticipants(eventId).then(
-        //     (res) =>{
-        //         setParticipants(res.data)
-        //         console.log(participants)
-        //     }
-        //
-        // )
-        setParticipants(3)
-        if (participants>=event.maxParticipant){
-            setPendFlag(false)}
-            else{
-                setPendFlag(true)
-            }
-    }
-
-    const onPendClick = () =>{
-        setPendingFlag(true)
     }
 
 
@@ -160,12 +116,12 @@ export default function EventDetail(effect, deps) {
 
                                             <Container>
                                                 <Stack direction={"row"} sx={{marginLeft: 2, marginTop: 8}} spacing={1}>
-                                                    <Avatar sx={{width: 50, height: 50}} src={eventPoster.avatar}/>
+                                                    <Avatar sx={{width: 50, height: 50}} src={avatar}/>
                                                     <Stack>
                                                         <Typography align={"left"}
-                                                                    fontSize={16}> {eventPoster.nickname} </Typography>
+                                                                    fontSize={16}> {event["owner"].nickname} </Typography>
                                                         <Typography align={"left"} fontSize={12}
-                                                                    fontWeight={500}> {eventPoster.email}
+                                                                    fontWeight={500}> {event["owner"].email}
                                                         </Typography>
                                                     </Stack>
                                                 </Stack>
@@ -181,39 +137,16 @@ export default function EventDetail(effect, deps) {
                                                                 <Typography align={'center'} sx={{marginTop: 2}}
                                                                             fontWeight={500}> {eventDate} </Typography>
                                                                 <Typography align={'center'} sx={{marginTop: 2}}
-                                                                > {location.street} </Typography>
+                                                                > {event["location"].street} </Typography>
                                                                 <Typography align={'center'}
-                                                                > {location.suburb + ", " + location.state + " " + location.postcode} </Typography>
+                                                                > {event["location"].suburb + ", " + event["location"].state + " " + event["location"].postcode} </Typography>
                                                                 <Typography align={'center'} sx={{marginTop: 2}}
-                                                                            fontWeight={500}>Available: {participants} / {event.maxParticipant} </Typography>
-                                                                {
-                                                                    pendFlag?
-                                                                        (
-                                                                            pendingFlag?
-                                                                                <Button disabled fullWidth align={'center'} sx={{marginY: 3}}
-                                                                                        variant="contained" size="large">
-                                                                                    pending</Button>
-                                                                        :
-                                                                                <Button onClick={onPendClick} fullWidth align={'center'} sx={{marginY: 3}}
-                                                                                        variant="contained" size="large">
-
-                                                                                    Regist Now</Button>
-
-                                                                        )
-
-
-                                                                        :
-
-                                                                        <Button disabled fullWidth align={'center'} sx={{marginY: 3}}
-                                                                                variant="contained" size="large">
-
-                                                                            Full</Button>
-
-
-                                                                }
-
-
-
+                                                                            fontWeight={500}>Available: {registrationList.length} / {event.maxParticipant} </Typography>
+                                                                <RegistBtn
+                                                                    updateRegistFlag={(newRegistFlag) => setRegistFlag(newRegistFlag)}
+                                                                    registFlag={registFlag}
+                                                                    eventId={eventId}
+                                                                ></RegistBtn>
 
                                                             </Container>
                                                         </Card>
@@ -237,18 +170,13 @@ export default function EventDetail(effect, deps) {
 
                             <Divider sx={{marginTop: 3}} variant="middle"/>
 
-
                             <Stack sx={{marginTop: 3, marginX: 6}}>
                                 <Typography align={"left"} fontSize={18} fontWeight={500}>Participants: </Typography>
                                 <Grid2 container direction={"row"} sx={{marginTop: 2, marginX: 2}} spacing={2}>
-                                    <ParticipantCPN></ParticipantCPN>
-                                    <ParticipantCPN></ParticipantCPN>
-                                    <ParticipantCPN></ParticipantCPN>
-                                    <ParticipantCPN></ParticipantCPN>
-                                    <ParticipantCPN></ParticipantCPN>
-                                    <ParticipantCPN></ParticipantCPN>
-                                    <ParticipantCPN></ParticipantCPN>
-
+                                    {registrationList.map((reg) => (
+                                        <ParticipantCPN key={reg.requester.email}
+                                                        requester={reg["requester"]}></ParticipantCPN>
+                                    ))}
                                 </Grid2>
                             </Stack>
                         </Stack>
