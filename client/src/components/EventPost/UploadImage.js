@@ -1,9 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import useUpload from '../../hook/useUpload'
-import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
-import formValidate from '../../utils/validation';
-import {remove} from '../../api/UserAPI'
 import {Button, Card, CircularProgress, Input, Stack, Typography} from "@mui/material";
 
 export default function UploadImage(props) {
