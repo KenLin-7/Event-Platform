@@ -37,7 +37,6 @@ export function UserProvider({children}){
        }else{
         setTimeout(() => {
             setLoading(false)
-
         }, 1000);
        }
     },[auth])

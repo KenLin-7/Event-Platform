@@ -89,6 +89,7 @@ export const NotificationProvider = ({children})=>{
                 eventId:eventId
             }
             stompClient.send(`/event/${eventId}/notification`,{},JSON.stringify(notification))
+            createNotification(recieverEmail,message,"status")
             setSent(true)
         }
     }
@@ -101,7 +102,7 @@ export const NotificationProvider = ({children})=>{
                     email:email
                 }
                 stompClient.send(`/user/${email}/notification`,{},JSON.stringify(notification))
-                // createNotification(email,message,"status")
+                createNotification(email,message,"status")
                 setSent(true)
             }
         }
