@@ -60,11 +60,12 @@ const UserPost = () => {
 
   // TODO Add Notification 
   const handleConfirmCancel = (id) => {
-    sendEventMessage(id,"Your registered event has been canceled")
 
-    // cancelEvent(id).then(() => {
-    //   setFresh(!fresh)
-    // })
+    cancelEvent(id).then(() => {
+
+      sendEventMessage(id,"Your registered event has been canceled")
+      setFresh(!fresh)
+    })
 
     setOpen(false);
   }

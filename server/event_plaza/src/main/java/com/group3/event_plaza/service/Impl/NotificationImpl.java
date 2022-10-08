@@ -47,12 +47,11 @@ public class NotificationImpl implements NotificationService, MessageService {
     /**
      * Send notification when event has been updated
      * @param eventId
-     * @param content
+     * @param message
      */
     @Override
-    public void eventNotification(String eventId,String content){
-            simpMessagingTemplate.convertAndSend("/event/"+eventId+"/notification",content);
-
+    public void eventNotification(String eventId,String message){
+        simpMessagingTemplate.convertAndSend("/event/"+eventId+"/notification",message);
     }
 
 

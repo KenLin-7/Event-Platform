@@ -38,6 +38,7 @@ const Header = () => {
 
 
 
+
   return (
     <div className={styles["header-container"]}>
       <Container sx={{ display: "flex", padding: 3 }} className={styles["header-container-inner"]}>
@@ -89,7 +90,6 @@ const Header = () => {
                 </div>
               </Stack>
               <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={logout} className="header-btn">Log out</Button>
-
             </Stack>
 
           )

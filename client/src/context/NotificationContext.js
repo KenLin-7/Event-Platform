@@ -48,12 +48,14 @@ export const NotificationProvider = ({children})=>{
                 });
             })
 
+
         }
  
     }
 
     // handle notificaition payload 
     const handlePayload = (payload)=>{
+
         try{
             setCurrentNotification(JSON.parse(payload.body).message)
         }catch(err){
@@ -76,7 +78,7 @@ export const NotificationProvider = ({children})=>{
     // Subscribe event socket to recieve event update notification
     const subscribeEvent = (eventId)=>{
         if(stompClient){ 
-            stompClient.subscribe(`/event/${eventId}/notification`)
+            stompClient.subscribe(`/event/${eventId}/notification`,handlePayload)
         }       
     }
 
@@ -166,7 +168,7 @@ export const NotificationProvider = ({children})=>{
                     >
                     <Notification/>
                         {children}
-                    </SnackbarProvider>
+            </SnackbarProvider>
             </NotificationContext.Provider>
 
     )

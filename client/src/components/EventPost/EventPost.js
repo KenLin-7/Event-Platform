@@ -37,7 +37,7 @@ export default function EventPost() {
     //     {
     //         value: 'Music',
     //         label: 'Music'
-    //     },
+    //     },io
     //     {
     //         value: 'Arts',
     //         label: 'Arts'
