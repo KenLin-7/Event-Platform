@@ -391,10 +391,8 @@ export default function EventEdit(effect, deps) {
 
                                                      img={event.image}
                                                      name={"image"}></UploadImage>
-
                                     </Card>
                                 </Stack>
-
 
                                 <Divider sx={{marginX: 6, marginY: 2}} variant="middle"/>
 
@@ -541,8 +539,6 @@ export default function EventEdit(effect, deps) {
                     </Container>
                 )}
         </div>
-
-
     );
 
 }
