@@ -26,7 +26,6 @@ const ManageRegistraion = () => {
         const fetchedList = [];
 
         const allEvents = data.data
-        console.log(allEvents)
         for (let i = 0; i < allEvents.length; i++) {
           const requests = allEvents[i].registrationList
 

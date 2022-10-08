@@ -1,11 +1,11 @@
-.user-registration-container{
+.user-registration-container {
   padding-top: 50px;
   height: 500px;
   width: 100vw;
   margin: 0 auto;
 }
 
-.user-registration-title{
+.user-registration-title {
   width: 275px;
   height: 40px;
   font-weight: 600;
@@ -23,6 +23,19 @@
   padding-left: 170px;
 
 }
+
+.event-card-cancelled{
+  margin-right: 40px;
+  cursor: pointer;
+  width: 300px;
+  box-sizing: border-box;
+  margin-bottom: 50px;
+  filter:alpha(Opacity=50);
+  -moz-opacity:0.5;
+  opacity: 0.5;
+}
+
+
 
 .event-containter>* {
   margin-right: 40px;
@@ -43,6 +56,7 @@
 }
 
 .event-card-img {
+  position: relative;
   height: 280px;
   width: 268gpx;
   /* background-color: aqua; */
@@ -50,21 +64,99 @@
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
+
+.cancel-label {
+  width: 150px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  position: absolute;
+  margin-left: 70px;
+  top: 35%;
+  background: rgba(255, 235, 223, 0.9);
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 25px;
+  color: red;
+
+  border: 5px solid #FF3F33;
+  border-radius: 10px;
+}
+
 .event-image {
+  position: relative;
   width: 100%;
   height: 100%;
 }
 
 .event-card-title {
   font-size: 13px;
-  width: 100vw;
+  flex: 2;
   height: 22px;
   text-align: left;
   padding: 25px 5px 0px 5px;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   cursor: pointer;
+}
+
+.registration-status-label-container {
+  flex: 1;
+  height: 47px;
+}
+
+.registration-status-label-rejected {
+  margin-top: 20px;
+  margin-right: 10px;
+  text-align: center;
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  text-align: center;
+  line-height: 27px;
+  height: 27px;
+  background: red;
+  box-shadow: 0px 4px 20px rgb(216, 59, 59);
+  border-radius: 15px;
+  color: white;
+}
+
+.registration-status-label-confirmed{
+  margin-top: 20px;
+  margin-right: 10px;
+  text-align: center;
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  text-align: center;
+  line-height: 27px;
+  height: 27px;
+  background: green;
+  box-shadow: 0px 4px 20px rgb(75, 187, 75);
+  border-radius: 15px;
+  color: white;
+}
+
+.registration-status-label-pending{
+  margin-top: 20px;
+  margin-right: 10px;
+  text-align: center;
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  text-align: center;
+  line-height: 27px;
+  height: 27px;
+  background: orange;
+  box-shadow: 0px 4px 20px rgb(212, 171, 93);
+  border-radius: 15px;
+  color: white;
 }
 
 .event-card-people-num {
@@ -113,7 +205,7 @@
   text-align: left;
 }
 
-.event-card-location{
+.event-card-location {
   font-size: 12px;
   color: darkgray;
   margin-left: 5px;
@@ -126,10 +218,10 @@
   margin: 0 auto;
 }
 
-.no-data-notification{
+.no-data-notification {
   width: 300px;
   height: 200px;
   margin: 0 auto;
   line-height: 100px;
-  color: darkgray ;
+  color: darkgray;
 }

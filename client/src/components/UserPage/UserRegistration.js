@@ -70,33 +70,130 @@ const UserRegistration = () => {
                         {
                           _DATA.currentData().map((card, index) => {
                             return (
-                              <Card variant="outlined" className='event-card' key={index}>
-                                <div className={styles['event-card-img']}>
-                                  <img className={styles['event-image']} src={ImageTest} alt="" />
-                                </div>
+                              <div key={index}>
+                                {
+                                  card.event.status === "2"
+                                    ?
+                                    (
+                                      <Card variant="outlined" key={index}  className={styles['event-card-cancelled']}>
+
+                                        <div className={styles['event-card-img']}>
+                                          <img className={styles['event-image']} src={ImageTest} alt="" />
+                                          <div className={styles['cancel-label']}>Cancelled</div>
+                                        </div>
+
+                                        <Box sx={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
+                                          <div className={styles["event-card-title"]}>
+                                            {card.event.title}
+                                          </div>
+                                          <div className={styles['registration-status-label-container']}>
+                                            {
+                                              card.status === "rejected" &&
+                                              (
+                                                <div className={styles['registration-status-label-rejected']}>
+                                                  {card.status}
+                                                </div>
+                                              )
+                                            }
+
+                                            {
+                                              card.status === "confirmed" &&
+                                              (
+                                                <div className={styles['registration-status-label-confirmed']}>
+                                                  {card.status}
+                                                </div>
+                                              )
+                                            }
+
+                                            {
+                                              card.status === "pending" &&
+                                              (
+                                                <div className={styles['registration-status-label-pending']}>
+                                                  {card.status}
+                                                </div>
+                                              )
+                                            }
 
 
+                                          </div>
+                                        </Box>
 
-                                <Box sx={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
-                                  <div className={styles["event-card-title"]}>
-                                    {card.event.title}
-                                  </div>
-                                </Box>
+                                        <div className={styles["event-card-date"]}>
+                                          <AccessAlarmIcon sx={{ marginTop: -0.3 }} /> {humanDateConvert(card.event.startDate)}
+                                        </div>
 
-                                <div className={styles["event-card-date"]}>
-                                  <AccessAlarmIcon sx={{ marginTop: -0.3 }} /> {humanDateConvert(card.event.startDate)}
-                                </div>
+                                        <div className={styles["event-card-location"]}>
+                                          {card.event.location}
+                                        </div>
 
-                                <div className={styles["event-card-location"]}>
-                                  {card.event.location}
-                                </div>
+                                        <Divider />
 
-                                <Divider />
+                                        <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 1.5, marginBottom: 1.5, fontSize: 12, marginLeft: 1 }}>
+                                          @Orgnizer: {card.event.owner.nickname}
+                                        </Box>
 
-                                <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 1.5, marginBottom: 1.5, fontSize: 12, marginLeft: 1 }}>
-                                  @Orgnizer: {card.event.owner.nickname}
-                                </Box>
-                              </Card>
+                                      </Card>
+                                    )
+                                    :
+                                    (
+                                      <Card variant="outlined" className='event-card' key={index}>
+                                        <div className={styles['event-card-img']}>
+                                          <img className={styles['event-image']} src={ImageTest} alt="" />
+                                        </div>
+
+                                        <Box sx={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
+                                          <div className={styles["event-card-title"]}>
+                                            {card.event.title}
+                                          </div>
+                                          <div className={styles['registration-status-label-container']}>
+                                            {
+                                              card.status === "rejected" &&
+                                              (
+                                                <div className={styles['registration-status-label-rejected']}>
+                                                  {card.status}
+                                                </div>
+                                              )
+                                            }
+
+                                            {
+                                              card.status === "confirmed" &&
+                                              (
+                                                <div className={styles['registration-status-label-confirmed']}>
+                                                  {card.status}
+                                                </div>
+                                              )
+                                            }
+
+                                            {
+                                              card.status === "pending" &&
+                                              (
+                                                <div className={styles['registration-status-label-pending']}>
+                                                  {card.status}
+                                                </div>
+                                              )
+                                            }
+
+
+                                          </div>
+                                        </Box>
+
+                                        <div className={styles["event-card-date"]}>
+                                          <AccessAlarmIcon sx={{ marginTop: -0.3 }} /> {humanDateConvert(card.event.startDate)}
+                                        </div>
+
+                                        <div className={styles["event-card-location"]}>
+                                          {card.event.location}
+                                        </div>
+
+                                        <Divider />
+
+                                        <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 1.5, marginBottom: 1.5, fontSize: 12, marginLeft: 1 }}>
+                                          @Orgnizer: {card.event.owner.nickname}
+                                        </Box>
+                                      </Card>
+                                    )
+                                }
+                              </div>
                             )
                           })
                         }
