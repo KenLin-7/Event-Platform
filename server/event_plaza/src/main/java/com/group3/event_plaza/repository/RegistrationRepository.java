@@ -12,4 +12,8 @@ public interface RegistrationRepository extends JpaRepository<Registration,Integ
 
     @Query(value = "SELECT * from registration where user_id = ?1",nativeQuery = true)
     List<Registration> findByUserId(int id);
+
+
+    @Query(value = "SELECT event_id from registration where user_id = ?1 and status = 'confirmed'",nativeQuery = true)
+    List<Integer> findUserJoinedEventId(int id);
 }

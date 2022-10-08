@@ -2,13 +2,15 @@ package com.group3.event_plaza.service;
 
 
 import com.group3.event_plaza.model.Notification;
+import com.group3.event_plaza.model.dto.NotificationDTO;
+
 import java.util.List;
 
 public interface NotificationService{
 
         void create(Notification notification,String email);
 
-        List<Notification> getAll(String email);
+        List<NotificationDTO> getAll(String email);
 
         void update(int notificationId);
 
@@ -18,5 +20,6 @@ public interface NotificationService{
 
         void updateAll(List<Notification> notifications);
 
+        List<Integer> getUserEvent(String email);
 
 }

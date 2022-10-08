@@ -3,7 +3,7 @@ import * as SockJS from 'sockjs-client';
 import { useUser } from './UserContext';
 import { SnackbarProvider} from 'notistack';
 import Notification from '../components/Notification';
-import { createNotification, updateAll } from '../api/NotificationAPI';
+import { createNotification, getUserConfirmedEvent, updateAll } from '../api/NotificationAPI';
 import { getNotifications } from '../api/NotificationAPI';
 const Stomp = require('stompjs')
 // import Stomp from 'stomp-websocket'
@@ -33,9 +33,6 @@ export const NotificationProvider = ({children})=>{
     }
 
 
-    // Mock-data get join eventID
-    let eventIds = ["1","2","3"]
-
 
     // connect socket and subscribe the default
     const onConnected = ()=>{
@@ -45,6 +42,11 @@ export const NotificationProvider = ({children})=>{
             // subscribe user socket to recieve user private notifications
             // stompClient.debug = null
             stompClient.subscribe(`/user/${auth}/notification`,handlePayload)
+            getUserConfirmedEvent().then(res=>{
+                res.forEach(id => {
+                    subscribeEvent(id)
+                });
+            })
 
         }
  

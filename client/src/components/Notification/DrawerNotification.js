@@ -56,7 +56,7 @@ export default function DrawerNotification(props) {
         {notifications.length === 0 ? (
           <Stack justifyContent={'center'} alignItems={'center'} sx={{height:'100%'}}>
             <img src={icon} width="40px" height={"40px"}/>
-            <Typography color={'#CCCCCC'} variant="h6">No notification</Typography>
+            <Typography color={'#CCCCCC'} variant="h6">No message</Typography>
           </Stack>
         ) : (
           <List>

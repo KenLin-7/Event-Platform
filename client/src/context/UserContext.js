@@ -35,7 +35,10 @@ export function UserProvider({children}){
        if(localStorage.getItem("token") !=null){
             getAuth() 
        }else{
+        setTimeout(() => {
             setLoading(false)
+
+        }, 1000);
        }
     },[auth])
 

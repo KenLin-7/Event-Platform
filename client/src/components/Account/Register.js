@@ -7,6 +7,7 @@ import { signUp } from '../../api/UserAPI'
 import { Link } from 'react-router-dom'
 import { Alert } from '@mui/material'
 import { useNavigate } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Register() {
 
@@ -23,12 +24,13 @@ export default function Register() {
         password:true,
         email:true,
     })
+
     const navigate = useNavigate();
     const [emailError,setEmailError] = useState("Please enter your email")
     const [passwordError,setPasswordError] = useState("Please enter your password")
     const [phoneError,setPhoneError] = useState("Please enter your phone")
-
     const [message,setMessage] = useState({show:false,content:"",severity:""})
+    const [loading,setLoading] = useState(false)
 
     const validation = ()=>{
         const validate = {
@@ -38,33 +40,29 @@ export default function Register() {
           nickname: account.nickname
         }
         const result = formValidate(validate)
-
         // setting helper text
         if(account.email !== "")     setEmailError("Please enter correct email") 
         if(account.password !== "")  setPasswordError("Please enter correct password format")         
-        if(account.phone !== "")  setPasswordError("Please enter correct phone format") 
-
+        if(account.phone !== "")  setPhoneError("Please enter correct phone") 
         setIsValidated(result)  
         return result
     }
 
     const onClick = ()=>{
         const result = validation()
-        if(result.email & result.password &result.nickname & result.phone){
+        if(result.email && result.password && result.nickname && result.phone ){
+            setLoading(true)
             signUp(account).then((res)=>{
-                if(res.code == 200){
+                if(res.code === 200){
                     setMessage({show:true,message:"Register succcessfully",severity:"success"})
-                    setTimeout(()=>{
-                        navigate("/login")
-                    },2000)
+                    
+                    setLoading(false)
                 }else{
                     setMessage({show:true,message:"Email was taken",severity:"error"})
                 }
             })
         }
     }
-
-    
 
     // Handle form change
     const onChange = (e)=>{
@@ -73,9 +71,6 @@ export default function Register() {
             || !isValidated.nickname || !isValidated.phone
             ) validation()
     }
-
-
-
   return (
     <div className={styles.container}>
         <div id={styles['left']}>
@@ -152,7 +147,9 @@ export default function Register() {
                     </div>
                     {message.show && <Alert severity={message.severity} sx={{marginBottom:"15px"}}>{message.message}</Alert>} 
                     <div className={FormStyles['button-area']}>
-                        <button className={FormStyles.formButton} onClick={onClick}>Create an account</button>
+                        <button className={FormStyles.formButton} onClick={onClick} disabled={loading}>
+                            {loading? (<CircularProgress color='inherit'/>):("Create an account")}
+                        </button>
                         <span><span>Privacy Policy </span>and <span>Terms of service</span> apply</span>
                     </div>
                 </div>

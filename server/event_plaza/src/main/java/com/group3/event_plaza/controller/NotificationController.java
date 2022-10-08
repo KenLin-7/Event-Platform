@@ -3,6 +3,7 @@ package com.group3.event_plaza.controller;
 
 import com.group3.event_plaza.common.ResponseResult;
 import com.group3.event_plaza.model.Notification;
+import com.group3.event_plaza.model.dto.NotificationDTO;
 import com.group3.event_plaza.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class NotificationController {
     private NotificationService notificationService;
 
     @GetMapping("/all")
-    public ResponseResult<List<Notification>> getNotifications(Principal principal){
+    public ResponseResult<List<NotificationDTO>> getNotifications(Principal principal){
         return ResponseResult.success(notificationService.getAll(principal.getName()));
     }
 
@@ -47,5 +48,10 @@ public class NotificationController {
     public ResponseResult<String> updateAll(@RequestBody Map<String,List<Notification>> data){
         notificationService.updateAll(data.get("notifications"));
         return ResponseResult.success();
+    }
+
+    @PostMapping("/confirmed/event")
+    public ResponseResult<List<Integer>> getUserConfirmedEvents(Principal principal){
+        return ResponseResult.success(notificationService.getUserEvent(principal.getName()));
     }
 }

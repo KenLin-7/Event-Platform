@@ -1,19 +1,20 @@
 package com.group3.event_plaza.service.Impl;
 
-import com.group3.event_plaza.common.exception.business.DataNotFoundException;
 import com.group3.event_plaza.model.Notification;
 import com.group3.event_plaza.model.User;
+import com.group3.event_plaza.model.dto.NotificationDTO;
+import com.group3.event_plaza.model.result.NotificationResult;
 import com.group3.event_plaza.repository.NotificationRepository;
+import com.group3.event_plaza.repository.RegistrationRepository;
 import com.group3.event_plaza.repository.UserRepository;
 import com.group3.event_plaza.service.MessageService;
 import com.group3.event_plaza.service.NotificationService;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +28,9 @@ public class NotificationImpl implements NotificationService, MessageService {
 
     @Autowired
     private NotificationRepository notificationRepository;
+
+    @Autowired
+    private RegistrationRepository registrationRepository;
 
 
     /**
@@ -60,11 +64,26 @@ public class NotificationImpl implements NotificationService, MessageService {
         notificationRepository.save(notification);
     }
 
-    @Override
-    public List<Notification> getAll(String email) {
-        User receiver = userRepository.findByEmail(email);
-        List<Notification> notifications = notificationRepository.findAllUnRead(receiver.getUserId());
 
+    /**
+     * Get user unread notification
+     * @param email
+     * @return
+     */
+    @Override
+    @Transactional
+    public List<NotificationDTO> getAll(String email) {
+        int userId = userRepository.findUseIdBYEmail(email);
+        List<List<NotificationResult>> resultList = notificationRepository.findAllUnRead(userId);
+        List<NotificationDTO> notifications = new ArrayList<>();
+        for (List<NotificationResult> notificationResult:resultList) {
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setNotificationId(notificationResult.get(0).getNotification_Id());
+            notificationDTO.setReceiver(notificationResult.get(0).getReceiver());
+            notificationDTO.setCreatedTime(notificationResult.get(0).getCreated_Time());
+            notificationDTO.setMessage(notificationResult.get(0).getMessage());
+            notifications.add(notificationDTO);
+        }
         return notifications;
     }
 
@@ -87,8 +106,8 @@ public class NotificationImpl implements NotificationService, MessageService {
 
     @Override
     public Integer getCount(String email) {
-        User user = userRepository.findByEmail(email);
-        return notificationRepository.countByReceiver_UserId(user.getUserId());
+        int userId = userRepository.findUseIdBYEmail(email);
+        return notificationRepository.countByReceiver_UserId(userId);
     }
 
     @Override
@@ -96,5 +115,10 @@ public class NotificationImpl implements NotificationService, MessageService {
         // TODO get participant email to save notification
     }
 
-
+    @Override
+    public List<Integer> getUserEvent(String email) {
+        Integer userId = userRepository.findUseIdBYEmail(email);
+        List<Integer> eventIds = registrationRepository.findUserJoinedEventId(userId);
+        return  eventIds;
+    }
 }

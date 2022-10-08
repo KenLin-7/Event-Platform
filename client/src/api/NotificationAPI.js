@@ -22,6 +22,12 @@ export const getCount = async()=>{
 }
 
 export const updateAll = async(notifications)=>{
+    console.log(notifications);
     const result = await axios.post(API+"/update/all",{notifications:notifications})
+    return result.data
+}
+
+export const getUserConfirmedEvent = async()=>{
+    const result = await axios.post(API+"/confirmed/event")
     return result.data
 }

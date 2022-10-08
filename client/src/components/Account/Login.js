@@ -9,6 +9,8 @@ import { Link,Navigate } from 'react-router-dom'
 import { Alert } from '@mui/material'
 import {useUser} from '../../context/UserContext'
 import { useNotification } from '../../context/NotificationContext'
+import CircularProgress from '@mui/material/CircularProgress';
+
 export default function Login() {
   const [account,setAccount] = useState({email:"",password:""})
   const [isValidated,setIsValidated] = useState({email:true,password:true})
@@ -17,6 +19,7 @@ export default function Login() {
   const [errorMsg,setErrorMsg] = useState("")
   const {getAuth,auth} = useUser();
   const {socketConn} = useNotification()
+  const [loading,setLoading] = useState(false)
 
   // handle input change 
   const onChange = (e)=>{
@@ -28,6 +31,8 @@ export default function Login() {
   const onClick = ()=>{
     const result = validation()
     if(result.email && result.password){
+      setLoading(true)
+
        signIn(account.email,account.password).then(data=>{
           if(data.code === "200"){
               getAuth()
@@ -35,6 +40,8 @@ export default function Login() {
           } 
           // set logged in user
           else setErrorMsg(data.msg)
+          setLoading(false)
+
        })
     }
   }
@@ -78,13 +85,11 @@ export default function Login() {
                       <label>Email</label>
                       <input className={!isValidated.email? (FormStyles['formInput-error']):(FormStyles.formInput)} type={"email"} placeholder="name@email.com" id="email" onChange={onChange} name="email"/>
                       {
-                        !isValidated.email ? (
+                        !isValidated.email && 
                           <div className={FormStyles['helper-text']}>
                           <span>{emailError}</span>
                         </div>
-                        ):(
-                            <></>
-                        )
+                     
                       }
                     </div>
 
@@ -92,13 +97,11 @@ export default function Login() {
                       <label>Password</label>
                       <input className={!isValidated.password? (FormStyles['formInput-error']):(FormStyles.formInput)}  type={"password"} placeholder="password" id="password" onChange={onChange} name="password"/>
                       {
-                        !isValidated.password ? (
+                        !isValidated.password &&
                           <div className={FormStyles['helper-text']}>
                           <span>{passwordError}</span>
                         </div>
-                        ):(
-                            <></>
-                        )
+                    
                       }
                     </div>
                     <div>
@@ -107,7 +110,9 @@ export default function Login() {
 
                     <div className={FormStyles['button-area']}>
                       {errorMsg && <Alert severity={"error"} sx={{marginBottom:"15px",width:"90%"}}>{errorMsg}</Alert>}
-                      <button className={FormStyles.formButton} onClick={onClick}>Sign In</button>
+                      <button className={FormStyles.formButton} onClick={onClick} disabled={loading}>
+                      {loading? (<CircularProgress color='inherit'/>):("Sign In")}
+                      </button>
                       <span className={styles['register-link']}>Don't have an account?
                         <Link to="/register"><span className={FormStyles.link}>Register</span></Link>
                       </span>
