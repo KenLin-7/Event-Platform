@@ -28,4 +28,7 @@ public interface EventService {
 
     List<Registration> getUserRegistrationEvents(String email);
 
+    List<Event> getNoCancelledEvents(String email);
+
+    void cancelEvent(int id);
 }

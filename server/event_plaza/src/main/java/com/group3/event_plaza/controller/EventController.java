@@ -64,4 +64,17 @@ public class EventController {
         return ResponseResult.success(list);
     }
 
+    @GetMapping("/getNoCancelledEvents")
+    public ResponseResult<List<Event>> getNoCancelledEvents(Principal principal){
+        String email = principal.getName();
+        List<Event> list = eventService.getNoCancelledEvents(email);
+        return ResponseResult.success(list);
+    }
+
+    @PostMapping("/cancelEvent")
+    public ResponseResult<String> cancelEvent(@RequestBody Map<String,String> map){
+        int newId = Integer.parseInt(map.get("eventId"));
+        eventService.cancelEvent(newId);
+        return ResponseResult.success();
+    }
 }

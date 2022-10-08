@@ -92,4 +92,16 @@ public class EventServiceImpl implements EventService {
         List<Registration> registrationList = registrationRepository.findByUserId(currentUser.getUserId());
         return registrationList;
     }
+
+    @Override
+    public List<Event> getNoCancelledEvents(String email){
+        User currentUser = userRepository.findByEmail(email);
+        List<Event> noCancelledEvents = eventRepository.findByUserId(currentUser.getUserId());
+        return noCancelledEvents;
+    }
+
+    @Override
+    public void cancelEvent(int id){
+         eventRepository.cancelEvent(id);
+    }
 }

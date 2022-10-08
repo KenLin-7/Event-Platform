@@ -12,7 +12,9 @@ import UserRegistration from './UserRegistration'
 import UserPost from './UserPost'
 import ManageRegistraion from './ManageRegistraion';
 
+
 const UserPage = () => {
+
   const [flag, setFlag] = useState(false)
   const [currentUser, setCurrentUser] = useState({});
 
@@ -34,7 +36,7 @@ const UserPage = () => {
         flag
           ?
           (
-            <CircularProgress />
+            <CircularProgress className={styles['progress-control']}/>
           )
           :
           (

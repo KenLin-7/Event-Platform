@@ -3,32 +3,48 @@ import styles from '../../asserts/stylesheet/UserPage/ManageRegistration.module.
 import usePagination from "../Pagination";
 import {
   Pagination,
-  Avatar
+  Avatar,
+  CircularProgress
 } from "@mui/material";
+import { getCurrentUserEvents } from '../../api/EventAPI'
+import { getAllRegistrationRequests } from '../../api/RegistrationAPI'
 
-const messagesTest = [
-  { id: 1, nickname: "woshinidie", email: "woshinidie@123.com" },
-  { id: 2, nickname: "woshinidie1", email: "woshinidie@123.com" },
-  { id: 3, nickname: "woshinidie2", email: "woshinidie@123.com" },
-  { id: 4, nickname: "woshinidie3", email: "woshinidie@123.com" },
-  { id: 5, nickname: "woshinidie4", email: "woshinidie@123.com" },
-]
 
 const ManageRegistraion = () => {
-  const [msgs, setMsgs] = useState([]);
-
+  const [events, setEvents] = useState([]);
+  const [flag, setFlag] = useState(false);
   let [page, setPage] = useState(1);
   const PER_PAGE = 2;
-  const count = Math.ceil(messagesTest.length / PER_PAGE);
-  const _DATA = usePagination(messagesTest, PER_PAGE);
+  const count = Math.ceil(events.length / PER_PAGE);
+  const _DATA = usePagination(events, PER_PAGE);
 
 
   useEffect(() => {
     const fetch = () => {
+      setFlag(true)
+      getCurrentUserEvents().then((data) => {
+        const fetchedList = [];
 
+        const allEvents = data.data
+        for (let i = 0; i < allEvents.length; i++) {
+          const requests = allEvents[i].registrationList
+
+
+          if (requests.length !== 0) {
+            for (let j = 0; j < requests.length; j++) {
+              if (requests[j].status === "pending") {
+                fetchedList.push(requests[j])
+              }
+            }
+          }
+        }
+
+        setEvents(fetchedList)
+
+        setFlag(false)
+      })
     }
-
-    fetch()
+    fetch();
   }, [])
 
   const handleChange = (e, p) => {
@@ -41,49 +57,78 @@ const ManageRegistraion = () => {
       <div className={styles['manage-registration-title']}>
         Manage Registraion
       </div>
-      <div className={styles['manage-registration-content']}>
-        {
-          _DATA.currentData().map((data, index) => {
-            return (
-              <div className={styles['registraion-notification-card']} key={index}>
+      {
+        flag
+          ?
+          (
+            <CircularProgress className={styles['progress-control']}/>
+          )
+          :
+          (
+            <>
+              {
+                events.length === 0
+                  ?
+                  (
+                    <div className={styles['no-data-notification']}>No requests</div>
+                  )
+                  :
+                  (
+                    <>
+                      <div className={styles['manage-registration-content']}>
+                        {
+                          _DATA.currentData().map((data, index) => {
+                            return (
+                              <div className={styles['registraion-notification-card']} key={index}>
 
-                <div className={styles['requester-container']}>
-                  <div className={styles['requester-avatar']}>
-                    <Avatar alt="Remy Sharp" src="" sx={{ height: 60, width: 60 }} />
-                  </div>
+                                <div className={styles['requester-container']}>
+                                  <div className={styles['requester-avatar']}>
+                                    <Avatar alt="Remy Sharp" src={data.requester.avatar} sx={{ height: 60, width: 60 }} />
+                                  </div>
 
-                  <div className={styles['requester-msg-section']}>
-                    <div className={styles['requester-nickname']}>
-                      {data.nickname}
-                    </div>
-                    <div className={styles['requester-msg']}>
-                      is requesting
-                    </div>
-                  </div>
+                                  <div className={styles['requester-msg-section']}>
+                                    <div className={styles['requester-nickname']}>
+                                      {data.requester.nickname}
+                                    </div>
+                                    <div className={styles['requester-msg']}>
+                                      is requesting to join your event:
+                                    </div>
+                                    <div className={styles['display-location']}>
+                                      {data.event.title}
+                                      <p>at：{data.event.location}</p>
+                                    </div>
+                                  </div>
 
-                  <div className={styles['group-btn']}>
-                    <div className={styles['approve-btn']}>
-                      Approve
-                    </div>
-                    <div className={styles['reject-btn']}>
-                      Reject
-                    </div>
-                  </div>
+                                  <div className={styles['group-btn']}>
+                                    <div className={styles['approve-btn']}>
+                                      Approve
+                                    </div>
+                                    <div className={styles['reject-btn']}>
+                                      Reject
+                                    </div>
+                                  </div>
 
-                </div>
+                                </div>
 
-              </div>
-            )
-          })
-        }
-      </div>
-      <Pagination
-        count={count}
-        color="primary"
-        onChange={handleChange}
-        page={page}
-        className={styles["pagination"]}
-      />
+                              </div>
+                            )
+                          })
+                        }
+                      </div>
+                      <Pagination
+                        count={count}
+                        color="primary"
+                        onChange={handleChange}
+                        page={page}
+                        className={styles["pagination"]}
+                      />
+                    </>
+                  )
+              }
+
+            </>
+          )
+      }
     </div>
   )
 }

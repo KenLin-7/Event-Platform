@@ -17,7 +17,6 @@ export const getEvent = async (eventId)=>{
 
 export const getCurrentUserEvents = async () => {
   const result = await axios.get(API + "/currentUserEvents")
-  console.log(result)
   return result
 }
 
@@ -28,6 +27,15 @@ export const getAllEvent = async () => {
 
 export const getUserRegistrationEvents = async () => {
   const result = await axios.get(API + "/getUserRegistrationEvents");
-  console.log(result)
+  return result
+}
+
+export const getNoCancelledEvents = async () => {
+  const result = await axios.get(API + "/getNoCancelledEvents");
+  return result
+}
+
+export const cancelEvent = async (eventId) => {
+  const result = await axios.post(API + "/cancelEvent", {eventId:eventId})
   return result
 }

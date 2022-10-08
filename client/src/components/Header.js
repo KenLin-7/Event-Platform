@@ -83,7 +83,6 @@ const Header = () => {
 
                   <div className={styles["dropdown-content"]}>
                     <a href="/user-page">View event</a>
-                    <a href="/registration-list">Manage event</a>
                     <a href="/profile">Account setting</a>
                   </div>
                 </div>
