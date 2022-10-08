@@ -28,7 +28,7 @@ export default function DrawerNotification(props) {
         keepMounted: true,
       }}
     >
-      <Box role="presentation" sx={{ width: "350px" }}>
+      <Box role="presentation" minWidth={'350px'}>
         <Stack
           alignItems={"flex-end"}
           sx={{ marginLeft: "20px" }}

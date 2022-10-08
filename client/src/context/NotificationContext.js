@@ -3,7 +3,7 @@ import * as SockJS from 'sockjs-client';
 import { useUser } from './UserContext';
 import { SnackbarProvider} from 'notistack';
 import Notification from '../components/Notification';
-import { createNotification, getUserConfirmedEvent, updateAll } from '../api/NotificationAPI';
+import { createNotification, getUserConfirmedEvent, updateAll,createAll } from '../api/NotificationAPI';
 import { getNotifications } from '../api/NotificationAPI';
 const Stomp = require('stompjs')
 // import Stomp from 'stomp-websocket'
@@ -47,8 +47,6 @@ export const NotificationProvider = ({children})=>{
                     subscribeEvent(id)
                 });
             })
-
-
         }
  
     }
@@ -92,7 +90,7 @@ export const NotificationProvider = ({children})=>{
                 eventId:eventId
             }
             stompClient.send(`/event/${eventId}/notification`,{},JSON.stringify(notification))
-            // createNotification(recieverEmail,message,"status")
+            createAll(notification)
             setSent(true)
         }
     }
@@ -105,7 +103,7 @@ export const NotificationProvider = ({children})=>{
                     email:email
                 }
                 stompClient.send(`/user/${email}/notification`,{},JSON.stringify(notification))
-                // createNotification(email,message,"status")
+                createNotification(email,message,"status")
                 setSent(true)
             }
         }

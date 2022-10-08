@@ -31,3 +31,7 @@ export const getUserConfirmedEvent = async()=>{
     const result = await axios.post(API+"/confirmed/event")
     return result.data
 }
+
+export const createAll = async(notificaition)=>{
+    const result = await axios.post(API+"/create/notification/all",notificaition)
+}

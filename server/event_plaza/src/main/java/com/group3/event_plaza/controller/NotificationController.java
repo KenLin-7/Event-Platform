@@ -50,6 +50,13 @@ public class NotificationController {
         return ResponseResult.success();
     }
 
+    @PostMapping("/create/notification/all")
+    public ResponseResult<String> createEventNotification(@RequestBody Map<String,String> notification){
+        System.out.println(notification);
+        notificationService.createEventNotifications(Integer.parseInt(notification.get("eventId")),notification.get("message"));
+        return ResponseResult.success();
+    }
+
     @PostMapping("/confirmed/event")
     public ResponseResult<List<Integer>> getUserConfirmedEvents(Principal principal){
         return ResponseResult.success(notificationService.getUserEvent(principal.getName()));

@@ -22,4 +22,6 @@ public interface NotificationService{
 
         List<Integer> getUserEvent(String email);
 
+        void createEventNotifications(int eventId,String message);
+
 }

@@ -120,4 +120,20 @@ public class NotificationImpl implements NotificationService, MessageService {
         List<Integer> eventIds = registrationRepository.findUserJoinedEventId(userId);
         return  eventIds;
     }
+
+    @Override
+    public void createEventNotifications(int eventId,String message) {
+      List<Integer> userIds = registrationRepository.findUseIdByEvents(eventId);
+      if(userIds.size() != 0){
+          for (Integer id: userIds) {
+              User receiver = userRepository.findByUserId(id);
+              Notification notification = new Notification();
+              notification.setReceiver(receiver);
+              notification.setMessage(message);
+              notificationRepository.save(notification);
+
+          }
+      }
+
+    }
 }
