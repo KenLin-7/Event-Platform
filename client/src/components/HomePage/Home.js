@@ -6,6 +6,7 @@ import GetStart from './GetStart'
 import Popular from './Popular'
 import Statistic from './Statistic'
 import { getLatestEvents } from '../../api/FilterAPI'
+import { getStatistic } from '../../api/StatisticAPI'
 
 const Home = ({ref}) => {
   const [latestEvents, setLastestEvents] = useState([]);
@@ -14,6 +15,7 @@ const Home = ({ref}) => {
 
   useEffect(() => {
     const fetch = () => {
+      getStatistic()
       setFlag(true)
       getLatestEvents().then((data) => {
         const list = data.data

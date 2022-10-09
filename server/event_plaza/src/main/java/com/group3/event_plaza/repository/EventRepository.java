@@ -44,4 +44,10 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
     @Query("update Event e set e.status = 2 where e.eventId = ?1")
     void cancelEvent(int id);
 
+
+    @Query(value = "SELECT COUNT(event_id) from event where start_date < ?1", nativeQuery = true)
+    Integer countFinishEvent(Timestamp today);
+
+
+
 }
