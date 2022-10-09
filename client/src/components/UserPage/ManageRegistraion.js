@@ -7,17 +7,19 @@ import {
   CircularProgress
 } from "@mui/material";
 import { getCurrentUserEvents } from '../../api/EventAPI'
-import { getAllRegistrationRequests } from '../../api/RegistrationAPI'
+import { approveRegistration, rejectRegistration } from '../../api/RegistrationAPI'
 import { useNotification } from '../../context/NotificationContext';
+
 
 const ManageRegistraion = () => {
   const [events, setEvents] = useState([]);
   const [flag, setFlag] = useState(false);
+  const [refresh, setRefresh] = useState(false)
   let [page, setPage] = useState(1);
   const PER_PAGE = 2;
   const count = Math.ceil(events.length / PER_PAGE);
   const _DATA = usePagination(events, PER_PAGE);
-  const {sendUserMessage} = useNotification()
+  const { sendUserMessage } = useNotification()
 
 
   useEffect(() => {
@@ -41,12 +43,11 @@ const ManageRegistraion = () => {
         }
 
         setEvents(fetchedList)
-
         setFlag(false)
       })
     }
     fetch();
-  }, [])
+  }, [refresh])
 
   const handleChange = (e, p) => {
     setPage(p);
@@ -54,12 +55,20 @@ const ManageRegistraion = () => {
   };
 
   // Add use email
-  const onApprovedClick = (email)=>{
-      sendUserMessage(email,"Your registration has been confirmed")
+  const onApprovedClick = (email, registrationId) => {
+    setRefresh(true)
+    approveRegistration(registrationId).then(() => {
+      setRefresh(false)
+    })
+    sendUserMessage(email, "Your registration has been confirmed")
   }
 
-  const onRejectClick = (email)=>{
-    sendUserMessage(email,"Your registration has been rejected")
+  const onRejectClick = (email, registrationId) => {
+    setRefresh(true)
+    rejectRegistration(registrationId).then(() => {
+      setRefresh(false)
+    })
+    sendUserMessage(email, "Your registration has been rejected")
   }
 
   return (
@@ -71,7 +80,7 @@ const ManageRegistraion = () => {
         flag
           ?
           (
-            <CircularProgress className={styles['progress-control']}/>
+            <CircularProgress className={styles['progress-control']} />
           )
           :
           (
@@ -110,10 +119,10 @@ const ManageRegistraion = () => {
                                   </div>
 
                                   <div className={styles['group-btn']}>
-                                    <div className={styles['approve-btn']} onClick={()=>onApprovedClick(data.requester.email)}>
+                                    <div className={styles['approve-btn']} onClick={() => onApprovedClick(data.requester.email, data.registrationId)}>
                                       Approve
                                     </div>
-                                    <div className={styles['reject-btn']} onClick={()=>onRejectClick(data.requester.email)}>
+                                    <div className={styles['reject-btn']} onClick={() => onRejectClick(data.requester.email, data.registrationId)}>
                                       Reject
                                     </div>
                                   </div>
