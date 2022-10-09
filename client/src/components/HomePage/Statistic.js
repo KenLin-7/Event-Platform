@@ -7,7 +7,7 @@ const items = [
   { id: 1, data: "300K", title: "User active" },
   { id: 2, data: "52.5K", title: "Events" },
   { id: 3, data: "17.5K", title: "Finished events" },
-  { id: 4, data: "35.58", title: "Registration" },
+  { id: 4, data: "35.58", title: "Registrations" },
 
 ]
 
