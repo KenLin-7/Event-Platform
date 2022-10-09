@@ -1,5 +1,6 @@
 package com.group3.event_plaza.service.Impl;
 
+import com.group3.event_plaza.common.exception.authorization.EmailExistException;
 import com.group3.event_plaza.common.exception.business.DataNotFoundException;
 import com.group3.event_plaza.common.lang.RoleUser;
 import com.group3.event_plaza.model.Role;
@@ -42,15 +43,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
         @Override
-        public void register(User user) {
-                try {
+        public void register(User user) throws EmailExistException {
+                User existUser = userRepository.findByEmail(user.getEmail());
+                if(existUser != null){
+                        throw new EmailExistException("Email was taken");
+                }else{
                         Role role = roleRepository.findByRoleId(RoleUser.ROLE_USER.getId());
                         user.getRole().add(role);
                         user.setPassword(passwordEncoder.encode(user.getPassword()));
                         userRepository.save(user);
-                }catch (Exception e){
-
                 }
+
+
 
         }
 

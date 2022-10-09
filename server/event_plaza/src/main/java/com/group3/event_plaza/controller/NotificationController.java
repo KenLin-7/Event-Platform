@@ -29,6 +29,7 @@ public class NotificationController {
     @PostMapping("/create")
     public ResponseResult<String> createNotification(@RequestBody Map<String, Object> payload){
         Notification notification = new Notification(payload.get("message").toString(),payload.get("status").toString());
+        notification.setEventId(Integer.parseInt(payload.get("eventId").toString()));
         notificationService.create(notification,payload.get("email").toString());
         return ResponseResult.success();
     }
@@ -40,7 +41,8 @@ public class NotificationController {
     }
 
     @PostMapping("/update")
-    public  ResponseResult<String> updateNotification(@RequestBody int Id){
+    public  ResponseResult<String> updateNotification(@RequestBody Map<String,Integer> data){
+        notificationService.update(data.get("id"));
         return ResponseResult.success();
     }
 
@@ -52,7 +54,6 @@ public class NotificationController {
 
     @PostMapping("/create/notification/all")
     public ResponseResult<String> createEventNotification(@RequestBody Map<String,String> notification){
-        System.out.println(notification);
         notificationService.createEventNotifications(Integer.parseInt(notification.get("eventId")),notification.get("message"));
         return ResponseResult.success();
     }

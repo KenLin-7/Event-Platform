@@ -13,7 +13,17 @@ public class NotificationDTO {
 
     private int receiver;
 
+    private int eventId;
+
     public NotificationDTO() {
+    }
+
+    public int getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
     }
 
     public int getNotificationId() {

@@ -55,7 +55,6 @@ export default function Register() {
             signUp(account).then((res)=>{
                 if(res.code === 200){
                     setMessage({show:true,message:"Register succcessfully",severity:"success"})
-                    
                     setLoading(false)
                 }else{
                     setMessage({show:true,message:"Email was taken",severity:"error"})

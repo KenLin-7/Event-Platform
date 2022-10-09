@@ -5,6 +5,7 @@ import com.group3.event_plaza.common.ResponseResult;
 import com.group3.event_plaza.common.exception.business.DataNotFoundException;
 import com.group3.event_plaza.model.Event;
 import com.group3.event_plaza.model.Registration;
+import com.group3.event_plaza.model.dto.EventDTO;
 import com.group3.event_plaza.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,6 @@ public class EventController {
         return ResponseResult.success();
     }
 
-    @PostMapping
 
     @GetMapping("/search/{keyword}")
     public ResponseResult<List<Event>> search(@PathVariable String keyword){
@@ -62,7 +62,6 @@ public class EventController {
     @PostMapping("/getEventDetail")
     public ResponseResult<Map<String,Object>> getEventDetail(Principal principal,@RequestBody Map<String,Integer>map) throws DataNotFoundException {
         int eventId = map.get("eventId");
-        System.out.println(principal.getName());
         Map<String,Object> result= eventService.getEventDetail(eventId,principal.getName());
 
         return ResponseResult.success(result);
@@ -96,5 +95,12 @@ public class EventController {
         int newId = Integer.parseInt(map.get("eventId"));
         eventService.cancelEvent(newId);
         return ResponseResult.success();
+    }
+
+
+    @PostMapping("/notification/event")
+    public ResponseResult<EventDTO> getBriefEvent(@RequestBody Map<String,Integer> data) throws DataNotFoundException {
+        int eventId = data.get("eventId");
+        return ResponseResult.success(eventService.getBriefEventDetails(eventId));
     }
 }

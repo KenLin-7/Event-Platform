@@ -1,3 +1,4 @@
+import { async } from "@firebase/util"
 import axios from "./axios"
 const API = '/api/event'
 
@@ -47,4 +48,9 @@ export const getNoCancelledEvents = async () => {
 export const cancelEvent = async (eventId) => {
   const result = await axios.post(API + "/cancelEvent", {eventId:eventId})
   return result
+}
+
+export const getNotificaitonEvent = async(eventId)=>{
+   const result = await axios.post(API+"/notification/event",{eventId:eventId})
+   return result.data
 }

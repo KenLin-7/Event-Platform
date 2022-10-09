@@ -2,6 +2,7 @@ package com.group3.event_plaza.controller;
 
 
 import com.group3.event_plaza.common.ResponseResult;
+import com.group3.event_plaza.common.exception.authorization.EmailExistException;
 import com.group3.event_plaza.common.exception.business.DataNotFoundException;
 import com.group3.event_plaza.model.User;
 import com.group3.event_plaza.service.UserService;
@@ -23,7 +24,7 @@ public class UserController {
     HttpSession session;
 
     @PostMapping("/register")
-    public ResponseResult<String> register(@RequestBody User user){
+    public ResponseResult<String> register(@RequestBody User user) throws EmailExistException {
         userService.register(user);
         return ResponseResult.success();
     }

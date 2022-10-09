@@ -10,7 +10,7 @@ import { Alert } from '@mui/material'
 import {useUser} from '../../context/UserContext'
 import { useNotification } from '../../context/NotificationContext'
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { useNavigate } from 'react-router-dom'
 export default function Login() {
   const [account,setAccount] = useState({email:"",password:""})
   const [isValidated,setIsValidated] = useState({email:true,password:true})
@@ -20,6 +20,7 @@ export default function Login() {
   const {getAuth,auth} = useUser();
   const {socketConn} = useNotification()
   const [loading,setLoading] = useState(false)
+  const navigate = useNavigate()
 
   // handle input change 
   const onChange = (e)=>{
@@ -37,6 +38,7 @@ export default function Login() {
           if(data.code === "200"){
               getAuth()
               socketConn()
+              navigate("/")
           } 
           // set logged in user
           else setErrorMsg(data.msg)
@@ -117,9 +119,7 @@ export default function Login() {
                         <Link to="/register"><span className={FormStyles.link}>Register</span></Link>
                       </span>
                     </div>
-                    {
-                      auth && <Navigate to="/" replace={true}/>
-                    }
+  
                   </div>
               </div>
           </div>

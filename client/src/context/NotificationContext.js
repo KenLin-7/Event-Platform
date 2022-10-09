@@ -4,9 +4,8 @@ import { useUser } from './UserContext';
 import { SnackbarProvider} from 'notistack';
 import Notification from '../components/Notification';
 import { createNotification, getUserConfirmedEvent, updateAll,createAll } from '../api/NotificationAPI';
-import { getNotifications } from '../api/NotificationAPI';
+import { getNotifications,updateNotification } from '../api/NotificationAPI';
 const Stomp = require('stompjs')
-// import Stomp from 'stomp-websocket'
 const NotificationContext = React.createContext()
 const host = "http://localhost:8080/ws/socket"
 var stompClient = null
@@ -96,14 +95,15 @@ export const NotificationProvider = ({children})=>{
     }
 
         // notify user if resgiration has been rejected/accepted
-        const sendUserMessage = (email,message)=>{
+        const sendUserMessage = (email,eventId,message)=>{
             if(stompClient){
                 let notification = {
                     message:message,
-                    email:email
+                    email:email,
+                    eventId:eventId
                 }
                 stompClient.send(`/user/${email}/notification`,{},JSON.stringify(notification))
-                createNotification(email,message,"status")
+                createNotification(email,message,eventId,"status")
                 setSent(true)
             }
         }
@@ -119,12 +119,23 @@ export const NotificationProvider = ({children})=>{
         }
     }
 
+    // Mark notfication as read 
+    const clear = (notficationId,index)=>{
+
+        updateNotification(notficationId).then((res)=>{
+            setNotifications(notifications.slice(index,index))
+            setCount(notifications.length)
+        })
+
+    }
+
 
 
 
 
 
     useEffect(()=>{
+        console.log(notifications);
 
         if(!connected && auth != null){
             socketConn()
@@ -137,6 +148,7 @@ export const NotificationProvider = ({children})=>{
         }
 
         if(auth!=null||sent){
+            console.log("test");
             fetch()
             setSent(false)
         }
@@ -154,7 +166,8 @@ export const NotificationProvider = ({children})=>{
         disconnect,
         socketConn,
         count,
-        clearAll
+        clearAll,
+        clear
         
     }
 

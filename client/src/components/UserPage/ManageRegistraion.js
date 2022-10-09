@@ -54,12 +54,13 @@ const ManageRegistraion = () => {
   };
 
   // Add use email
-  const onApprovedClick = (email)=>{
-      sendUserMessage(email,"Your registration has been confirmed")
+  const onApprovedClick = (email,eventId)=>{
+
+      sendUserMessage(email,eventId,"Your registration has been confirmed")
   }
 
-  const onRejectClick = (email)=>{
-    sendUserMessage(email,"Your registration has been rejected")
+  const onRejectClick = (email,eventId)=>{
+    sendUserMessage(email,eventId,"Your registration has been rejected")
   }
 
   return (
@@ -110,10 +111,10 @@ const ManageRegistraion = () => {
                                   </div>
 
                                   <div className={styles['group-btn']}>
-                                    <div className={styles['approve-btn']} onClick={()=>onApprovedClick(data.requester.email)}>
+                                    <div className={styles['approve-btn']} onClick={()=>onApprovedClick(data.requester.email,data.event.eventId)}>
                                       Approve
                                     </div>
-                                    <div className={styles['reject-btn']} onClick={()=>onRejectClick(data.requester.email)}>
+                                    <div className={styles['reject-btn']} onClick={()=>onRejectClick(data.requester.email,data.event.eventId)}>
                                       Reject
                                     </div>
                                   </div>

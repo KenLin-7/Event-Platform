@@ -7,4 +7,6 @@ public interface NotificationResult {
     Timestamp getCreated_Time();
     Integer getNotification_Id();
     int getReceiver();
+
+    int getEvent_Id();
 }

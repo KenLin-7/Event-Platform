@@ -27,7 +27,7 @@ export default function RegistBtn(props) {
 
         createRegistration(props.eventId).then(res=>{
             if(res.code==="200"){
-                sendUserMessage("kenlbd61@gmail.com","Some one have registred your event")
+                sendUserMessage("kenlbd61@gmail.com",props.eventId,"Some one have registred your event")
             }
         })
         props.updateRegistFlag("pending")
@@ -48,7 +48,7 @@ export default function RegistBtn(props) {
         setOpenConfirmed(false)
         deleteRegistration(props.eventId).then(res=>{
             if(res.code==="200"){
-                sendUserMessage("kenlbd61@gmail.com","Some one have left your event")
+                sendUserMessage("kenlbd61@gmail.com",props.eventId,"Some one have left your event")
             }
         })
         props.updateRegistFlag("available")

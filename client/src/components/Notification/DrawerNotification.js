@@ -63,7 +63,7 @@ export default function DrawerNotification(props) {
             {notifications.map((message, index) => (
               <div key={index}>
                 <ListItem disablePadding>
-                  <MessageNotification notification={message} />
+                  <MessageNotification notification={message} closeDrawer={props.toggleDrawer} index={index}/>
                 </ListItem>
                 <Divider />
               </div>

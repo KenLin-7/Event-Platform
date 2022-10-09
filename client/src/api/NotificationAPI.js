@@ -7,13 +7,14 @@ export const getNotifications = async ()=>{
     return result.data
 }
 
-export const createNotification = async(reciever,message,status)=>{
-    const result = await axios.post(API+"/create",{email:reciever,message:message,status:status})
+export const createNotification = async(reciever,message,eventId,status)=>{
+    const result = await axios.post(API+"/create",{email:reciever,message:message,status:status,eventId:eventId})
     return result.data
 }
 
 export const updateNotification = async(id)=>{
-    const result = await axios.get(API+"/update",id)
+    const result = await axios.post(API+"/update",{id:id})
+    return result.data
 }
 
 export const getCount = async()=>{

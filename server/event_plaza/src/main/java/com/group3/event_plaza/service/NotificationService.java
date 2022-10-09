@@ -16,7 +16,7 @@ public interface NotificationService{
 
         Integer getCount(String email);
 
-        void createNotifications(int eventId);
+
 
         void updateAll(List<Notification> notifications);
 

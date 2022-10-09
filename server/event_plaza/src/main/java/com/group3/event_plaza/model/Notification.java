@@ -42,6 +42,8 @@ public class Notification  {
 
     private boolean isRead;
 
+    private int eventId;
+
     public Notification() {
     }
 
@@ -99,6 +101,14 @@ public class Notification  {
 
     public void setRead(boolean read) {
         isRead = read;
+    }
+
+    public int getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
     }
 
     @Override

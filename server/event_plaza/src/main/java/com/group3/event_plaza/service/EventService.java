@@ -1,6 +1,8 @@
 package com.group3.event_plaza.service;
+import com.group3.event_plaza.common.exception.business.DataNotFoundException;
 import com.group3.event_plaza.model.Event;
 import com.group3.event_plaza.model.Registration;
+import com.group3.event_plaza.model.dto.EventDTO;
 
 import java.security.Principal;
 import java.util.List;
@@ -13,10 +15,11 @@ public interface EventService {
     // TODO Find method need to be throw DataNotFoundException
 
 
-   void updateEvent(Event event);
+    void updateEvent(Event event);
 
+    EventDTO getBriefEventDetails(int eventId) throws DataNotFoundException;
 
-   Event getEvent(int eventId);
+    Event getEvent(int eventId);
 
     Map<String,Object> getEventDetail(int eventId,String registerEmail);
 
@@ -29,7 +32,6 @@ public interface EventService {
     List<Event> getCurrentUserEvents(String email);
 
     List<Event> getAllEvent();
-
 
     List<Event> getEventLess24();
 

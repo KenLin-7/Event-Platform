@@ -1,7 +1,10 @@
 package com.group3.event_plaza.service.Impl;
 
+import com.group3.event_plaza.common.exception.business.DataNotFoundException;
 import com.group3.event_plaza.common.lang.RoleUser;
 import com.group3.event_plaza.model.*;
+import com.group3.event_plaza.model.dto.EventDTO;
+import com.group3.event_plaza.model.result.EventResult;
 import com.group3.event_plaza.repository.CategoryRepository;
 import com.group3.event_plaza.repository.EventRepository;
 import com.group3.event_plaza.repository.RoleRepository;
@@ -65,12 +68,36 @@ public class EventServiceImpl implements EventService {
 
     }
 
+
+    @Override
+    public EventDTO getBriefEventDetails(int eventId) throws DataNotFoundException {
+        EventDTO eventDTO = new EventDTO();
+        List<EventResult> events = eventRepository.findBriefEventDetails(eventId);
+        if(events.size() > 0) {
+            EventResult result = events.get(0);
+            String ownerEmail = userRepository.findEmailByUserId(result.getOwner());
+            eventDTO.setDescription(result.getDescription());
+            eventDTO.setImage(result.getImage());
+            eventDTO.setTitle(result.getTitle());
+            eventDTO.setOwnerEmail(ownerEmail);
+        }else{
+            throw  new DataNotFoundException("Can't found the event ");
+        }
+        return eventDTO;
+    }
+
     @Override
     public Event getEvent(int eventId) {
         Event event = eventRepository.findByEventId(eventId);
         return event;
     }
 
+    /**
+     * Get Event details page data
+     * @param eventId
+     * @param requesterEmail
+     * @return
+     */
     @Override
     public Map<String, Object> getEventDetail(int eventId, String requesterEmail) {
         Event event = eventRepository.findByEventId(eventId);

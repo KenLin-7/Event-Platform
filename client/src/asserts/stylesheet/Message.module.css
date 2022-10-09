@@ -27,7 +27,16 @@
     flex-direction: column;
 }
 
+.event .title{
+    font-family: 'Sora';
+    margin-bottom: 2px;
 
+}
+
+.event .description{
+    font-size: small;
+    color: rgba(48, 46, 44, 0.627);
+}
 
 .time{
     display: flex;

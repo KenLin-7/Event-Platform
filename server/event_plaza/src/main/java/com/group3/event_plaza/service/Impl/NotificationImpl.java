@@ -81,6 +81,7 @@ public class NotificationImpl implements NotificationService, MessageService {
             notificationDTO.setReceiver(notificationResult.get(0).getReceiver());
             notificationDTO.setCreatedTime(notificationResult.get(0).getCreated_Time());
             notificationDTO.setMessage(notificationResult.get(0).getMessage());
+            notificationDTO.setEventId(notificationResult.get(0).getEvent_Id());
             notifications.add(notificationDTO);
         }
         return notifications;
@@ -90,7 +91,7 @@ public class NotificationImpl implements NotificationService, MessageService {
 
     @Override
     public void update(int notificationId) {
-
+        notificationRepository.readNotification(notificationId);
     }
 
     @Override
@@ -109,10 +110,7 @@ public class NotificationImpl implements NotificationService, MessageService {
         return notificationRepository.countByReceiver_UserId(userId);
     }
 
-    @Override
-    public void createNotifications(int eventId) {
-        // TODO get participant email to save notification
-    }
+
 
     @Override
     public List<Integer> getUserEvent(String email) {
@@ -121,6 +119,11 @@ public class NotificationImpl implements NotificationService, MessageService {
         return  eventIds;
     }
 
+    /**
+     * Create notification record base on event id and registration
+     * @param eventId
+     * @param message
+     */
     @Override
     public void createEventNotifications(int eventId,String message) {
       List<Integer> userIds = registrationRepository.findUseIdByEvents(eventId);
@@ -130,6 +133,7 @@ public class NotificationImpl implements NotificationService, MessageService {
               Notification notification = new Notification();
               notification.setReceiver(receiver);
               notification.setMessage(message);
+              notification.setEventId(eventId);
               notificationRepository.save(notification);
 
           }

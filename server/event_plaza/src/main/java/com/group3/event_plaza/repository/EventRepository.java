@@ -3,6 +3,7 @@ package com.group3.event_plaza.repository;
 import com.group3.event_plaza.model.Event;
 import com.group3.event_plaza.model.Registration;
 import com.group3.event_plaza.model.User;
+import com.group3.event_plaza.model.result.EventResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.Modifying;
@@ -33,6 +34,10 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
 
     @Query(value = "SELECT * from event where owner = ?1 and status = 1",nativeQuery = true)
     List<Event> findByUserId(int id);
+
+
+    @Query(value = "select description,image,title,owner from event where event_id = ?1",nativeQuery = true)
+    List<EventResult> findBriefEventDetails(int eventId);
 
     @Modifying
     @Transactional

@@ -60,7 +60,7 @@ const FilterPage = () => {
   }, [params.keyword]);
 
   const handleToEventDetail = (id) => {
-    navigate(`/eventDetail/${id}`)
+    navigate(`/event/detail/${id}`)
   }
 
   const handleChange = (e, p) => {

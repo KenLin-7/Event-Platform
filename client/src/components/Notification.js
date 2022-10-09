@@ -7,7 +7,6 @@ export default function Notification() {
     const {currentNotification,setCurrentNotification} = useNotification()
 
     useEffect(()=>{
-        console.log(currentNotification);
         if(currentNotification!="") {
             enqueueSnackbar(currentNotification,{variant:'success'})
             setCurrentNotification("")
