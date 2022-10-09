@@ -37,7 +37,7 @@ public class SecurityConfig {
             "/api/user/resetPassword",
             "/api/event/search/{keyword}",
             "/api/test/*",
-            "/api/event/search/{keyword}",
+            "/api/event/getAllEvent",
             "/api/event/latestEvent",
             "/api/event/getEventDetail"
 

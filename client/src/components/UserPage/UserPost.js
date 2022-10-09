@@ -8,7 +8,6 @@ import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import Divider from '@mui/material/Divider'
-import ImageTest from '../../asserts/images/test-image.png'
 import CircularProgress from '@mui/material/CircularProgress';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -37,7 +36,6 @@ const UserPost = () => {
     const fetch = () => {
       setFlag(true)
       getNoCancelledEvents().then((data) => {
-        console.log(data.data)
         setEvents(data.data)
         setFlag(false)
       })
@@ -138,7 +136,7 @@ const UserPost = () => {
                                   aria-describedby="alert-dialog-description"
                                 >
                                   <DialogTitle id="alert-dialog-title">
-                                    {"Use Google's location service?"}
+                                    {"Cancel warning!"}
                                   </DialogTitle>
                                   <DialogContent>
                                     <DialogContentText id="alert-dialog-description">

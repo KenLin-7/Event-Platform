@@ -45,4 +45,14 @@ public class RegistrationImpl implements RegistrationService {
         Registration registration = registrationRepository.findByEventAndRequester(event, requester);
         registrationRepository.delete(registration);
     }
+
+    @Override
+    public void approveRegistration(int registrationId) {
+        registrationRepository.approveRegistration(registrationId);
+    }
+
+    @Override
+    public void rejectRegistration(int registrationId) {
+        registrationRepository.rejectRegistration(registrationId);
+    }
 }

@@ -60,8 +60,19 @@ public class RegistrationController {
         return ResponseResult.success(eventList);
     }
 
+    @PostMapping("/approveRegistration")
+    public ResponseResult<String> approveRegistration(@RequestBody Map<String, Integer> map) throws DataNotFoundException {
+        int registrationId = map.get("registrationId");
+        registrationService.approveRegistration(registrationId);
+        return ResponseResult.success();
+    }
 
-
+    @PostMapping("/rejectRegistration")
+    public ResponseResult<String> rejectRegistration(@RequestBody Map<String, Integer> map) throws DataNotFoundException {
+        int registrationId = map.get("registrationId");
+        registrationService.rejectRegistration(registrationId);
+        return ResponseResult.success();
+    }
 
 
 }
