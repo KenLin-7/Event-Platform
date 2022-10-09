@@ -16,7 +16,7 @@ const Search = () => {
   }
 
   const onSearchInputClick = () => {
-    if(searchInput === ""){
+    if(searchInput === "" || searchInput === undefined){
       navigate('/filter/')
     }
     navigate(`/filter/${searchInput}`)

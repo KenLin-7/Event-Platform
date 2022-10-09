@@ -43,9 +43,10 @@ const FilterPage = () => {
     const getFilteredEvent = () => {
       setLoading(true);
       const keyword = params.keyword
-      if (keyword === undefined) {
+      if (keyword === undefined || keyword === "") {
         getAllEvent().then((data) => {
           setFilteredEventList(data.data);
+          console.log(data.data)
           setLoading(false);
         })
       } else {
@@ -60,7 +61,7 @@ const FilterPage = () => {
   }, [params.keyword]);
 
   const handleToEventDetail = (id) => {
-    navigate(`/eventDetail/${id}`)
+    navigate(`/event/detail/${id}`)
   }
 
   const handleChange = (e, p) => {
@@ -154,16 +155,18 @@ const FilterPage = () => {
                             <div className={styles["event-card-participants"]}>
                               <div className={styles['avatars-group']}>
                                 <AvatarGroup max={4} sx={{ float: 'left' }} className={styles['avatars-group-control']}>
-                                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                                  <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-                                  <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-                                  <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-                                  <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
+                                  {
+                                    card.registrationList.map((requester,index) => {
+                                      return (
+                                        <Avatar alt="" src={requester.avatar} key={index}/>
+                                      )
+                                    })
+                                  }
                                 </AvatarGroup>
                               </div>
 
                               <div className={styles['avatars-group-text']}>
-                                5 participants
+                                {card.registrationList.length} participants
                               </div>
                             </div>
 
