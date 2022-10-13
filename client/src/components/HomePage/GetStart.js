@@ -16,14 +16,12 @@ const GetStart = () => {
       <Box className={styles['get-start-inner-layout']} >
         <div className={styles['get-start-text']}>
           <div className={styles['get-start-text-1']}>
-            Overline
+            Slogan
           </div>
 
           <div className={styles['get-start-text-2']}>
-            Sapien ipsum scelerisque convallis fusce
+            Find whatever you want, You're not alone
           </div>
-
-
 
           <Box sx={{ display: 'flex', flexDirection: 'row',marginTop:'20px'}} className="get-start-btn-group">
             <button className={styles['get-start-btns']} onClick={onStartClick}>Get started</button>

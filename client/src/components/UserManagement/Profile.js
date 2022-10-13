@@ -9,11 +9,14 @@ import IconButton from '@mui/material/IconButton';
 import formValidate from '../../utils/validation'
 import FormStyles from '../../asserts/stylesheet/Form.module.css'
 import {useNavigate}  from "react-router-dom";
-
+import defaultAvatar from '../../asserts/images/default-avatar.jpg'
+import {ref,uploadBytesResumable, getDownloadURL} from 'firebase/storage'
+import storage from '../../firebase/storage'
 export default function Profile(){
   const navigate = useNavigate()
-  const [user, setuser] = useState({ nickname: "", email: "", phone: "", dob: "", gender: ""});
+  const [user, setuser] = useState({nickname: "", email: "", phone: "", dob: "", gender: "",avatar:""});
   const {auth, getAuth, signOut} = useUser();
+  const [avatar,setAvatar] = useState("");
   const [isValidated,setIsValidated] = useState({nickname:true,phone:true,dob:true});
   const [isValidatedEmail,setIsValidatedEmail] = useState({email:true,});
   const [emailError,setEmailError] = useState("Please enter your new email");
@@ -31,7 +34,6 @@ export default function Profile(){
   const [code,setCode] = useState("")
   const [isValidatedCode,setIsValidatedCode] = useState(true);
   const [codeDisabled, setCodeDisabled] = React.useState(false);
-  
   const handleInputChange = (e) => {
     setuser({...user, [e.target.name]: e.target.value });
     if(!isValidated.nickname || !isValidated.phone || !isValidated.dob || !isValidated.gender) validation()
@@ -46,7 +48,8 @@ export default function Profile(){
     const loadUser = async () => {
       if(auth){
         await profile(auth).then((res) => {
-          setuser({ nickname: res.data.nickname, email: res.data.email, phone: res.data.phone, dob: res.data.dob, gender: res.data.gender})
+          console.log(res);
+          setuser({ nickname: res.data.nickname, email: res.data.email, phone: res.data.phone, dob: res.data.dob, gender: res.data.gender,avatar:res.data.avatar})
         })
       }
 
@@ -83,26 +86,43 @@ export default function Profile(){
     if(button.innerText === 'EDIT'){
       button.innerText = 'Update';
       setDisabled(false);
+
     }else{
       const result = validation()
-      console.log(result);
       if(result.nickname && result.phone && result.dob){
-          setOpen(true);
-          updateUser(user).then((data)=>{
-            if(data.code === "200") {
-              timer.current = window.setTimeout(() => {
-                setLoading("loading")
-              }, 2000);
-              setLoading("success")
-              getAuth();
-              setDisabled(true);
-              button.innerText = 'EDIT';
-              clearTimeout(timer.current);
-            }else{
-              setOpen(false);
-              setErrorMsg(data.msg)
-            }
-          })
+        setOpen(true)
+        timer.current = window.setTimeout(() => {
+          setLoading("loadings")
+        }, 2000);
+        const imageRef = ref(storage,`avatar/${avatar.name+new Date().getTime()}`)
+
+        const uploadTask = uploadBytesResumable(imageRef,avatar)
+        // upload process
+        uploadTask.on("state_changed",(snapshot)=>{
+
+        },(err)=>{
+    
+        },()=>{
+            // Upload completed successfully, return download url 
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
+                updateUser(user,downloadURL).then((data)=>{
+                  if(data.code === "200") {
+                    setLoading("success")
+                    getAuth();
+                    setDisabled(true);
+                    button.innerText = 'EDIT';
+                    clearTimeout(timer.current);
+                  }else{
+                    setOpen(false);
+                    setErrorMsg(data.msg)
+                  }
+                })
+            })
+        })
+
+
+        
+
         }else{
           setIsValidated(false)
         }
@@ -159,6 +179,10 @@ export default function Profile(){
     setOpen(false);
   };
 
+  const avatarOnChange = (e)=>{
+    setAvatar(e.target.files[0])
+  }
+
   function disableWait(){
     const sendCodeButton = document.getElementById('codeButton')
     var t = 5
@@ -181,13 +205,13 @@ export default function Profile(){
           <Typography variant="h6" noWrap component="div" sx={{width:1,height:40, ml:5,}}>My Account</Typography>
           <Box component="main" sx={{display:'flex', flexDirection: 'column', alignItems: 'center',}}>
             <Container component="div" maxWidth="xs">
-              <Box sx={{mt:10, display:'flex', alignItems:'flex-end', justifyContent:'flex-start', flexDirection:'row-reverse', }}>
-                <IconButton sx={{ display: 'inline', m:0, p:0 }}>
-                  <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 100, height: 100}}><PermIdentityIcon sx={{width: 50, height: 50}} /></Avatar>
+              <Box sx={{mt:10, display:'flex', alignItems:'center', justifyContent:'flex-start' }}>
+                <IconButton sx={{ display: 'inline', m:0, p:0 }} aria-label="upload picture" component="label">
+                  <input hidden accept="image/*" type="file" onChange={avatarOnChange} />
+                  <Avatar sx={{ m: 1, width: 80, height: 80}} src={user.avatar !== null && avatar === ""? user.avatar:avatar&&URL.createObjectURL(avatar)} />
                 </IconButton>
                 <Typography variant="h6" noWrap component="div" sx={{height:40, display:'inline', m:0, p:0}}>{auth}</Typography>
               </Box>
-
               <Box component="form" noValidate sx={{backgroundColor:'#fbfbfb', pt:7, pb:7, pl:7, pr:7, mb:5, mt:3, borderRadius:5, width:350,}}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>

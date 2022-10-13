@@ -53,11 +53,13 @@ export default function Register() {
         if(result.email && result.password && result.nickname && result.phone ){
             setLoading(true)
             signUp(account).then((res)=>{
-                if(res.code === 200){
+                if(res.code === "200"){
                     setMessage({show:true,message:"Register succcessfully",severity:"success"})
                     setLoading(false)
                 }else{
                     setMessage({show:true,message:"Email was taken",severity:"error"})
+                    setLoading(false)
+
                 }
             })
         }

@@ -33,6 +33,9 @@ function useUpload(){
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
                 setIsUploaded(true)
                 setImageURL(downloadURL)
+                if(foldername === "avatar"){
+                    
+                }
             })
         })
     }

@@ -18,8 +18,10 @@ export const profile = async (email)=>{
     return result 
 }
 
-export const updateUser = async (user)=>{
+export const updateUser = async (user,imageURL)=>{
+    user.avatar = imageURL
     const result = await axios.post(API+"/updateUser",user)
+    console.log(user);
     return result 
 }
 
@@ -42,7 +44,7 @@ export const updateUserPassword = async (password,code)=>{
 }
 
 export const updateUserAvatar = async (avatar)=>{
-    const result = await axios.post(API+"/updateAvatar", avatar)
+    const result = await axios.post(API+"/updateAvatar", {avatar:avatar})
     return result 
 }
 

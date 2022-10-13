@@ -42,7 +42,6 @@ public class UserController {
 
     @PostMapping("/profile")
     public ResponseResult<User> profile(@RequestBody Map<String,String>  email) throws DataNotFoundException {
-        System.out.println("profile: "+email.get("email"));
         User userProfile = userService.getUserInfo(email.get("email"));
         return ResponseResult.success(userProfile);
     }
@@ -51,13 +50,7 @@ public class UserController {
     public ResponseResult<String> sendEmail(HttpServletRequest request, Principal principal, @RequestBody Map<String,String> email){
         session = request.getSession();
         String s;
-        System.out.println(email.get("email"));
         if(email!=null){
-//            if(principal!=null){
-//                s = userService.sendMail(principal.getName()).toString();
-//            }else{
-//                s = userService.sendMail(email).toString();
-//            }
             s = userService.sendMail(email.get("email")).toString();
             session.setAttribute("code",s);
             return ResponseResult.success();
