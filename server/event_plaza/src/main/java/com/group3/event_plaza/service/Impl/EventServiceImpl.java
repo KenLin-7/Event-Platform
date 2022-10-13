@@ -159,7 +159,7 @@ public class EventServiceImpl implements EventService {
         result.put("image",event.getImage());
         result.put("description",event.getDescription());
         result.put("title",event.getTitle());
-        result.put("Category",event.getCategoryName());
+        result.put("category",event.getCategoryName());
         return result;
     }
 

@@ -42,21 +42,7 @@ export default function EventEdit(effect, deps) {
 
 
     const [category, setCategory] = useState('Sports');
-    const categories = [
-        {
-            value: 'Sports',
-            label: 'Sports'
-        },
-        {
-            value: 'Music',
-            label: 'Music'
-        },
-        {
-            value: 'Arts',
-            label: 'Arts'
-        },
-
-    ];
+    const categories = ['Food&Drink','Music','Business','Film&Media'];
 
     const handleCategoryChange = (e) => {
         setCategory(e.target.value)
@@ -65,24 +51,7 @@ export default function EventEdit(effect, deps) {
 
 
     const [state, setState] = useState('NSW');
-    const states = [
-        {
-            value: 'NSW',
-            label: 'NSW'
-        },
-        {
-            value: 'VIC',
-            label: 'VIC'
-        },
-        {
-            value: 'ACT',
-            label: 'ACT'
-        },
-        {
-            value: 'QLD',
-            label: 'QLD'
-        },
-    ];
+    const states = ['NSW', 'VIC', 'ACT', 'QLD','WA','SA','TAS'];
     const handleSateChange = (e) => {
         setState(e.target.value)
         setEvent({...event, ["state"]: e.target.value})
@@ -193,6 +162,7 @@ export default function EventEdit(effect, deps) {
             const databaseEvent = {
                 eventId: eventId,
                 title: event.title,
+                categoryName:event.category,
                 image: event.image,
                 startDate: event.time,
                 maxParticipant: event.maxParticipant,
@@ -357,13 +327,13 @@ export default function EventEdit(effect, deps) {
                                             select
                                             required
                                             label="Category"
-                                            value={category}  // unchanged
+                                            value={event.category}  // unchanged
                                             onChange={handleCategoryChange}
                                             helperText="Please select a category"
                                         >
-                                            {categories.map((option) => (
-                                                <MenuItem key={option.value} value={option.value}>
-                                                    {option.label}
+                                            {categories.map((option,index) => (
+                                                <MenuItem key={index} value={option}>
+                                                    {option}
                                                 </MenuItem>
                                             ))}
                                         </TextField>
@@ -456,9 +426,9 @@ export default function EventEdit(effect, deps) {
                                                onChange={handleSateChange}
 
                                     >
-                                        {states.map((option) => (
-                                            <MenuItem key={option.value} value={option.value}>
-                                                {option.label}
+                                        {states.map((option,index) => (
+                                            <MenuItem key={index} value={option}>
+                                                {option}
                                             </MenuItem>
                                         ))}
                                     </TextField>

@@ -27,33 +27,16 @@ import { useNavigate } from "react-router-dom";
 
 export default function EventPost() {
 
-    const [category, setCategory] = useState('Sports');
+    const [category, setCategory] = useState('Food&Drink');
     const navigate = useNavigate()
-    const categories = ['Sports','Music','Arts'];
+    const categories = ['Food&Drink','Music','Business','Film&Media'];
     const handleCategoryChange = (e) => {
         setCategory(e.target.value)
         setEvent({...event, ["category"]: e.target.value})
     };
 
     const [state, setState] = useState('NSW');
-    const states = [
-        {
-            value: 'NSW',
-            label: 'NSW'
-        },
-        {
-            value: 'VIC',
-            label: 'VIC'
-        },
-        {
-            value: 'ACT',
-            label: 'ACT'
-        },
-        {
-            value: 'QLD',
-            label: 'QLD'
-        },
-    ];
+    const states = ['NSW', 'VIC', 'ACT', 'QLD','WA','SA','TAS'];
     const handleSateChange = (e) => {
         setState(e.target.value)
         setEvent({...event, ["state"]: e.target.value})
@@ -65,7 +48,7 @@ export default function EventPost() {
     const [event, setEvent] = useState({
         eventTitle: "",
         participant: 1,
-        category: "",
+        category: "Food&Drink",
         description: "",
         image: "",
         address1: "",
@@ -174,6 +157,7 @@ export default function EventPost() {
 
                 title:event.eventTitle,
                 image:event.image,
+                categoryName:event.category,
                 status:"1",
                 startDate: event.dateAndTime,
                 maxParticipant: event.participant ,
@@ -420,9 +404,9 @@ export default function EventPost() {
                                    onChange={handleSateChange}
 
                         >
-                            {states.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
+                            {states.map((option,index) => (
+                                <MenuItem key={index} value={option}>
+                                    {option}
                                 </MenuItem>
                             ))}
                         </TextField>
@@ -456,6 +440,7 @@ export default function EventPost() {
                         <Stack sx={{marginRight: 40}}>
                             <CalendarCPN
                                 onTime={(time) => setEvent({...event, ["dateAndTime"]: time})}
+                                oldTime = {event.dateAndTime}
                                          ></CalendarCPN>
                         </Stack>
                     </Stack>
