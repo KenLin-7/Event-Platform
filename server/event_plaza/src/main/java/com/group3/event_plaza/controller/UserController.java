@@ -48,17 +48,17 @@ public class UserController {
     }
 
     @PostMapping("/sendEmail")
-    public ResponseResult<String> sendEmail(HttpServletRequest request, Principal principal, @RequestBody String email){
+    public ResponseResult<String> sendEmail(HttpServletRequest request, Principal principal, @RequestBody Map<String,String> email){
         session = request.getSession();
         String s;
-        System.out.println(email);
+        System.out.println(email.get("email"));
         if(email!=null){
 //            if(principal!=null){
 //                s = userService.sendMail(principal.getName()).toString();
 //            }else{
 //                s = userService.sendMail(email).toString();
 //            }
-            s = userService.sendMail(email).toString();
+            s = userService.sendMail(email.get("email")).toString();
             session.setAttribute("code",s);
             return ResponseResult.success();
         }else{

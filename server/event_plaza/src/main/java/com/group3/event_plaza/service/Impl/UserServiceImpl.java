@@ -1,5 +1,4 @@
 package com.group3.event_plaza.service.Impl;
-
 import com.group3.event_plaza.common.exception.authorization.EmailExistException;
 import com.group3.event_plaza.common.exception.business.DataNotFoundException;
 import com.group3.event_plaza.common.lang.RoleUser;

@@ -23,11 +23,9 @@ const GetStart = () => {
             Sapien ipsum scelerisque convallis fusce
           </div>
 
-          <div className={styles['get-start-text-3']}>
-            Overline
-          </div>
 
-          <Box sx={{ display: 'flex', flexDirection: 'row'}} className="get-start-btn-group">
+
+          <Box sx={{ display: 'flex', flexDirection: 'row',marginTop:'20px'}} className="get-start-btn-group">
             <button className={styles['get-start-btns']} onClick={onStartClick}>Get started</button>
             <button className={styles['get-start-btns']}>Learn more</button>
           </Box>

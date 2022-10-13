@@ -72,6 +72,8 @@
   border-radius: 12px;
   color: white;
   margin-right: 20px;
+  font-size: 18px;
+  font-weight: bolder;
 }
 
 @media screen and (max-width: 1200px) {

@@ -29,28 +29,11 @@ export default function EventPost() {
 
     const [category, setCategory] = useState('Sports');
     const navigate = useNavigate()
-    // const categories = [
-    //     {
-    //         value: 'Sports',
-    //         label: 'Sports'
-    //     },
-    //     {
-    //         value: 'Music',
-    //         label: 'Music'
-    //     },io
-    //     {
-    //         value: 'Arts',
-    //         label: 'Arts'
-    //     },
-
-    // ];
     const categories = ['Sports','Music','Arts'];
     const handleCategoryChange = (e) => {
         setCategory(e.target.value)
         setEvent({...event, ["category"]: e.target.value})
     };
-
-
 
     const [state, setState] = useState('NSW');
     const states = [
@@ -76,8 +59,6 @@ export default function EventPost() {
         setEvent({...event, ["state"]: e.target.value})
     };
 
-
-
     const participant_regex = /(^[1-9]\d*$)/
     const [uploadingImageFlag, setUploadingImageFlag] = useState(0)
 
@@ -96,14 +77,12 @@ export default function EventPost() {
 
     })
 
-
     const [isValidated, setIsValidated] = useState({
         eventTitle: true,
         address1: true,
         suburb: true,
         postcode: true
     })
-
 
     const [eventTitleError, setEventTitleError] = useState(
         {
@@ -129,7 +108,6 @@ export default function EventPost() {
         show: false,
         content: ""
     })
-
 
     const validation = () => {
         const validate = {
@@ -212,8 +190,6 @@ export default function EventPost() {
         }
     }
 
-
-
     const onChange = (e) => {
         setEvent({...event, [e.target.name]: e.target.value})
 
@@ -288,7 +264,6 @@ export default function EventPost() {
         setOpen(false);
         // go back to the previous page
     };
-
 
     return (
 

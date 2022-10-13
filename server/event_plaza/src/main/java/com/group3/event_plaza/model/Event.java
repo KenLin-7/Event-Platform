@@ -1,10 +1,8 @@
 package com.group3.event_plaza.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -37,13 +35,11 @@ public class Event {
 
     private User owner;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
     @OneToMany(mappedBy = "event",fetch = FetchType.LAZY)
     @JsonIgnoreProperties("role")
     private List<Registration> registrationList;
+
+    private String categoryName;
 
 
     public Event(String description, int maxParticipant, String status, String image,
@@ -132,12 +128,13 @@ public class Event {
         this.owner = owner;
     }
 
-    public Category getCategory() {
-        return category;
+
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public List<Registration> getRegistrationList() {

@@ -5,7 +5,6 @@ import com.group3.event_plaza.common.lang.RoleUser;
 import com.group3.event_plaza.model.*;
 import com.group3.event_plaza.model.dto.EventDTO;
 import com.group3.event_plaza.model.result.EventResult;
-import com.group3.event_plaza.repository.CategoryRepository;
 import com.group3.event_plaza.repository.EventRepository;
 import com.group3.event_plaza.repository.RoleRepository;
 import com.group3.event_plaza.repository.UserRepository;
@@ -33,8 +32,6 @@ public class EventServiceImpl implements EventService {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    CategoryRepository categoryRepository;
 
     @Autowired
     RoleRepository roleRepository;
@@ -49,8 +46,6 @@ public class EventServiceImpl implements EventService {
         Role organizer = roleRepository.findByRoleId(RoleUser.ROLE_ORGANIZER.getId());
         owner.getRole().add(organizer);
         event.setOwner(owner);
-        Category category = categoryRepository.findByCategoryId(1);
-        event.setCategory(category);
         return eventRepository.save(event).getEventId();
     }
 
@@ -63,7 +58,7 @@ public class EventServiceImpl implements EventService {
         oldEvent.setMaxParticipant(event.getMaxParticipant());
         oldEvent.setStartDate(event.getStartDate());
         oldEvent.setTitle(event.getTitle());
-
+        oldEvent.setCategoryName(event.getCategoryName());
         eventRepository.save(oldEvent);
 
     }
@@ -164,7 +159,7 @@ public class EventServiceImpl implements EventService {
         result.put("image",event.getImage());
         result.put("description",event.getDescription());
         result.put("title",event.getTitle());
-        result.put("Category",event.getCategory());
+        result.put("Category",event.getCategoryName());
         return result;
     }
 
