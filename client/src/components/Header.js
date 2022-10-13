@@ -69,7 +69,7 @@ const Header = () => {
         <div className={styles["right"]}>
           {auth === null?(            
           <Stack className={styles["right-stack"]} direction="row" spacing={2}>
-            <Link to="/login"><Button variant="outlined" sx={{ borderRadius: 2 }} className="header-btn">Sign in</Button></Link>
+            <Link to="/login"><Button variant="outlined" sx={{ borderRadius: 2, minWidth: 100 }} className="header-btn">Sign in</Button></Link>
             <Link to="/register"><Button variant="contained" sx={{ borderRadius: 2 }} className="header-btn">Register</Button></Link>
           </Stack>):(
             <Stack direction="row" spacing={2}>
