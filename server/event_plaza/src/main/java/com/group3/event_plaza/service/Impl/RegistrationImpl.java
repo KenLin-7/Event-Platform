@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
+import java.util.List;
 
 
 @Service
@@ -54,5 +55,13 @@ public class RegistrationImpl implements RegistrationService {
     @Override
     public void rejectRegistration(int registrationId) {
         registrationRepository.rejectRegistration(registrationId);
+    }
+
+    @Override
+    public List<Registration> getParticipantsByEventId(int eventId) {
+
+        List<Registration> registrationList = registrationRepository.findByEventId(eventId);
+
+        return registrationList;
     }
 }

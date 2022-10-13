@@ -12,6 +12,8 @@ import java.util.List;
 
 public interface RegistrationRepository extends JpaRepository<Registration,Integer> {
 
+    @Query(value = "select  * from registration  where event_id= ?1 and status = 'confirmed'",nativeQuery = true)
+    List<Registration> findByEventId(int eventId);
 
     @Query(value = "SELECT * from registration where user_id = ?1",nativeQuery = true)
     List<Registration> findByUserId(int id);

@@ -51,11 +51,12 @@ export default function RegistBtn(props) {
         setOpenConfirmed(false)
         deleteRegistration(props.eventId).then(res=>{
             if(res.code==="200"){
+                props.updateRegistFlag("available")
                 subscribeEvent(props.eventId)
                 sendUserMessage("kenlbd61@gmail.com",props.eventId,"Some one have left your event")
             }
         })
-        props.updateRegistFlag("available")
+
     }
 
 

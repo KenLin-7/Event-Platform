@@ -101,7 +101,6 @@ public class EventServiceImpl implements EventService {
     public Map<String, Object> getEventDetail(int eventId, String requesterEmail) {
         Event event = eventRepository.findByEventId(eventId);
 
-        // TODO Allow No login
 
         Registration registration = registrationFlag(event.getRegistrationList(), requesterEmail);
         Map<String, Object> result = new HashMap<String, Object>();
@@ -110,7 +109,9 @@ public class EventServiceImpl implements EventService {
         if (requesterEmail.equals(event.getOwner().getEmail()) ) {
             result.replace("registBtnFlag", "owner");
         } else {
+
             if (registration != null) {
+
                 result.replace("registBtnFlag", registration.getStatus());
 
             }else{
@@ -133,6 +134,7 @@ public class EventServiceImpl implements EventService {
         result.put("owner",event.getOwner());
         result.put("description",event.getDescription());
         result.put("title",event.getTitle());
+
 
 
         return result;

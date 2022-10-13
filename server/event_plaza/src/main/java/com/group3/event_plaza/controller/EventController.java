@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
@@ -73,8 +74,12 @@ public class EventController {
     @PostMapping("/getEventDetail")
     public ResponseResult<Map<String,Object>> getEventDetail(Principal principal,@RequestBody Map<String,Integer>map) throws DataNotFoundException {
         int eventId = map.get("eventId");
-        Map<String,Object> result= eventService.getEventDetail(eventId,principal.getName());
-
+        Map<String, Object> result;
+        if(principal!=null) {
+            result = eventService.getEventDetail(eventId, principal.getName());
+        }else {
+            result = eventService.getEventDetail(eventId, "");
+        }
         return ResponseResult.success(result);
     }
 

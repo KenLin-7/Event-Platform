@@ -17,7 +17,8 @@ import {getEventDetail} from "../../api/EventAPI";
 import avatar from '../EventDetail/avatar.jpg';
 import RegistBtn from "./RegistBtn";
 import dayjs from "dayjs";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
+import {getParticipants} from "../../api/RegistrationAPI";
 
 
 export default function EventDetail(effect, deps) {
@@ -35,19 +36,20 @@ export default function EventDetail(effect, deps) {
     const [eventDate, setEventDate] = useState("")
     const [eventImg, setEventImg] = useState(img)
     const [registFlag, setRegistFlag] = useState("")
-    const [registrationList, setRegistrationList] = useState(null)
+    const [registrationList, setRegistrationList] = useState([])
 
     useEffect(() => {
-        
+
         getEventDetail(eventId).then(
             (res) => {
                 setEvent(res.data)
-                setRegistrationList(res.data["registrationList"])
                 setRegistFlag(res.data["registBtnFlag"])
+                setRegistrationList(res.data["registrationList"])
                 // setRegistFlag("rejected")
-                setLoading(false)
 
+                setLoading(false)
             })
+
 
     }, [eventId])
 
@@ -55,14 +57,23 @@ export default function EventDetail(effect, deps) {
         if (!loading) {
             processTime(event.time)
             processImage(event.image)
-            if (registrationList.length >= event.maxParticipant) {
-                setRegistFlag("full")
+            if (registFlag !== "confirmed") {
+                if (registrationList.length >= event.maxParticipant) {
+                    setRegistFlag("full")
+                }
             }
         }
     }, [event])
 
     useEffect(() => {
-
+        console.log(registFlag)
+        getParticipants(eventId).then(
+            (res) => {
+                console.log(res.data)
+                setRegistrationList(res.data);
+                console.log(registrationList)
+            }
+        )
 
     }, [registFlag])
 
@@ -116,7 +127,7 @@ export default function EventDetail(effect, deps) {
 
                                             <Container>
                                                 <Stack direction={"row"} sx={{marginLeft: 2, marginTop: 8}} spacing={1}>
-                                                    <Avatar sx={{width: 50, height: 50}} src={avatar}/>
+                                                    <Avatar sx={{width: 50, height: 50}} src={event["owner"].avatar}/>
                                                     <Stack>
                                                         <Typography align={"left"}
                                                                     fontSize={16}> {event["owner"].nickname} </Typography>
@@ -170,15 +181,33 @@ export default function EventDetail(effect, deps) {
 
                             <Divider sx={{marginTop: 3}} variant="middle"/>
 
-                            <Stack sx={{marginTop: 3, marginX: 6}}>
-                                <Typography align={"left"} fontSize={18} fontWeight={500}>Participants: </Typography>
-                                <Grid2 container direction={"row"} sx={{marginTop: 2, marginX: 2}} spacing={2}>
-                                    {registrationList.map((reg) => (
-                                        <ParticipantCPN key={reg.requester.email}
-                                                        requester={reg["requester"]}></ParticipantCPN>
-                                    ))}
-                                </Grid2>
-                            </Stack>
+
+                            {
+                                registrationList.length === 0 ?
+
+                                    (
+                                        <Stack sx={{marginTop: 3}}>
+                                            <Typography align={"center"} fontSize={18}
+                                                        fontWeight={500}>No participants </Typography>
+                                        </Stack>)
+                                    :
+                                    (<Stack sx={{marginTop: 3, marginX: 6}}>
+                                            <Typography align={"left"} fontSize={18}
+                                                        fontWeight={500}>Participants: </Typography>
+                                            <Grid2 container direction={"row"} sx={{marginTop: 2, marginX: 2}}
+                                                   spacing={2}>
+                                                {registrationList.map((reg) => (
+                                                    <ParticipantCPN key={reg.requester.email}
+                                                                    requester={reg["requester"]}></ParticipantCPN>
+                                                ))}
+                                            </Grid2>
+                                        </Stack>
+                                    )
+
+
+                            }
+
+
                         </Stack>
                     </Container>
 
