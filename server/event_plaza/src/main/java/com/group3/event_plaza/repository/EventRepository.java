@@ -23,11 +23,15 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
 
     List<Event> findByTitleContains(String keyword);
 
-    List<Event> findTop9ByOrderByEventIdDesc();
+
+    @Query(value = "SELECT * FROM event where status = 1 ORDER BY event_id DESC LIMIT 9",nativeQuery = true)
+    List<Event> findTop9EventNoCancellation();
 
     List<Event> findByOwner(User user);
 
     List<Event> findAll();
+    @Query(value = "SELECT * FROM event where status = 1",nativeQuery = true)
+    List<Event> findAllNonCancelledEvents();
 
     @Query(value = "SELECT * FROM event where start_date > ?1 AND TIMESTAMPDIFF(DAY ,?1,start_date) <= 1",nativeQuery = true)
     List<Event> getEventBy24Hour(Timestamp today);
@@ -48,10 +52,11 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
     @Query(value = "SELECT COUNT(event_id) from event where start_date < ?1", nativeQuery = true)
     Integer countFinishEvent(Timestamp today);
 
-    @Query(value = "SELECT * from event where category_name = ?1",nativeQuery = true)
+    @Query(value = "SELECT * from event where category_name = ?1 and status = 1",nativeQuery = true)
     List<Event> findEventByCategory(String category);
 
-    @Query(value = "SELECT * from event where category_name = ?2 and title LIKE %?1%",nativeQuery = true)
+    @Query(value = "SELECT * from event where status = 1 and category_name = ?2 and title LIKE %?1%",nativeQuery = true)
     List<Event> findEventByCategoryAndKeyword(String keyword, String category);
+
 
 }

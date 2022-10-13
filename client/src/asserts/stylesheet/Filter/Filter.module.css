@@ -57,6 +57,17 @@
   justify-content: space-evenly;
 }
 
+.no-participant-warning{
+  margin-left: 15px;
+}
+
+.no-post-warning{
+  margin: 0 auto;
+  text-align: center;
+  line-height: 600px;
+  color: gray;
+}
+
 .event-card-img {
   flex: 1;
   width: 100%;

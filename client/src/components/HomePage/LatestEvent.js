@@ -10,6 +10,7 @@ import DefaultAvatar from '../../asserts/images/default-avatar.jpg';
 import TestImage from '../../asserts/images/test-image.png';
 import CircularProgress from '@mui/material/CircularProgress';
 import humanDateConvert from '../../utils/humanDateConvert';
+import confirmedParticipants from '../../utils/confirmedParticipants';
 import { useNavigate } from 'react-router-dom'
 
 const LatestEvent = ({ latestEvents, flag, ref }) => {
@@ -57,7 +58,7 @@ const LatestEvent = ({ latestEvents, flag, ref }) => {
                         </div>
 
                         <div className={styles["event-card-people-num"]}>
-                          {event.registrationList.length}/{event.maxParticipant}
+                          {confirmedParticipants(event.registrationList)}/{event.maxParticipant}
                         </div>
                       </Box>
 
@@ -69,33 +70,10 @@ const LatestEvent = ({ latestEvents, flag, ref }) => {
 
                       <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2.5 }}>
                         <div className={styles["event-card-participants"]}>
-                          <div className={styles['avatars-group']}>
-                            <AvatarGroup max={3} sx={{ float: 'left' }} className={styles['avatars-group-control']}>
-                              {
-                                event.registrationList.map((user, index) => {
-                                  return (
-                                    <div key={index}>
-                                      {
-                                        user.requester.avatar === null
-                                          ?
-                                          (
-                                            <Avatar alt="Remy Sharp" src={DefaultAvatar} />
-                                          )
-                                          :
-                                          (
-                                            <Avatar alt="Remy Sharp" src={user.requester.avatar} />
-                                          )
-                                      }
 
-                                    </div>
-                                  )
-                                })
-                              }
-                            </AvatarGroup>
-                          </div>
 
                           {
-                            event.registrationList.length === 0
+                            confirmedParticipants(event.registrationList) === 0
                               ?
                               (
                                 <div className={styles['avatars-group-text-1']}>
@@ -104,9 +82,35 @@ const LatestEvent = ({ latestEvents, flag, ref }) => {
                               )
                               :
                               (
-                                <div className={styles['avatars-group-text-2']}>
+                                <>
+                                  <div className={styles['avatars-group']}>
+                                    <AvatarGroup max={3} sx={{ float: 'left' }} className={styles['avatars-group-control']}>
+                                      {
+                                        event.registrationList.map((user, index) => {
+                                          return (
+                                            <div key={index}>
+                                              {
+                                                user.requester.avatar === null
+                                                  ?
+                                                  (
+                                                    <Avatar alt="Remy Sharp" src={DefaultAvatar} />
+                                                  )
+                                                  :
+                                                  (
+                                                    <Avatar alt="Remy Sharp" src={user.requester.avatar} />
+                                                  )
+                                              }
+
+                                            </div>
+                                          )
+                                        })
+                                      }
+                                    </AvatarGroup>
+                                  </div>
+                                  <div className={styles['avatars-group-text-2']}>
                                   {event.registrationList.length} people are interested and have submitted an application
                                 </div>
+                                </>
                               )
                           }
 
