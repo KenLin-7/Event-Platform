@@ -40,7 +40,7 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
     List<Event> findByUserId(int id);
 
 
-    @Query(value = "select description,image,title,owner from event where event_id = ?1",nativeQuery = true)
+    @Query(value = "select description,image,title,owner,status from event where event_id = ?1",nativeQuery = true)
     List<EventResult> findBriefEventDetails(int eventId);
 
     @Modifying

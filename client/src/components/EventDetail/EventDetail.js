@@ -188,7 +188,7 @@ export default function EventDetail(effect, deps) {
                                     (
                                         <Stack sx={{marginTop: 3}}>
                                             <Typography align={"center"} fontSize={18}
-                                                        fontWeight={500}>No participants </Typography>
+                                                        fontWeight={500}>No participant </Typography>
                                         </Stack>)
                                     :
                                     (<Stack sx={{marginTop: 3, marginX: 6}}>

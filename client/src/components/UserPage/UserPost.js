@@ -72,6 +72,11 @@ const UserPost = () => {
     navigate(`/event/edit/${id}`)
   }
 
+  const handleToDetail = (id)=>{
+    navigate(`/event/detail/${id}`)
+
+  }
+
   return (
     <div>
       {
@@ -98,7 +103,10 @@ const UserPost = () => {
                         {
                           _DATA.currentData().map(card => {
                             return (
-                              <Card variant="outlined" className='event-card' key={card.eventId}>
+                              <Card variant="outlined" className='event-card' key={card.eventId} >
+                                <div onClick={()=>handleToDetail(card.eventId)}>
+
+                                
                                 <div className={styles['event-card-img']}>
                                   <img className={styles['event-image']} src={card.image} alt="" />
                                 </div>
@@ -118,7 +126,7 @@ const UserPost = () => {
                                 <div className={styles["event-card-date"]}>
                                   <AccessAlarmIcon sx={{ marginTop: -0.3 }} /> {humanDateConvert(card.startDate)}
                                 </div>
-
+                                </div>
                                 <Divider />
 
                                 <div className={styles['group-btn']}>

@@ -9,6 +9,8 @@ public class EventDTO {
 
     private String ownerEmail;
 
+    private String status;
+
     public EventDTO() {
     }
 
@@ -42,5 +44,13 @@ public class EventDTO {
 
     public void setOwnerEmail(String ownerEmail) {
         this.ownerEmail = ownerEmail;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -79,6 +79,7 @@ public class EventServiceImpl implements EventService {
             eventDTO.setImage(result.getImage());
             eventDTO.setTitle(result.getTitle());
             eventDTO.setOwnerEmail(ownerEmail);
+            eventDTO.setStatus(result.getStatus());
         }else{
             throw  new DataNotFoundException("Can't found the event ");
         }

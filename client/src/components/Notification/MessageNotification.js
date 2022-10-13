@@ -24,12 +24,15 @@ export default function MessageNotification({notification,closeDrawer,index}) {
   },[])
 
   const navToDetail = ()=>{
+  if(event.status !== "2"){
     if(auth === event.ownerEmail){
       navigate("/user-page")
     }else{
       navigate(`/event/detail/${notification.eventId}`)
     }
     closeDrawer()
+  }
+
 
   }
 

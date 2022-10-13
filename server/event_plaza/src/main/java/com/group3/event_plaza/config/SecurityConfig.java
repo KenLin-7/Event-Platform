@@ -40,7 +40,8 @@ public class SecurityConfig {
             "/api/event/getEventDetail",
             "/api/event/search/all/{category}",
             "/api/event/search/{keyword}/{category}",
-            "/api/statistic/get"
+            "/api/statistic/get",
+            "/api/registration/participants"
     };
 
     private static final String[] ORGANIZER_URLS = {

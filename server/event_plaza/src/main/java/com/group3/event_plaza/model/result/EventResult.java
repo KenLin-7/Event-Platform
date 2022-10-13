@@ -10,4 +10,6 @@ public interface EventResult {
 
     int getOwner();
 
+    String getStatus();
+
 }
