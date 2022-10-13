@@ -22,50 +22,35 @@ import formValidate from "../../utils/validation";
 import React from "react";
 import dayjs from "dayjs";
 import {postEvent} from "../../api/EventAPI";
-import {useUser} from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import FormStyles from "../../asserts/stylesheet/Form.module.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function EventPost() {
 
-    const [category, setCategory] = useState('Sports');
+    const [category, setCategory] = useState('Food&Drink');
+    const [confirmFlag,setConfirmFlag] = useState(false);
     const navigate = useNavigate()
-    const categories = ['Sports','Music','Arts'];
+    const categories = ['Food&Drink','Music','Business','Film&Media'];
     const handleCategoryChange = (e) => {
         setCategory(e.target.value)
         setEvent({...event, ["category"]: e.target.value})
     };
 
     const [state, setState] = useState('NSW');
-    const states = [
-        {
-            value: 'NSW',
-            label: 'NSW'
-        },
-        {
-            value: 'VIC',
-            label: 'VIC'
-        },
-        {
-            value: 'ACT',
-            label: 'ACT'
-        },
-        {
-            value: 'QLD',
-            label: 'QLD'
-        },
-    ];
+    const states = ['NSW', 'VIC', 'ACT', 'QLD','WA','SA','TAS'];
     const handleSateChange = (e) => {
         setState(e.target.value)
         setEvent({...event, ["state"]: e.target.value})
     };
 
     const participant_regex = /(^[1-9]\d*$)/
-    const [uploadingImageFlag, setUploadingImageFlag] = useState(0)
+    const [uploadingImageFlag, setUploadingImageFlag] = useState(false)
 
     const [event, setEvent] = useState({
         eventTitle: "",
         participant: 1,
-        category: "",
+        category: "Food&Drink",
         description: "",
         image: "",
         address1: "",
@@ -164,6 +149,8 @@ export default function EventPost() {
         }
 
         if(result.suburb&&result.postcode&&result.eventTitle&&result.address1){
+            setConfirmFlag(true);
+
             let address = ""
             if(event.address2!=null&&event.address2!="") {
                 address = event.address1 + "+" + event.address2 + "+" + event.suburb + "+" + event.state + "+" + event.postcode
@@ -174,14 +161,15 @@ export default function EventPost() {
 
                 title:event.eventTitle,
                 image:event.image,
+                categoryName:event.category,
                 status:"1",
                 startDate: event.dateAndTime,
                 maxParticipant: event.participant ,
                 description:event.description,
                 location:address
             }
+
             postEvent(databaseEvent).then((res)=>{
-                console.log(res);
 
                 if(res.code === "200"){
                     navigate(`/event/detail/${res.data}`)
@@ -196,7 +184,6 @@ export default function EventPost() {
         if (!isValidated.eventTitle || !isValidated.address1
             || !isValidated.suburb || !isValidated.postcode
         ) validation()
-        console.log(event)
     }
 
     const handleParticipantChange = (e) => {
@@ -262,7 +249,7 @@ export default function EventPost() {
 
     const handleCancelYes = () => {
         setOpen(false);
-        // go back to the previous page
+        navigate(-1)
     };
 
     return (
@@ -420,9 +407,9 @@ export default function EventPost() {
                                    onChange={handleSateChange}
 
                         >
-                            {states.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
+                            {states.map((option,index) => (
+                                <MenuItem key={index} value={option}>
+                                    {option}
                                 </MenuItem>
                             ))}
                         </TextField>
@@ -456,6 +443,7 @@ export default function EventPost() {
                         <Stack sx={{marginRight: 40}}>
                             <CalendarCPN
                                 onTime={(time) => setEvent({...event, ["dateAndTime"]: time})}
+                                oldTime = {event.dateAndTime}
                                          ></CalendarCPN>
                         </Stack>
                     </Stack>
@@ -491,16 +479,18 @@ export default function EventPost() {
                         </Dialog>
 
                         {/*        confirm button      */}
-                        {console.log(uploadingImageFlag)}
-                        {uploadingImageFlag === 1 ?
+
+                        {uploadingImageFlag ?
 
                             <Button disabled variant={"contained"} align={"right"}
                                     sx={{marginLeft: 2}}
                             > Confirm </Button>
 
-                            : <Button onClick={onClick} variant={"contained"} align={"right"}
-                                      sx={{marginLeft: 2}}
-                            > Confirm </Button>
+                            :
+                            <Button variant={"contained"} align={"right"}
+                            sx={{marginLeft: 2}}  onClick={onClick} disabled={confirmFlag}>
+                        {confirmFlag ? (<CircularProgress color='inherit'size={25}/>):("Confirm")}
+                            </Button>
 
                         }
                     </Stack>
