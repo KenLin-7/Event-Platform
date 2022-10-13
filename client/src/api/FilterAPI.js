@@ -6,6 +6,16 @@ export const search = async (keyword)=>{
     return result
 }
 
+export const searchEventByCategory = async (category)=>{
+    const result = await axios.get(API+`/search/all/${category}`)
+    return result
+}
+
+export const searchEventByCategoryAndKeyword = async (keyword, category)=>{
+    const result = await axios.get(API+`/search/${keyword}/${category}`)
+    return result
+}
+
 export const getLatestEvents = async ()=>{
     const result = await axios.get(API+`/latestEvent`)
     return result

@@ -14,17 +14,18 @@ import ImageTest from '../../asserts/images/test-image.png';
 import usePagination from "../Pagination";
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
-import { search } from '../../api/FilterAPI'
+import { search, searchEventByCategoryAndKeyword,  searchEventByCategory } from '../../api/FilterAPI'
 import humanDateConvert from '../../utils/humanDateConvert';
 import CircularProgress from '@mui/material/CircularProgress';
-import { getAllEvent } from '../../api/EventAPI';
+import { getAllEvent} from '../../api/EventAPI';
 
 
 const items = [
-  { id: 1, title: "Food & Drink" },
+  { id: 11, title: "All" },
+  { id: 1, title: "Food&Drink" },
   { id: 2, title: "Business" },
   { id: 3, title: "Music" },
-  { id: 4, title: "Film & Media" },
+  { id: 4, title: "Film&Media" },
 ]
 
 const FilterPage = () => {
@@ -34,7 +35,8 @@ const FilterPage = () => {
   const PER_PAGE = 2;
   const count = Math.ceil(filteredEventList.length / PER_PAGE);
   const _DATA = usePagination(filteredEventList, PER_PAGE);
-  const [searchInput, setSearchInput] = useState();
+  const [searchInput, setSearchInput] = useState("");
+  // const [categorySelction, setCategorySelection] = useState("");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -43,22 +45,59 @@ const FilterPage = () => {
     const getFilteredEvent = () => {
       setLoading(true);
       const keyword = params.keyword
-      if (keyword === undefined || keyword === "") {
+      const category = params.category
+
+      console.log(keyword)
+      console.log(category)
+
+      //两个都是空 显示所有
+      if ((keyword === undefined || keyword === "") && (category === undefined || category === "")) {
         getAllEvent().then((data) => {
           setFilteredEventList(data.data);
-          console.log(data.data)
           setLoading(false);
         })
-      } else {
+      }
+
+      //有keyword没有category
+      if(keyword !== undefined && category === undefined){
         search(keyword).then((data) => {
           setFilteredEventList(data.data);
           setLoading(false);
         });
       }
+
+      //两个都有
+      if(keyword !== undefined && category !== undefined){
+        searchEventByCategoryAndKeyword(keyword, category).then((data) => {
+          setFilteredEventList(data.data);
+          setLoading(false);
+        });
+      }
+
+      //没有keyword有category
+      if(keyword === undefined && category !== undefined){
+        console.log("123")
+        searchEventByCategory(category).then((data) => {
+          setFilteredEventList(data.data);
+          setLoading(false);
+        });
+      }
     }
+    
 
     getFilteredEvent();
-  }, [params.keyword]);
+  }, [params.keyword, params.category]);
+
+  const onClickCategory = (category) => {
+    const keyword = params.keyword
+    if(keyword !== undefined){
+      //有keyword 也有category
+      navigate(`/filter/${keyword}/${category}`)
+    }else{
+      //只有category
+      navigate(`/filter/all/${category}`)
+    }
+  }
 
   const handleToEventDetail = (id) => {
     navigate(`/event/detail/${id}`)
@@ -95,7 +134,7 @@ const FilterPage = () => {
           {
             items.map(item => {
               return (
-                <div className={styles['filter-items']} key={item.id}>
+                <div className={styles['filter-items']} key={item.id} onClick={() => onClickCategory(item.title)}>
                   {item.title}
                 </div>
               )
