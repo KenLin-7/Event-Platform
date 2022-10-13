@@ -52,7 +52,6 @@ export const NotificationProvider = ({children})=>{
 
     // handle notificaition payload 
     const handlePayload = (payload)=>{
-
         try{
             setCurrentNotification(JSON.parse(payload.body).message)
         }catch(err){

@@ -5,6 +5,9 @@ import { useUser } from '../context/UserContext'
 export const  PrivateRoute = ()=> {
     const {auth,loading} = useUser()
 
+    useEffect(()=>{
+            console.log(auth);
+    },[auth])
     return (
         loading ? (
             <Stack sx={{height:'100%',widht:"100%"}}>
@@ -16,7 +19,7 @@ export const  PrivateRoute = ()=> {
             </Stack>
 
         ):(
-            auth? <Outlet/>:<Navigate to={'/login'}/>
+            auth!==null? <Outlet/>:<Navigate to={'/login'}/>
         )
 
     )

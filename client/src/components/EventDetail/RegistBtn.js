@@ -10,7 +10,7 @@ export default function RegistBtn(props) {
 
     const [openConfirmed, setOpenConfirmed] = useState(false);
     const [openPending, setOpenPending] = useState(false);
-    const {sendUserMessage} = useNotification()
+    const {sendUserMessage,subscribeEvent} = useNotification()
 
     const handleClosePending = () => {
         setOpenPending(false);
@@ -27,6 +27,7 @@ export default function RegistBtn(props) {
 
         createRegistration(props.eventId).then(res=>{
             if(res.code==="200"){
+
                 sendUserMessage("kenlbd61@gmail.com",props.eventId,"Some one have registred your event")
             }
         })
@@ -48,6 +49,7 @@ export default function RegistBtn(props) {
         setOpenConfirmed(false)
         deleteRegistration(props.eventId).then(res=>{
             if(res.code==="200"){
+                subscribeEvent(props.eventId)
                 sendUserMessage("kenlbd61@gmail.com",props.eventId,"Some one have left your event")
             }
         })

@@ -59,16 +59,17 @@ const ManageRegistraion = () => {
     setRefresh(true)
     approveRegistration(registrationId).then(() => {
       setRefresh(false)
+      sendUserMessage(email, "Your registration has been confirmed")
     })
-    sendUserMessage(email, "Your registration has been confirmed")
   }
 
   const onRejectClick = (email, registrationId) => {
     setRefresh(true)
     rejectRegistration(registrationId).then(() => {
       setRefresh(false)
+      sendUserMessage(email, "Your registration has been rejected")
+
     })
-    sendUserMessage(email, "Your registration has been rejected")
   }
 
   return (
