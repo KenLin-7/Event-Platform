@@ -39,6 +39,18 @@ public class EventController {
         return ResponseResult.success(list);
     }
 
+    @GetMapping("/search/all/{category}")
+    public ResponseResult<List<Event>> searchEventByCategory(@PathVariable String category){
+        List<Event> list = eventService.searchEventByCategory(category);
+        return ResponseResult.success(list);
+    }
+
+    @GetMapping("/search/{keyword}/{category}")
+    public ResponseResult<List<Event>> searchEventByCategoryAndKeyword(@PathVariable String keyword, @PathVariable String category){
+        List<Event> list = eventService.searchEventByCategoryAndKeyword(keyword, category);
+        return ResponseResult.success(list);
+    }
+
     @GetMapping("/latestEvent")
     public ResponseResult<List<Event>> getLatestEvent(){
         List<Event> list = eventService.getLatestEvent();

@@ -206,6 +206,18 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public List<Event> searchEventByCategory(String category) {
+        List<Event> list = eventRepository.findEventByCategory(category);
+        return list;
+    }
+
+    @Override
+    public List<Event> searchEventByCategoryAndKeyword(String keyword, String category) {
+        List<Event> list = eventRepository.findEventByCategoryAndKeyword(keyword,category);
+        return list;
+    }
+
+    @Override
     public List<Event> getLatestEvent() {
         List<Event> list = eventRepository.findTop9ByOrderByEventIdDesc();
         return list;

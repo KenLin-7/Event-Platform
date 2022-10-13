@@ -48,6 +48,10 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
     @Query(value = "SELECT COUNT(event_id) from event where start_date < ?1", nativeQuery = true)
     Integer countFinishEvent(Timestamp today);
 
+    @Query(value = "SELECT * from event where category_name = ?1",nativeQuery = true)
+    List<Event> findEventByCategory(String category);
 
+    @Query(value = "SELECT * from event where category_name = ?2 and title LIKE %?1%",nativeQuery = true)
+    List<Event> findEventByCategoryAndKeyword(String keyword, String category);
 
 }
