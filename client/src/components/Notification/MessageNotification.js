@@ -43,7 +43,7 @@ export default function MessageNotification({notification,closeDrawer,index}) {
           <Skeleton height={150}/>
         ):(      
           <div className={styles.event} >
-            <img src={testImage} style={{width:'100px',height:'100px'}} alt='Event cover'/>
+            <img src={event.image} style={{width:'100px',height:'100px'}} alt='Event cover'/>
             <div className={styles.content}>
               <span className={styles.title}>{event.title}</span>
               <span className={styles.description}>{event.description}</span>
