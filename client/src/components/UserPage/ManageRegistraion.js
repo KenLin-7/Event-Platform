@@ -55,19 +55,21 @@ const ManageRegistraion = () => {
   };
 
   // Add use email
-  const onApprovedClick = (email, registrationId) => {
+  const onApprovedClick = (email, registrationId,eventId) => {
     setRefresh(true)
     approveRegistration(registrationId).then(() => {
       setRefresh(false)
-      sendUserMessage(email, "Your registration has been confirmed")
+      sendUserMessage(email,eventId, "Your registration has been confirmed")
+
     })
+
   }
 
-  const onRejectClick = (email, registrationId) => {
+  const onRejectClick = (email, registrationId,eventId) => {
     setRefresh(true)
     rejectRegistration(registrationId).then(() => {
       setRefresh(false)
-      sendUserMessage(email, "Your registration has been rejected")
+      sendUserMessage(email,eventId, "Your registration has been rejected")
 
     })
   }
@@ -120,10 +122,10 @@ const ManageRegistraion = () => {
                                   </div>
 
                                   <div className={styles['group-btn']}>
-                                    <div className={styles['approve-btn']} onClick={() => onApprovedClick(data.requester.email, data.registrationId)}>
+                                    <div className={styles['approve-btn']} onClick={() => onApprovedClick(data.requester.email, data.registrationId,data.event.eventId)}>
                                       Approve
                                     </div>
-                                    <div className={styles['reject-btn']} onClick={() => onRejectClick(data.requester.email, data.registrationId)}>
+                                    <div className={styles['reject-btn']} onClick={() => onRejectClick(data.requester.email, data.registrationId,data.event.eventId)}>
                                       Reject
                                     </div>
                                   </div>
