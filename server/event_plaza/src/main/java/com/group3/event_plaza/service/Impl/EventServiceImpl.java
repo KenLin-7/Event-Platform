@@ -219,7 +219,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> getLatestEvent() {
-        List<Event> list = eventRepository.findTop9ByOrderByEventIdDesc();
+        List<Event> list = eventRepository.findTop9EventNoCancellation();
         return list;
     }
 
@@ -232,7 +232,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> getAllEvent(){
-        List<Event> list = eventRepository.findAll();
+        List<Event> list = eventRepository.findAllNonCancelledEvents();
         return list;
     }
 

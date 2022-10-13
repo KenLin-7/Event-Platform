@@ -77,6 +77,11 @@
   font-size: 12px;
 }
 
+.no-post-warning{
+  margin: 0 auto;
+  color: gray;
+}
+
 .event-card-date> :first-child {
   margin-right: 8px;
 }

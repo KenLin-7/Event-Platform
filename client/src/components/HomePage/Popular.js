@@ -32,32 +32,39 @@ const Popular = ({ others, flag }) => {
           (
             <Box className={styles["event-containter"]}>
               {
-                others.map(event => {
-                  return (
-                    <Card variant="outlined" className='event-card' key={event.eventId} onClick={() => handleToEventDetail(event.eventId)}>
-                      <div className={styles['event-card-img']}>
-                        <img className={styles['event-image']} src={ImageTest} alt="" />
-                      </div>
+                others.length === 0
+                  ?
+                  (
+                    <div className={styles['no-post-warning']}>No post</div>
+                  )
+                  :
+                  (
+                    others.map(event => {
+                      return (
+                        <Card variant="outlined" className='event-card' key={event.eventId} onClick={() => handleToEventDetail(event.eventId)}>
+                          <div className={styles['event-card-img']}>
+                            <img className={styles['event-image']} src={ImageTest} alt="" />
+                          </div>
 
 
 
-                      <Box sx={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
-                        <div className={styles["event-card-title"]}>
-                          {event.title}
-                        </div>
+                          <Box sx={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
+                            <div className={styles["event-card-title"]}>
+                              {event.title}
+                            </div>
 
-                        <div className={styles["event-card-people-num"]}>
-                          {event.registrationList.length}/{event.maxParticipant}
-                        </div>
-                      </Box>
+                            <div className={styles["event-card-people-num"]}>
+                              {event.registrationList.length}/{event.maxParticipant}
+                            </div>
+                          </Box>
 
-                      <div className={styles["event-card-date"]}>
-                        <AccessAlarmIcon sx={{marginTop: -0.4}} /> {humanDateConvert(event.startDate)}
-                      </div>
+                          <div className={styles["event-card-date"]}>
+                            <AccessAlarmIcon sx={{ marginTop: -0.4 }} /> {humanDateConvert(event.startDate)}
+                          </div>
 
-                      <Divider />
+                          <Divider />
 
-                      {
+                          {
                             event.registrationList.length === 0
                               ?
                               (
@@ -72,9 +79,10 @@ const Popular = ({ others, flag }) => {
                                 </div>
                               )
                           }
-                    </Card>
+                        </Card>
+                      )
+                    })
                   )
-                })
               }
 
             </Box>
