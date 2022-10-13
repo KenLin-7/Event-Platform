@@ -27,8 +27,12 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+
           <Route path='/filter' element={<FilterPage />} />
           <Route path='/filter/:keyword' element={<FilterPage />} />
+          <Route path='/filter/all/:category' element={<FilterPage />} />
+          <Route path='/filter/:keyword/:category' element={<FilterPage />} />
+
           <Route path='/test' element={<TestUploadImage />} />
           <Route path='/eventpost' element={<EventPost />} />
           <Route path='/event/detail/:id' element={<EventDetail />} />
