@@ -39,12 +39,16 @@ public class EventServiceImpl implements EventService {
     @Autowired
     RegistrationRepository registrationRepository;
 
+    String defaultImage = "https://firebasestorage.googleapis.com/v0/b/eventplazaweb.appspot.com/o/default%2Fxxxxxxxx.png?alt=media&token=451eb7a8-9b68-4d80-b676-5353435ed8db";
 
     @Override
     public int createEvent(Principal user, Event event) {
         User owner = userRepository.findByEmail(user.getName());
         Role organizer = roleRepository.findByRoleId(RoleUser.ROLE_ORGANIZER.getId());
         owner.getRole().add(organizer);
+        if(event.getImage().equals("")||event.getImage()==null){
+            event.setImage(defaultImage);
+        }
         event.setOwner(owner);
         return eventRepository.save(event).getEventId();
     }

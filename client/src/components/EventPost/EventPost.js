@@ -22,7 +22,6 @@ import formValidate from "../../utils/validation";
 import React from "react";
 import dayjs from "dayjs";
 import {postEvent} from "../../api/EventAPI";
-import {useUser} from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 export default function EventPost() {
