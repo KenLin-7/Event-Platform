@@ -27,6 +27,10 @@ public interface EventService {
 
     List<Event> searchEvent(String keyword);
 
+    List<Event> searchEventByCategory(String category);
+
+    List<Event> searchEventByCategoryAndKeyword(String keyword, String category);
+
     List<Event> getLatestEvent();
 
     List<Event> getCurrentUserEvents(String email);
