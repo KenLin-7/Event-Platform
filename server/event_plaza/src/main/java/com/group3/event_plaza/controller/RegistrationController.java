@@ -2,6 +2,7 @@ package com.group3.event_plaza.controller;
 
 import com.group3.event_plaza.common.ResponseResult;
 import com.group3.event_plaza.model.Event;
+import com.group3.event_plaza.model.Registration;
 import com.group3.event_plaza.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -72,6 +73,13 @@ public class RegistrationController {
         int registrationId = map.get("registrationId");
         registrationService.rejectRegistration(registrationId);
         return ResponseResult.success();
+    }
+
+    @PostMapping("/participants")
+    public ResponseResult<List<Registration>> getParticipantsByEventId(@RequestBody Map<String, Integer> map) throws DataNotFoundException {
+        int eventId = map.get("eventId");
+        List<Registration> registrationList= registrationService.getParticipantsByEventId(eventId);
+        return ResponseResult.success(registrationList);
     }
 
 
