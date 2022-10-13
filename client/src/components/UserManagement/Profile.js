@@ -318,7 +318,7 @@ export default function Profile(){
                   </Button>
               </Box>
 
-              <Box component="form" noValidate sx={{backgroundColor:'#fbfbfb', pt:7, pb:7, pl:7, pr:7, mb:5, mt:3, borderRadius:5, width:350,}}>
+              {/* <Box component="form" noValidate sx={{backgroundColor:'#fbfbfb', pt:7, pb:7, pl:7, pr:7, mb:5, mt:3, borderRadius:5, width:350,}}>
               <Grid container spacing={2} sx={{width:1,}}>
                 <Grid item xs={12} >
                     <TextField
@@ -393,7 +393,7 @@ export default function Profile(){
                   }
                   {errorMsgEmail && <Alert severity={"error"} sx={{marginBottom:"15px",width:"90%", mt:2,mr:4,ml:2,}}>{errorMsgEmail}</Alert>}
               </Grid>
-              </Box> 
+              </Box>  */}
 
               <Snackbar open={open} autoHideDuration={4000}>
                 {loading === "loading" ?

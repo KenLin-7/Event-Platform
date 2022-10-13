@@ -9,16 +9,10 @@ import { useUser } from '../context/UserContext';
 import logo from '../asserts/images/logo3.png'
 import { useNotification } from '../context/NotificationContext';
 import BadgeNotification from './Notification/BadgeNotification';
-import { getInfo } from '../api/UserAPI';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useNavigate } from "react-router-dom";
 
-const items = [
-  { id: 1, text: 'Latest event' },
-  { id: 2, text: 'Search' },
-  { id: 3, text: 'Community' },
-  { id: 4, text: 'About us' },
-];
+
 
 
 const Header = () => {
@@ -35,10 +29,6 @@ const Header = () => {
 
   }
 
-
-
-
-
   return (
     <div className={styles["header-container"]}>
       <Container sx={{ display: "flex", padding: 3 }} className={styles["header-container-inner"]}>
@@ -53,17 +43,7 @@ const Header = () => {
         </Box>
       </Link>
         <div className={styles["mid"]}>
-          {
-            items.map(item => {
-              return (
-                <Button key={item.id} className={styles["header-mid-btn"]}>
-                  <Typography className="header-font" sx={{ color: '#7780A1', fontSize: 'small' }}>
-                    {item.text}
-                  </Typography>
-                </Button>
-              )
-            })
-          }
+
         </div>
 
         <div className={styles["right"]}>

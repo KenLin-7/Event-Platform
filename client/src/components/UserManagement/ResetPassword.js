@@ -59,12 +59,7 @@ export default function ResetPassword(){
           <Typography variant="h6" noWrap component="div" sx={{width:1,height:40, ml:5,}}>Please enter you new password</Typography>
           <Box component="main" sx={{display:'flex', flexDirection: 'column', alignItems: 'center',}}>
             <Container component="div" maxWidth="xs">
-  
-              <Box sx={{mt:10, display:'flex', alignItems:'flex-end', justifyContent:'space-evenly', flexDirection:'row-reverse', }}>
-                <IconButton sx={{ display: 'inline', m:0, p:0 }}>
-                  <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 100, height: 100}}><PermIdentityIcon sx={{width: 50, height: 50}} /></Avatar>
-                </IconButton>
-              </Box>
+
   
               <Box sx={{pt:5, pb:5, pl:5, pr:5, mt:5, display:'flex',backgroundColor:'#fbfbfb', borderRadius:5,}}>
                 <Grid container spacing={2}>
@@ -76,6 +71,7 @@ export default function ResetPassword(){
                           label="New password "
                           name="password"
                           autoComplete="password"
+                          type="password"
                           onChange={event => setPassword(event.target.value)}
                       />
                       {

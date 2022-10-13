@@ -149,7 +149,7 @@ export default function Register() {
                     {message.show && <Alert severity={message.severity} sx={{marginBottom:"15px"}}>{message.message}</Alert>} 
                     <div className={FormStyles['button-area']}>
                         <button className={FormStyles.formButton} onClick={onClick} disabled={loading}>
-                            {loading? (<CircularProgress color='inherit'/>):("Create an account")}
+                            {loading? (<CircularProgress color='inherit' size={25}/>):("Create an account")}
                         </button>
                         <span><span>Privacy Policy </span>and <span>Terms of service</span> apply</span>
                     </div>

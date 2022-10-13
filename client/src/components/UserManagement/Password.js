@@ -114,12 +114,6 @@ export default function Password(){
           <Box component="main" sx={{display:'flex', flexDirection: 'column', alignItems: 'center',}}>
             <Container component="div" maxWidth="xs">
 
-              <Box sx={{mt:10, display:'flex', alignItems:'flex-end', justifyContent:'space-evenly', flexDirection:'row-reverse', }}>
-                <IconButton sx={{ display: 'inline', m:0, p:0 }}>
-                  <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 100, height: 100}}><PermIdentityIcon sx={{width: 50, height: 50}} /></Avatar>
-                </IconButton>
-                <Typography variant="h6" noWrap component="div" sx={{height:40, display:'inline', m:0, p:0}}>{auth}</Typography>
-              </Box>
 
               <Box sx={{pt:7, pb:7, pl:7, pr:7, mt:5, display:'flex',backgroundColor:'#fbfbfb', borderRadius:5, width:350}}>
                 <Grid container spacing={2}>
@@ -129,6 +123,7 @@ export default function Password(){
                           fullWidth
                           id="password"
                           label="New password "
+                          type="password"
                           name="password"
                           autoComplete="new password"
                           onChange={onChange}

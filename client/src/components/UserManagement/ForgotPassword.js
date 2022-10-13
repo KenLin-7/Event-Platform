@@ -95,12 +95,6 @@ export default function ForgotPassword(){
         <Box component="main" sx={{display:'flex', flexDirection: 'column', alignItems: 'center',}}>
           <Container component="div" maxWidth="xs">
 
-            <Box sx={{mt:10, width:1, display:'flex', justifyContent:'center', flexDirection:'row-reverse', }}>
-              <IconButton sx={{ display: 'inline', m:0, p:0 }}>
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 100, height: 100}}><PermIdentityIcon sx={{width: 50, height: 50}} /></Avatar>
-              </IconButton>
-            </Box>
-
             <Box sx={{pt:5, pb:5, pl:5, pr:5, mt:5, display:'flex',backgroundColor:'#fbfbfb', borderRadius:5}}>
               <Grid container spacing={2}>
                 <Grid item xs={12} >

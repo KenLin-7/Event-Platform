@@ -25,7 +25,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    // No
     private static final String[] URL_WHITELISTS ={
             "/test/*",
             "/api/user/register",
@@ -41,6 +40,7 @@ public class SecurityConfig {
             "/api/event/getEventDetail",
             "/api/event/search/all/{category}",
             "/api/event/search/{keyword}/{category}",
+            "/api/statistic/get"
     };
 
     private static final String[] ORGANIZER_URLS = {

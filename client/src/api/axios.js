@@ -7,7 +7,7 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use(request=>{
-    // request.headers['content-type'] = 'application/json'
+    request.headers['content-type'] = 'application/json'
     if(localStorage.getItem("token") !== null){
         request.headers.Authorization =`Bearer ${localStorage.getItem("token")}`;
 

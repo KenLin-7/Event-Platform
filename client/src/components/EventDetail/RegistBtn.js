@@ -4,14 +4,15 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContentText from "@mui/material/DialogContentText";
 import {createRegistration, deleteRegistration} from "../../api/RegistrationAPI";
 import { useNotification } from "../../context/NotificationContext";
-
-
+import { useUser } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 export default function RegistBtn(props) {
 
     const [openConfirmed, setOpenConfirmed] = useState(false);
     const [openPending, setOpenPending] = useState(false);
     const {sendUserMessage,subscribeEvent} = useNotification()
-
+    const {auth} = useUser()
+    const navigate = useNavigate()
     const handleClosePending = () => {
         setOpenPending(false);
     };
@@ -24,15 +25,16 @@ export default function RegistBtn(props) {
 
     //  Add notification registre info ------------ add owner email 
     const onRigstClick = () => {
-
+    if(auth){
         createRegistration(props.eventId).then(res=>{
             if(res.code==="200"){
-
                 sendUserMessage("kenlbd61@gmail.com",props.eventId,"Some one have registred your event")
             }
         })
         props.updateRegistFlag("pending")
-
+    }else{
+        navigate("/login")
+    }
     }
 
 
