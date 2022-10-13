@@ -7,10 +7,13 @@ export default function UploadImage(props) {
     const {imageURL, uploadImage, progress, buffer, isUploaded} = useUpload()
     const [image, setImage] = useState("")
     const [uploading, setUploading] = useState(false)
+    const [btnAvailable,setBtnAvailable] = useState(false)
 
     const onClick = () => {
         setUploading(true)
         uploadImage(image, "event")
+        props.onFlag(true)
+        setBtnAvailable(true)
         // remove()
     }
 
@@ -24,6 +27,7 @@ export default function UploadImage(props) {
     useEffect(() => {
         if (imageURL) {
             props.onImage(imageURL)
+            props.onFlag(false)
         }
     }, [imageURL])
 
@@ -31,9 +35,9 @@ export default function UploadImage(props) {
     return (
         <div>
             <Stack direction={"row"} sx={{padding:1 ,marginLeft: 2, marginY:3} }>
-            <input  type={'file'} onChange={onChange}
+            <input  disabled={btnAvailable} type={'file'} onChange={onChange}
                    accept="image/*"/>
-                <Button sx={{marginLeft: 2}} variant={"contained"} onClick={onClick}>submit</Button>
+                <Button sx={{marginLeft: 2}} disabled={btnAvailable} variant={"contained"} onClick={onClick}>submit</Button>
 
             </Stack>
                 <Typography sx={{marginLeft: 2}}> Remember to click submit, or the image will not be kept</Typography>

@@ -23,10 +23,13 @@ import React from "react";
 import dayjs from "dayjs";
 import {postEvent} from "../../api/EventAPI";
 import { useNavigate } from "react-router-dom";
+import FormStyles from "../../asserts/stylesheet/Form.module.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function EventPost() {
 
     const [category, setCategory] = useState('Food&Drink');
+    const [confirmFlag,setConfirmFlag] = useState(false);
     const navigate = useNavigate()
     const categories = ['Food&Drink','Music','Business','Film&Media'];
     const handleCategoryChange = (e) => {
@@ -42,7 +45,7 @@ export default function EventPost() {
     };
 
     const participant_regex = /(^[1-9]\d*$)/
-    const [uploadingImageFlag, setUploadingImageFlag] = useState(0)
+    const [uploadingImageFlag, setUploadingImageFlag] = useState(false)
 
     const [event, setEvent] = useState({
         eventTitle: "",
@@ -146,6 +149,8 @@ export default function EventPost() {
         }
 
         if(result.suburb&&result.postcode&&result.eventTitle&&result.address1){
+            setConfirmFlag(true);
+
             let address = ""
             if(event.address2!=null&&event.address2!="") {
                 address = event.address1 + "+" + event.address2 + "+" + event.suburb + "+" + event.state + "+" + event.postcode
@@ -163,8 +168,8 @@ export default function EventPost() {
                 description:event.description,
                 location:address
             }
+
             postEvent(databaseEvent).then((res)=>{
-                console.log(res);
 
                 if(res.code === "200"){
                     navigate(`/event/detail/${res.data}`)
@@ -179,7 +184,6 @@ export default function EventPost() {
         if (!isValidated.eventTitle || !isValidated.address1
             || !isValidated.suburb || !isValidated.postcode
         ) validation()
-        console.log(event)
     }
 
     const handleParticipantChange = (e) => {
@@ -475,16 +479,18 @@ export default function EventPost() {
                         </Dialog>
 
                         {/*        confirm button      */}
-                        {console.log(uploadingImageFlag)}
-                        {uploadingImageFlag === 1 ?
+
+                        {uploadingImageFlag ?
 
                             <Button disabled variant={"contained"} align={"right"}
                                     sx={{marginLeft: 2}}
                             > Confirm </Button>
 
-                            : <Button onClick={onClick} variant={"contained"} align={"right"}
-                                      sx={{marginLeft: 2}}
-                            > Confirm </Button>
+                            :
+                            <Button variant={"contained"} align={"right"}
+                            sx={{marginLeft: 2}}  onClick={onClick} disabled={confirmFlag}>
+                        {confirmFlag ? (<CircularProgress color='inherit'size={25}/>):("Confirm")}
+                            </Button>
 
                         }
                     </Stack>

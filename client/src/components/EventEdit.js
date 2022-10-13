@@ -23,12 +23,14 @@ import React from "react";
 import {getEventDetail, getEventDetailForEdit, postEvent, updateEvent} from "../api/EventAPI";
 import { useNotification } from "../context/NotificationContext";
 import { useParams,useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function EventEdit(effect, deps) {
 
     let {id} = useParams()
     const [eventId, setEventId] = useState(id)
     const [event, setEvent] = useState(null)
+    const [confirmFlag,setConfirmFlag] = useState(false);
     const [loading, setLoading] = useState(true);
     const {sendEventMessage} = useNotification()
     const navigate = useNavigate()
@@ -41,11 +43,11 @@ export default function EventEdit(effect, deps) {
     }, [eventId])
 
 
-    const [category, setCategory] = useState('Sports');
+
     const categories = ['Food&Drink','Music','Business','Film&Media'];
 
     const handleCategoryChange = (e) => {
-        setCategory(e.target.value)
+
         setEvent({...event, ["category"]: e.target.value})
     };
 
@@ -59,7 +61,7 @@ export default function EventEdit(effect, deps) {
 
 
     const participant_regex = /(^[1-9]\d*$)/
-    const [uploadingImageFlag, setUploadingImageFlag] = useState(0)
+    const [uploadingImageFlag, setUploadingImageFlag] = useState(false)
 
 
     const [isValidated, setIsValidated] = useState({
@@ -153,6 +155,7 @@ export default function EventEdit(effect, deps) {
         }
 
         if (result.suburb && result.postcode && result.eventTitle && result.address1) {
+            setConfirmFlag(true);
             let address = ""
             if (event.address2 != null && event.address2 != "") {
                 address = event.address1 + "+" + event.address2 + "+" + event.suburb + "+" + event.state + "+" + event.postcode
@@ -358,7 +361,7 @@ export default function EventEdit(effect, deps) {
                                     <Typography fontSize={20} fontWeight={300}> Upload an image:</Typography>
                                     <Card>
                                         <UploadImage onImage={(image) => setEvent({...event, ["image"]: image})}
-
+                                                     onFlag={(uploadingFlag) => setUploadingImageFlag(uploadingFlag)}
                                                      img={event.image}
                                                      name={"image"}></UploadImage>
                                     </Card>
@@ -499,9 +502,19 @@ export default function EventEdit(effect, deps) {
                                     </Dialog>
 
                                     {/*        confirm button      */}
-                                    <Button onClick={onClick} variant={"contained"} align={"right"}
-                                            sx={{marginLeft: 2}}
-                                    > Confirm </Button>
+                                    {uploadingImageFlag ?
+
+                                        <Button disabled variant={"contained"} align={"right"}
+                                                sx={{marginLeft: 2}}
+                                        > Confirm </Button>
+
+                                        :
+                                        <Button variant={"contained"} align={"right"}
+                                                sx={{marginLeft: 2}}  onClick={onClick} disabled={confirmFlag}>
+                                            {confirmFlag ? (<CircularProgress color='inherit'size={25}/>):("Confirm")}
+                                        </Button>
+
+                                    }
 
                                 </Stack>
                             </Paper>
