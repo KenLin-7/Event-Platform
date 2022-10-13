@@ -255,7 +255,7 @@ export default function EventEdit(effect, deps) {
 
     const handleCancelYes = () => {
         setOpen(false);
-        // go back to the previous page
+        navigate(-1)
     };
 
 

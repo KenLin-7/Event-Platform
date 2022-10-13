@@ -249,7 +249,7 @@ export default function EventPost() {
 
     const handleCancelYes = () => {
         setOpen(false);
-        // go back to the previous page
+        navigate(-1)
     };
 
     return (
