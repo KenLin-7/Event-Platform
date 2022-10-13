@@ -4,7 +4,6 @@ import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import Divider from '@mui/material/Divider'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ImageTest from '../../asserts/images/test-image.png';
 import CircularProgress from '@mui/material/CircularProgress';
 import humanDateConvert from '../../utils/humanDateConvert'
@@ -14,7 +13,7 @@ const Popular = ({ others, flag }) => {
   const navigate = useNavigate();
 
   const handleToEventDetail = (id) => {
-    navigate(`/eventDetail/${id}`)
+    navigate(`/event/detail/${id}`)
   }
 
   return (

@@ -33,7 +33,6 @@ public class EventController {
         return ResponseResult.success();
     }
 
-
     @GetMapping("/search/{keyword}")
     public ResponseResult<List<Event>> search(@PathVariable String keyword){
         List<Event> list = eventService.searchEvent(keyword);

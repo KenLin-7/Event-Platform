@@ -7,4 +7,8 @@ public interface RegistrationService {
     void createRegistration(Principal user , int eventId);
 
     void deleteRegistration(Principal principal, int eventId);
+
+    void approveRegistration(int registrationId);
+
+    void rejectRegistration(int registrationId);
 }

@@ -23,7 +23,16 @@ export const createRegistration = async (eventId) => {
 }
 
 export const deleteRegistration = async (eventId) => {
-
     const result = await axios.post(API + "/delete", {eventId: eventId})
+    return result
+}
+
+export const approveRegistration = async (registrationId) => {
+    const result = await axios.post(API + "/approveRegistration", {registrationId: registrationId})
+    return result
+}
+
+export const rejectRegistration = async (registrationId) => {
+    const result = await axios.post(API + "/rejectRegistration", {registrationId: registrationId})
     return result
 }
