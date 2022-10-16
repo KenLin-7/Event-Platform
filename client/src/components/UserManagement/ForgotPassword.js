@@ -58,13 +58,13 @@ export default function ForgotPassword(){
 
   const sendCode = (e) => {
     e.preventDefault()
-    
+    setCodeDisabled(true)
+    disableWait()
+
     sendEmail(email).then((data)=>{
       if(data.code === "200"){
-        setCodeDisabled(true)
         setIsValidatedCode(false)
         setCodeError("Please check your email")
-        disableWait()
       }else{
         setErrorMsg(data.msg)
       }
@@ -77,7 +77,7 @@ export default function ForgotPassword(){
 
   function disableWait(){
     const sendCodeButton = document.getElementById('codeButton')
-    var t = 5
+    var t = 30
     var i = setInterval(function(){  
       if(t > 0) {  
         sendCodeButton.innerText = t--+" s";

@@ -174,8 +174,8 @@ export default function EventEdit(effect, deps) {
             }
             updateEvent(databaseEvent).then(res=>{
                 if(res.code === "200"){
-                    navigate(-1)
                     sendEventMessage(eventId,"Your registed event has been updated")
+                    navigate(-1)
                 }
             })
         }

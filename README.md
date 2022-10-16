@@ -55,16 +55,16 @@
 - User can reset password though email and verification code  if they forgot 
 - User can update their profile 
 - User can upload avatar 
-- Form validation
+- Login/Register Form validation
     - Email validation, format@email.com
     - Phone validation, only allow Australia phone format
     - Not-null validation 
 - User can change password though email and verification code
 
 ### Event Management 
-Public 
-- User can view all events 
 
+- User can view all events 
+- Click register button will reidrect to log in page if user not logged in 
 After logged in 
 - User can post event 
 - User can register an event 

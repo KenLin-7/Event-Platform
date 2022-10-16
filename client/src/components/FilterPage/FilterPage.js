@@ -19,6 +19,7 @@ import humanDateConvert from '../../utils/humanDateConvert';
 import confirmedParticipants from '../../utils/confirmedParticipants';
 import CircularProgress from '@mui/material/CircularProgress';
 import { getAllEvent } from '../../api/EventAPI';
+import { Button, Typography } from '@mui/material';
 
 
 const items = [
@@ -200,7 +201,9 @@ const FilterPage = () => {
 
                                 <div className={styles['event-card-left']}>
                                   <div className={styles["event-card-title"]}>
+                                    <Typography>{card.categoryName}</Typography>
                                     {card.title}
+                  
                                   </div>
 
                                   <div className={styles["event-card-time"]}>

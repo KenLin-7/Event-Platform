@@ -154,4 +154,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 }
                 return  authorities;
         }
+
+        public String getAvatar(String email){
+                return userRepository.getAvatar(email);
+        }
 }

@@ -1,5 +1,5 @@
 import React,{useContext,useEffect,useState} from 'react'
-import { getUser, logout } from '../api/UserAPI'
+import { getAvatar, getUser, logout } from '../api/UserAPI'
 
 
 const UserContext = React.createContext()
@@ -13,7 +13,7 @@ export function useUser(){
 export function UserProvider({children}){
     const [auth,setAuth] = useState(null)
     const [loading,setLoading] = useState(true)
-
+    const [avatar,setAvatar] = useState("")
 
 
     // get logged in user email
@@ -22,6 +22,11 @@ export function UserProvider({children}){
         getUser().then(res=>{
             setAuth(res.data)
             setLoading(false)
+        })
+
+        getAvatar().then(res=>{
+            setAvatar(res.data)
+            console.log(res.data);
         })
     }
 
@@ -34,6 +39,7 @@ export function UserProvider({children}){
     useEffect(()=>{
        if(localStorage.getItem("token") !=null){
             getAuth() 
+
        }else{
         setTimeout(() => {
             setLoading(false)
@@ -47,7 +53,8 @@ export function UserProvider({children}){
         auth,
         getAuth,
         signOut,
-        loading
+        loading,
+        avatar
     }
 
     return(

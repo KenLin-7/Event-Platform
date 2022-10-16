@@ -254,6 +254,7 @@ public class EventServiceImpl implements EventService {
     public List<Registration> getUserRegistrationEvents(String email) {
         User currentUser = userRepository.findByEmail(email);
         List<Registration> registrationList = registrationRepository.findByUserId(currentUser.getUserId());
+
         return registrationList;
     }
 
