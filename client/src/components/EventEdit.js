@@ -188,7 +188,6 @@ export default function EventEdit(effect, deps) {
         if (!isValidated.eventTitle || !isValidated.address1
             || !isValidated.suburb || !isValidated.postcode
         ) validation()
-        console.log(event)
     }
 
 

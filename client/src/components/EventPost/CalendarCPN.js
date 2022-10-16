@@ -20,7 +20,7 @@ export default function CalendarCPN(props) {
                 }}
                 label="Date and Time"
                 onError={console.log}
-                minDate={dayjs('2022-10-01T00:00')}
+                minDate={dayjs('2022-11-01T00:00')}
                 inputFormat="YYYY/MM/DD hh:mm a"
                 mask="____/__/__ __:__ _M"
                 renderInput={(params) => <TextField {...params} />}

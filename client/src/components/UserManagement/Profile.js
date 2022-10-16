@@ -48,7 +48,6 @@ export default function Profile(){
     const loadUser = async () => {
       if(auth){
         await profile(auth).then((res) => {
-          console.log(res);
           setuser({ nickname: res.data.nickname, email: res.data.email, phone: res.data.phone, dob: res.data.dob, gender: res.data.gender,avatar:res.data.avatar})
         })
       }

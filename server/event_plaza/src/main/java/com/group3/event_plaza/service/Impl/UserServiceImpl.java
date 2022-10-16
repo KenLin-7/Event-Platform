@@ -44,7 +44,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         @Override
         public void register(User user) throws EmailExistException {
                 User existUser = userRepository.findByEmail(user.getEmail());
-                System.out.println(existUser);
                 if(existUser != null){
                         throw new EmailExistException("Email was taken");
                 }else{

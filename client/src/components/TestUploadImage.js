@@ -12,7 +12,6 @@ export default function TestUploadImage() {
     const [event,setEvent] = useState({image:"https://firebasestorage.googleapis.com/v0/b/eventplazaweb.appspot.com/o/event%2F005U1peply1fff1uddgouj30xc0m8a9y.jpg1664782635262?alt=media&token=9e8175f2-a61e-471e-a02d-b75beb4e1ec6",title:"dsasdasda"})
 
     useEffect(()=>{
-        console.log(isUploaded);
     },[isUploaded])
     const onClick = ()=>{
         uploadImage(image,"avatar")
@@ -24,7 +23,6 @@ export default function TestUploadImage() {
     }
     
     useEffect(()=>{
-        console.log(imageURL);
     },[imageURL])
 
 

@@ -66,12 +66,9 @@ export default function EventDetail(effect, deps) {
     }, [event])
 
     useEffect(() => {
-        console.log(registFlag)
         getParticipants(eventId).then(
             (res) => {
-                console.log(res.data)
                 setRegistrationList(res.data);
-                console.log(registrationList)
             }
         )
 
@@ -157,6 +154,7 @@ export default function EventDetail(effect, deps) {
                                                                     updateRegistFlag={(newRegistFlag) => setRegistFlag(newRegistFlag)}
                                                                     registFlag={registFlag}
                                                                     eventId={eventId}
+                                                                    owner={event.owner.email}
                                                                 ></RegistBtn>
 
                                                             </Container>

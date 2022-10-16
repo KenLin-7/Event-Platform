@@ -11,7 +11,6 @@ export default function BadgeNotification() {
   const {count} = useNotification()
 
   useEffect(()=>{
-    console.log(count);
      function getCount(){
         setTotal(count)
      }
