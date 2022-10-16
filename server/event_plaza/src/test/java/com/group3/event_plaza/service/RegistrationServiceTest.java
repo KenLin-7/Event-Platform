@@ -22,12 +22,24 @@ class RegistrationServiceTest {
 
     @Test
     void createRegistration() {
-        registrationService.createRegistration(null, 1);
+        Principal user = new Principal() {
+            @Override
+            public String getName() {
+                return "378031309@qq.com";
+            }
+        };
+        registrationService.createRegistration(user, 1);
     }
 
     @Test
     void deleteRegistration() {
-        registrationService.deleteRegistration(null, 1);
+        Principal user = new Principal() {
+            @Override
+            public String getName() {
+                return "378031309@qq.com";
+            }
+        };
+        registrationService.deleteRegistration(user, 1);
     }
 
     @Test

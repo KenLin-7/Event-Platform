@@ -48,6 +48,10 @@ public class Notification  {
     }
 
 
+    public Notification(String message,int eventId) {
+        this.message = message;
+        this.eventId = eventId;
+    }
 
     public Notification(String message,String status){
         this.message = message;
