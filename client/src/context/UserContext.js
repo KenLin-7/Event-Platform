@@ -26,7 +26,6 @@ export function UserProvider({children}){
 
         getAvatar().then(res=>{
             setAvatar(res.data)
-            console.log(res.data);
         })
     }
 
