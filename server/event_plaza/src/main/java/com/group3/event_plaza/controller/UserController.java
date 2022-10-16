@@ -92,8 +92,6 @@ public class UserController {
     @PostMapping("/resetPassword")
     public ResponseResult<String> resetPassword(@RequestBody String password){
         String email = (String)session.getAttribute("resetPassword");
-        System.out.println(password);
-        System.out.println(email);
         String result;
         result = userService.updateUserPassword(email, password);
         return ResponseResult.success(result);
@@ -136,5 +134,11 @@ public class UserController {
         String email = principal.getName();
         User user = userService.getUserInfo(email);
         return ResponseResult.success(user);
+    }
+
+
+    @GetMapping("/avatar")
+    public ResponseResult<String> getAvatar(Principal principal){
+        return ResponseResult.success(userService.getAvatar(principal.getName()));
     }
 }

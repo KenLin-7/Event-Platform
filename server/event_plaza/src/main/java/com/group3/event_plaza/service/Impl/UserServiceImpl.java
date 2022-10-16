@@ -44,7 +44,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         @Override
         public void register(User user) throws EmailExistException {
                 User existUser = userRepository.findByEmail(user.getEmail());
-                System.out.println(existUser);
                 if(existUser != null){
                         throw new EmailExistException("Email was taken");
                 }else{
@@ -154,5 +153,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                         authorities.add(new SimpleGrantedAuthority(role.getRoleName().toString()));
                 }
                 return  authorities;
+        }
+
+        public String getAvatar(String email){
+                return userRepository.getAvatar(email);
         }
 }

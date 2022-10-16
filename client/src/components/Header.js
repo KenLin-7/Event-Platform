@@ -20,13 +20,12 @@ const Header = () => {
   const {auth,signOut} = useUser();
   const {disconnect} = useNotification();
   const navigate = useNavigate();
-
+  const {avatar} = useUser()
 
   const logout = ()=>{
     signOut()
     disconnect()
     navigate("/")
-
   }
 
   return (
@@ -58,7 +57,7 @@ const Header = () => {
               <Stack direction={"row"} spacing={1} sx={{ marginRight: 5 }}>
                 <div className={styles['dropdown']}>
                   <Stack direction={"row"}>
-                    <Avatar sx={{ width: 40, height: 40 }} src="" />
+                    <Avatar sx={{ width: 40, height: 40 }} src={avatar} />
                     <KeyboardArrowDownIcon sx={{marginTop: 1.5, marginLeft:0.4, fontSize: 18}}/>
                   </Stack>
 

@@ -76,12 +76,12 @@ export default function Password(){
 
   const sendCode = (e) => {
     e.preventDefault()
+    disableWait()
+    setCodeDisabled(true)
     sendEmail(auth).then((data)=>{
       if(data.code === "200"){
-        setCodeDisabled(true)
         setIsValidatedCode(false)
         setCodeError("Please check your email")
-        disableWait()
       }else{
         setErrorMsg(data.msg)
       }
@@ -94,7 +94,7 @@ export default function Password(){
 
   function disableWait(){
     const sendCodeButton = document.getElementById('codeButton')
-    var t = 5
+    var t = 30
     var i = setInterval(function(){  
       if(t > 0) {  
         sendCodeButton.innerText = t--+" s";

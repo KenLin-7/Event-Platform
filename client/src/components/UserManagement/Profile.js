@@ -48,7 +48,6 @@ export default function Profile(){
     const loadUser = async () => {
       if(auth){
         await profile(auth).then((res) => {
-          console.log(res);
           setuser({ nickname: res.data.nickname, email: res.data.email, phone: res.data.phone, dob: res.data.dob, gender: res.data.gender,avatar:res.data.avatar})
         })
       }
@@ -94,7 +93,22 @@ export default function Profile(){
         timer.current = window.setTimeout(() => {
           setLoading("loadings")
         }, 2000);
-        const imageRef = ref(storage,`avatar/${avatar.name+new Date().getTime()}`)
+
+        if(avatar === ""){
+          updateUser(user,user.avatar).then((data)=>{
+            if(data.code === "200") {
+              setLoading("success")
+              getAuth();
+              setDisabled(true);
+              button.innerText = 'EDIT';
+              clearTimeout(timer.current);
+            }else{
+              setOpen(false);
+              setErrorMsg(data.msg)
+            }
+          })
+        }else{
+          const imageRef = ref(storage,`avatar/${avatar.name+new Date().getTime()}`)
 
         const uploadTask = uploadBytesResumable(imageRef,avatar)
         // upload process
@@ -117,12 +131,12 @@ export default function Profile(){
                     setErrorMsg(data.msg)
                   }
                 })
+              
+
             })
         })
-
-
+        }
         
-
         }else{
           setIsValidated(false)
         }

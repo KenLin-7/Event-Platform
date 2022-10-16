@@ -19,15 +19,15 @@ export default function formValidate (data) {
                 case "phone":
                     data[key] = phone_regex.test(value)
                     break
-                case "password":
-                    data[key] = true
-                    break
-                case "nickname":
-                    data[key] = true
-                    break
-                case "gender":
-                    data[key] = true
-                    break
+                // case "password":
+                //     data[key] = true
+                //     break
+                // case "nickname":
+                //     data[key] = true
+                //     break
+                // case "gender":
+                //     data[key] = true
+                //     break
                 case "dob":
                     data[key] = dob_regex.test(value)
                     data[key] = true
@@ -40,6 +40,7 @@ export default function formValidate (data) {
                         break
                 default:
                     data[key] = true
+                    break
             }
         }else{
             data[key] = false

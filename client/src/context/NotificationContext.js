@@ -134,8 +134,6 @@ export const NotificationProvider = ({children})=>{
 
 
     useEffect(()=>{
-        console.log(notifications);
-
         if(!connected && auth != null){
             socketConn()
         } 
@@ -147,7 +145,6 @@ export const NotificationProvider = ({children})=>{
         }
 
         if(auth!=null||sent){
-            console.log("test");
             fetch()
             setSent(false)
         }

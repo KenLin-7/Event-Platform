@@ -19,5 +19,8 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     String findEmailByUserId(int userId);
 
 
+    @Query(value =  "SELECT  avatar  from user where email =  ?1",nativeQuery = true)
+    String getAvatar(String email);
+
 
 }

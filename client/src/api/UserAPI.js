@@ -1,3 +1,4 @@
+import { async } from "@firebase/util"
 import axios from "./axios"
 const API = '/api/user'
 
@@ -6,6 +7,11 @@ export const signIn = async (email,password)=>{
     formData.append("username",email)
     formData.append("password",password)
     const result = await axios.post("/login",formData,{headers:{"content-type":"application/x-www-form-urlencoded"}})
+    return result
+}
+
+export const getAvatar = async()=>{
+    const result = await axios.get(API+"/avatar")
     return result
 }
 

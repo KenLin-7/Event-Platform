@@ -27,7 +27,6 @@ const UserRegistration = () => {
       setFlag(true)
       getUserRegistrationEvents().then((data) => {
         setEvents(data.data)
-        console.log(data.data)
         setFlag(false)
       })
     }
