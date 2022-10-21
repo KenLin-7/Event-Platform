@@ -11,8 +11,6 @@ public class EventPlazaApplication {
 
 
     public static void main(String[] args) {
-
-
         SpringApplication.run(EventPlazaApplication.class, args);
     }
 
