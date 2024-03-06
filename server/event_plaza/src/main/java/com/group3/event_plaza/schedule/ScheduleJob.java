@@ -37,7 +37,7 @@ public class ScheduleJob {
 
 
 
-    @Scheduled(cron = "0 47 22 * * *")
+    @Scheduled(cron = "0 56 17 * * *")
     @Transactional
     public void sendEmail(){
         log.info(new Timestamp(getTodayTime())+" Start searching event");

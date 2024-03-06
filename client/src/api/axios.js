@@ -1,6 +1,5 @@
 import axios from "axios"
-import { Alert } from "@mui/material";
-import { Navigate } from "react-router-dom";
+
 const instance = axios.create({
     baseURL:'http://localhost:8080',
 })
